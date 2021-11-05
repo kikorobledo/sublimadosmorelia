@@ -1,0 +1,15 @@
+.container{
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.h-menu{
+    max-height: calc(100vh - 64px);
+}
+
+.glider-dot.active{
+    background:black;
+}
+
+.glider-track,.glider-next,.glider-prev{
+    z-index: 0;
+}
