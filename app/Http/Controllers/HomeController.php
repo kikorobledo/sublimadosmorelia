@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\CategoryDesign;
-use App\Models\CategoryProduct;
-
 class HomeController extends Controller
 {
     public function __invoke()
@@ -23,9 +19,7 @@ class HomeController extends Controller
 
         $latestDesignsIron = cache()->get('latestDesignsIron');
 
-        $metalDesigns = $latestDesignsIron->merge($latestDesignsAluminium);
-
-        /* dd($latestDesignsTextil); */
+        $metalDesigns = array_merge($latestDesignsIron, $latestDesignsAluminium);
 
         return view('welcome', compact('categoriesProduct', 'categoriesDesign', 'latestDesigns', 'latestDesignsTextil', 'metalDesigns'));
     }

@@ -89,9 +89,9 @@
 
         </div>
 
-        <div class="w-full px-2">
+        <div class="w-full">
 
-            <iframe class="w-2/3 mx-auto md:h-80 h-full" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F3546625815448093%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            <iframe class=" w-2/3 mx-auto md:h-80 h-full" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F3546625815448093%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
 
         </div>
 
@@ -108,7 +108,7 @@
 
         </div>
 
-        {{-- @livewire('glider', ['designs' => $latestDesignsTextil], key('textiles')) --}}
+        @livewire('glider', ['designs' => $latestDesignsTextil], key('textiles'))
 
     </div>
 
@@ -132,45 +132,45 @@
     </div>
 
     {{-- Video --}}
-    <div class="md:mb-8 container px-2">
+    <div class="mb-16 container px-2">
 
-        <div class="text-center mb-4">
+        <div class="text-center mb-8">
 
             <p class="text-2xl uppercase md:text-4xl font-bold mb-5 md:ml-5 md:tracking-widest">Recuerdos para cualquier tipo de evento</p>
 
         </div>
 
-        <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-1">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-16">
 
-            <div class="text-center space-y-3">
+            <div class="text-center ">
+
+                <iframe class="mx-auto w-full md:w-2/3 h-full  mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F521609105622737%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
                 <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">bautizo</a>
 
-                <iframe class="mx-auto  w-full h-2/3 md:h-auto" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F521609105622737%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
             </div>
 
-            <div class="text-center space-y-3">
+            <div class="text-center">
+
+                <iframe class="mx-auto  w-full md:w-2/3 h-full mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F169869817978594%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
                 <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">primera comunión</a>
 
-                <iframe class="mx-auto  w-full h-2/3 md:h-auto" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F169869817978594%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
             </div>
 
-            <div class="text-center space-y-3">
+            <div class="text-center">
+
+                <iframe class="mx-auto w-full md:w-2/3 h-full mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F650586145670366%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
                 <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">cumpleaños</a>
 
-                <iframe class="mx-auto  w-full h-2/3 md:h-auto" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F650586145670366%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
             </div>
 
-            <div class="text-center space-y-3">
+            <div class="text-center">
+
+                <iframe class="mx-auto w-full md:w-2/3 h-full mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F180471400564132%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
                 <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">funebres</a>
-
-                <iframe class="mx-auto  w-full h-2/3 md:h-auto" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F180471400564132%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
             </div>
 
@@ -189,7 +189,7 @@
 
         </div>
 
-        {{-- @livewire('glider', ['designs' => $metalDesigns], key('metals')) --}}
+        @livewire('glider', ['designs' => $metalDesigns], key('metals'))
 
     </div>
 

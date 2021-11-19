@@ -36,10 +36,10 @@ class DatabaseSeeder extends Seeder
 
         cache()->put('categoriesProduct', CategoryProduct::all());
         cache()->put('categoriesDesign', CategoryDesign::with('subcategories')->get());
-        cache()->put('latestDesigns', Design::with('product')->orderBy('created_at')->take(20)->get());
-        cache()->put('latestDesignsTextil', CategoryProduct::where('name', 'Textiles')->first()->designs()->with('product')->orderBy('created_at')->take(20)->get());
-        cache()->put('latestDesignsAluminium', CategoryProduct::where('name', 'Aluminios')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get());
-        cache()->put('latestDesignsIron', CategoryProduct::where('name', 'Aceros')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get());
+        cache()->put('latestDesigns', Design::with('product')->orderBy('created_at')->take(20)->get()->toArray());
+        cache()->put('latestDesignsTextil', CategoryProduct::where('name', 'Textiles')->first()->designs()->with('product')->orderBy('created_at')->take(20)->get()->toArray());
+        cache()->put('latestDesignsAluminium', CategoryProduct::where('name', 'Aluminios')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get()->toArray());
+        cache()->put('latestDesignsIron', CategoryProduct::where('name', 'Aceros')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get()->toArray());
 
     }
 }

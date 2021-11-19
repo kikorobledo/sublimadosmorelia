@@ -16,9 +16,9 @@
 
                         </figure>
 
-                        <h1 class=" uppercase font-light truncate">{{ $design->name }}</h1>
+                        <h1 class=" uppercase font-light truncate">{{ $design['name'] }}</h1>
 
-                        <p class="mb-2">$ {{ $design->product->price}}</p>
+                        <p class="mb-2">$ {{ $design['product']['price'] }}</p>
 
                         <a href="#" class="border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">Ver producto</a>
 
