@@ -30,7 +30,7 @@
 
                     <li class="border-t border-gray-300 hover:bg-gray-100 rounded-full transition duration-200">
 
-                        <a href="" class="block w-full py-4">{{ $category->name }}</a>
+                        <a href="{{ route('categories.show', $category->slug ) }}" class="block w-full py-4">{{ $category->name }}</a>
 
                     </li>
 

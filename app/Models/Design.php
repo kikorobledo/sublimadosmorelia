@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\SubCategoryDesign;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Design extends Model
 {
@@ -13,5 +14,9 @@ class Design extends Model
 
     public function product(){
         return $this->belongsTo(Product::class);
+    }
+
+    public function subCategoryDesign(){
+        return $this->belongsTo(SubCategoryDesign::class);
     }
 }

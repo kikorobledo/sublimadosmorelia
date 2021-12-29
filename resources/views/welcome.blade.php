@@ -104,7 +104,7 @@
 
             <p class="text-2xl md:text-4xl uppercase font-bold mb-4">Textiles</p>
 
-            <a href="#" class="border border-gray-300  rounded-full text-black uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">Ver todos</a>
+            <a href="{{ route('categories.show', 'textiles') }}" class="border border-gray-300  rounded-full text-black uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">Ver todos</a>
 
         </div>
 
@@ -125,7 +125,7 @@
 
             <p class="md:text-3xl text-white uppercase md:mb-6">Volantes - Lonas - Tarjetas de presentación</p>
 
-            <a href="#" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">catálogo</a>
+            <a href="{{ route('categories.show', 'impresiones') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">catálogo</a>
 
         </div>
 
@@ -185,7 +185,7 @@
 
             <p class="text-2xl md:text-4xl uppercase font-bold mb-4">Latas metalicas</p>
 
-            <a href="#" class="border border-gray-300  rounded-full text-black uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">Ver todos</a>
+            <a href="{{ route('categories.show', 'aceros') }}" class="border border-gray-300  rounded-full text-black uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">Ver todos</a>
 
         </div>
 
