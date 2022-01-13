@@ -16,7 +16,7 @@
 
             <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Compra 2 y llevate 3</p>
             <p class="md:text-4xl text-white uppercase md:mb-6">playeras</p>
-            <a href="#" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+            <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
 
         </div>
 
@@ -24,7 +24,7 @@
 
             <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
             <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p>
-            <a href="#" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+            <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
 
         </div>
 
@@ -32,7 +32,7 @@
 
             <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
             <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p>
-            <a href="#" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+            <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
 
         </div>
 
@@ -51,7 +51,7 @@
 
             <p class="text-2xl md:text-4xl uppercase font-bold mb-4">Los mas nuevos</p>
 
-            <a href="#" class="border border-gray-300  rounded-full text-black uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">Ver todos</a>
+            <a href="{{ route('catalogo') }}" class="border border-gray-300  rounded-full text-black uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">Ver todos</a>
 
         </div>
 
@@ -70,7 +70,7 @@
 
             <p class=" md:text-5xl text-white uppercase font-bold md:mb-4">Personaliza cualquier producto</p>
             <p class="md:text-4xl text-white uppercase md:mb-6">con tu diseño o foto</p>
-            <a href="#" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">catálogo</a>
+            <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">catálogo</a>
 
         </div>
 
@@ -85,7 +85,7 @@
 
             <p class="text-xl md:text-3xl capitalize font-extralight mb-5 md:ml-5">personalizalas con lo que mas te guste</p>
 
-            <a href="#" class="mx-auto border border-gray-300 rounded-full text-black uppercase font-light px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">catálogo</a>
+            <a href="{{ route('categories.show', 'ceramica' . '?product=Taza+mágica')  }}" class="mx-auto border border-gray-300 rounded-full text-black uppercase font-light px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out">catálogo</a>
 
         </div>
 

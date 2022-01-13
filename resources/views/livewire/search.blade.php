@@ -1,6 +1,6 @@
 <div class="absolute border-b w-full bg-white h-16 {{ $show ? '' : 'hidden'}} z-20">
 
-    <div class="container space-y-4 flex items-center flex-col px-4" x-data @click.away="$wire.show = false">
+    <div class="container space-y-4 flex items-center flex-col px-4 " x-data @click.away="$wire.show = false">
 
         <div class="flex items-center justify-between space-x-4 text-black w-full mt-3">
 
@@ -20,13 +20,13 @@
 
             <div class="w-full bg-white border shadow-2xl overflow-y-auto h-menu">
 
-                @forelse ($products as $product)
+                @forelse ($designs as $design)
 
-                    <div class="flex px-4 py-3 items-center space-x-6">
+                    <div class="flex px-4 py-3 items-center space-x-6 hover:bg-gray-100">
 
-                        <img src="{{ asset('storage/img/logo.png') }}" class="w-20 object-cover" alt="Imagen del producto">
+                        <img src="{{ asset('storage/img/logo.png') }}" class="w-20 object-cover" alt="Imagen del designo">
 
-                        <p>{{ $product->name }}</p>
+                        <p>{{ $design->name }}</p>
 
                     </div>
 

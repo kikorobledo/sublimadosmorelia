@@ -26,6 +26,12 @@
 
             <ul class="mt-5  text-xl uppercase font-light text-center space-y-2">
 
+                <li class="border-t border-gray-300 hover:bg-gray-100 rounded-full transition duration-200">
+
+                    <a href="{{ route('catalogo') }}" class="block w-full py-4">Catálogo</a>
+
+                </li>
+
                 @foreach ($categories as $category)
 
                     <li class="border-t border-gray-300 hover:bg-gray-100 rounded-full transition duration-200">

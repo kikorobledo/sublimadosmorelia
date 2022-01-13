@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -16,6 +17,8 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::get('/', HomeController::class)->name('home');
+
+Route::get('catalogo', CatalogoController::class)->name('catalogo');
 
 Route::get('categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Product;
+use App\Models\Design;
 use Livewire\Component;
 
 class Search extends Component
@@ -22,13 +22,17 @@ class Search extends Component
     {
 
         if($this->search)
-            $products = Product::with('subCategoryProduct')
+            $designs = Design::with('subCategoryDesign')
                                 ->where('name', 'LIKE', '%' . $this->search . '%')
-                                ->where('status', 2)
+                                ->orWhere(function($q){
+                                    $q->whereHas('subCategoryDesign', function($q){
+                                        $q->where('name', 'LIKE', '%' . $this->search . '%');
+                                    });
+                                })
                                 ->get();
         else
-            $products = [];
+            $designs = [];
 
-        return view('livewire.search', compact('products'));
+        return view('livewire.search', compact('designs'));
     }
 }
