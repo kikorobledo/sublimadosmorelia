@@ -11,9 +11,13 @@ class Size extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $guarded = [];
 
     public function product(){
-        return $this->belongsToMany(Product::class);
+        return $this->belongsTo(Product::class);
+    }
+
+    public function colors(){
+        return $this->belongsToMany(Color::class);
     }
 }

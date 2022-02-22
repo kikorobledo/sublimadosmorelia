@@ -11,9 +11,13 @@ class Color extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $guarded = [];
 
     public function products(){
         return $this->belongsToMany(Product::class);
+    }
+
+    public function size(){
+        return $this->belongsToMany(Size::class);
     }
 }

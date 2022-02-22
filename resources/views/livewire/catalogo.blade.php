@@ -52,7 +52,7 @@
 
         <aside class="hidden md:block">
 
-            <button class="border border-gray-300  rounded-full text-black text-sm mb-3 uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out" wire:click="clean">Borrar Filtros</button>
+            <button type="button" class="border border-gray-300  rounded-full text-black text-sm mb-3 uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out" wire:click="clean">Borrar Filtros</button>
 
             <h2 class="font-semibold mb-2">Diseños</h2>
 

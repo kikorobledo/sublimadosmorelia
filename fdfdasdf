@@ -1,0 +1,29 @@
+[33mcommit 3b621722a4c5801ce2c242dfd6edec43c0c76684[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: kikorobledo <enrique_j_@hotmail.com>
+Date:   Thu Jan 13 14:43:43 2022 -0600
+
+    Se agrego pagina de catalogo y productos
+
+[33mcommit f818b29957d5fcf3dd8d50ff974c2083a86976bf[m
+Author: kikorobledo <enrique_j_@hotmail.com>
+Date:   Wed Dec 29 13:19:16 2021 -0600
+
+    Se agrego pagina de categorías
+
+[33mcommit 10305fe7342e026fe0ed88d839b234b8e5f94014[m
+Author: Kiko <enrique_j_@hotmail.com>
+Date:   Thu Nov 25 19:30:30 2021 -0600
+
+    Se agregaron imagenes
+
+[33mcommit ff2339262f7ee6b3b6e6f5cc145ddf91d6bdfe14[m
+Author: Kiko <enrique_j_@hotmail.com>
+Date:   Thu Nov 18 20:40:34 2021 -0600
+
+    Se arreglo  problema con el cache en pagina de inicio, se finaliza pagina de inicio
+
+[33mcommit 3ae3032aea5eb1c46136b0f11d544e6a15916357[m
+Author: Kiko <enrique_j_@hotmail.com>
+Date:   Thu Nov 4 20:47:26 2021 -0600
+
+    First commit

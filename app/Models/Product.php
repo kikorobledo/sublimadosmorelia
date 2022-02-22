@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\SubCategoryDesign;
@@ -15,7 +16,7 @@ class Product extends Model
     const UNPUBLISHED = 1;
     const PUBLISHED = 2;
 
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $guarded = [];
 
     public function categoryProduct(){
         return $this->belongsTo(CategoryProduct::class);
@@ -30,10 +31,30 @@ class Product extends Model
     }
 
     public function sizes(){
-        return $this->belongsToMany(Size::class);
+        return $this->hasMany(Size::class);
     }
 
     public function designs(){
         return $this->hasMany(Design::class);
+    }
+
+    public function images(){
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function createdBy(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy(){
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function getCreatedAtAttribute(){
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['created_at'])->format('d-m-Y H:i:s');
+    }
+
+    public function getUpdatedAtAttribute(){
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['updated_at'])->format('d-m-Y H:i:s');
     }
 }

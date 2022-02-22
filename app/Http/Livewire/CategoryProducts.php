@@ -45,8 +45,6 @@ class CategoryProducts extends Component
     public function render()
     {
 
-
-
         $designsQuery = Design::query()->whereHas('product.categoryProduct', function (Builder $b){
             $b->where('id', $this->categoryProduct->id);
         });

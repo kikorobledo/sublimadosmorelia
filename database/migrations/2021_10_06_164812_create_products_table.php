@@ -19,10 +19,12 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('description');
-            $table->float('price');
-            $table->integer('quantity')->nullable();
+            $table->unsignedDecimal('price', 8,2);
+            $table->unsignedDecimal('purchase_price', 8,2);
             $table->enum('status', [Product::UNPUBLISHED, Product::PUBLISHED])->default(Product::UNPUBLISHED);
             $table->foreignId('category_product_id')->references('id')->on('category_products')->onDelete('cascade');
+            $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
+            $table->foreignId('updated_by')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();
         });
     }

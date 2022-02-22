@@ -26,6 +26,9 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+        {{-- SweetAlert --}}
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
     </head>
 
     <body class="antialiased font-ibm">
@@ -41,6 +44,10 @@
                 {{ $slot }}
             </main>
 
+        </div>
+
+        <div class="uppercase text-center font-extralight text-lg py-2">
+            <p>cualquier producto puede llevar cualquiera de nuestros diseños.</p>
         </div>
 
         <footer class="py-3  bg-black  static bottom-0 w-full">
@@ -230,13 +237,13 @@
 
             </div>
 
-        </div>
+            </div>
 
         </footer>
 
         @stack('modals')
 
-        @livewireScripts
+        @livewireScripts()
 
         @stack('script')
 

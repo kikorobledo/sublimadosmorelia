@@ -3,27 +3,22 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use App\Models\Design;
-use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class CategoryProduct extends Model
+class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'image'];
+    protected $guarded = [];
 
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function orderDetails(){
+        return $this->hasMany(OrderDetail::class);
     }
 
-    public function designs(){
-        return $this->hasManyThrough(Design::class, Product::class);
-    }
-
-    public function getRouteKeyName(){
-        return 'slug';
+    public function client(){
+        return $this->belongsTo(User::class);
     }
 
     public function createdBy(){

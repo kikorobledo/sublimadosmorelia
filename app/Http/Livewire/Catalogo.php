@@ -4,21 +4,26 @@ namespace App\Http\Livewire;
 
 use App\Models\Design;
 use Livewire\Component;
+use Livewire\WithPagination;
 use App\Models\CategoryDesign;
 use Illuminate\Database\Eloquent\Builder;
 
 class Catalogo extends Component
 {
 
+    use WithPagination;
+
     public $subcategoryDesign;
 
     protected $queryString = ['subcategoryDesign'];
 
     public function clean(){
-        $this->reset(['subcategoryDesign']);
+        $this->reset('subcategoryDesign');
+        $this->resetPage();
     }
 
-    public function updatedProduct(){
+    public function updatedSubcategoryDesign(){
+
         $this->resetPage();
     }
 

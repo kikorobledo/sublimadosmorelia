@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubCategoryDesignsTable extends Migration
+class CreateOrderDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateSubCategoryDesignsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_category_designs', function (Blueprint $table) {
+        Schema::create('order_details', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->foreignId('category_design_id')->references('id')->on('category_designs')->onDelete('cascade');
+            $table->unsignedDecimal('quantity', 8,2);
+            $table->unsignedDecimal('total', 8,2);
+            $table->foreignId('order_id')->constrained()->references('id')->on('orders')->onDelete('cascade');
+            $table->foreignId('design_id')->constrained()->references('id')->on('designs');
+            $table->foreignId('product_id')->constrained()->references('id')->on('products');
             $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('updated_by')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();
@@ -31,6 +33,6 @@ class CreateSubCategoryDesignsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_category_designs');
+        Schema::dropIfExists('order_details');
     }
 }
