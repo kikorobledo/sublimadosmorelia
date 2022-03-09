@@ -12,22 +12,22 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
-        {{-- Glider --}}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" integrity="sha512-YM6sLXVMZqkCspZoZeIPGXrhD9wxlxEF7MzniuvegURqrTGV2xTfqq1v9FJnczH+5OGFl5V78RgHZGaK34ylVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
         @livewireStyles
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
-
-        {{-- Glider --}}
-        <script src="https://cdnj   s.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.js" integrity="sha512-RidPlemZ+Xtdq62dXb81kYFycgFQJ71CKg+YbKw+deBWB0TLIqCraOn6k0CWDH2rGvE1a8ruqMB+4E4OLVJ7Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
         {{-- SweetAlert --}}
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+        {{-- Filepond --}}
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+        <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
+        @stack('styles')
 
     </head>
 
@@ -66,7 +66,7 @@
                     </div>
 
                     {{-- Nav --}}
-                    <nav class="p-4 text-gray-500" x-data="{open:true, openCategories:true}">
+                    <nav class="p-4 text-gray-500" x-data="{open:true, openCategories:true, openProducts:true}">
 
                         <p class="uppercase font-semibold text-md mb-4 tracking-wider text-gray-500">Administración</p>
 
@@ -128,15 +128,76 @@
 
                             </a>
 
+                            <a href="{{ route('admin.sub_category_designs') }}" class=" capitalize font-medium text-md  flex hover w-full  hover:bg-gray-100 p-2 px-4 ml-5">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                                </svg>
+
+                                Diseños Subcategoría
+
+                            </a>
+
                         </div>
 
-                        <a href="{{ route('admin.products') }}" class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+                        <div class="flex items-center mb-3 w-full justify-between hover:text-teal-600 transition ease-in-out duration-500 hover:bg-gray-100 rounded-xl">
 
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                            <p class="capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                                  </svg>
+
+                                  Productos
+                            </p>
+
+                            <svg @click="openProducts = false" x-show="openProducts" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-gray-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+
+                            <svg @click="openProducts = true" x-show="!openProducts" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-gray-300 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                            </svg>
+
+                        </div>
+
+                        <div
+                            x-transition:enter="transition duration-2000 transform ease-out"
+                            x-transition:leave="transition duration-200 transform ease-in"
+                            x-transition:leave-end="opacity-0 scale-90"
+                            x-transition:enter-start="scale-75"
+                            class="flex flex-col space-y-2 items-center mb-3 w-full justify-between hover:text-teal-600 transition ease-in-out duration-500  rounded-xl text-sm"
+                            x-show="!openProducts">
+
+                            <a href="{{ route('admin.colors') }}" class=" capitalize font-medium text-md  flex hover w-full  hover:bg-gray-100 p-2 px-4 ml-5">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                                  </svg>
+
+                                Colores
+
+                            </a>
+
+                            <a href="{{ route('admin.sizes') }}" class=" capitalize font-medium text-md  flex hover w-full  hover:bg-gray-100 p-2 px-4 ml-5">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                                  </svg>
+
+                                Tamaños
+
+                            </a>
+
+                        </div>
+
+                        <a href=" {{ route('admin.designs') }} " class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                               </svg>
 
-                            Productos
+                            Diseños
                         </a>
 
                         <a href=" {{ route('admin.orders.index') }} " class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
@@ -221,40 +282,35 @@
 
             </div>
 
-            <script>
-
-                const btn_close = document.getElementById('sidebar-menu-button');
-                const btn_open = document.getElementById('mobile-menu-button');
-                const sidebar = document.getElementById('sidebar');
-
-                btn_open.addEventListener('click', () => {
-                    sidebar.classList.toggle('-translate-x-full');
-                });
-
-                btn_close.addEventListener('click', () => {
-                    sidebar.classList.toggle('-translate-x-full');
-                });
-
-                /* Change nav profile image */
-                window.addEventListener('nav-profile-img', event => {
-
-                    document.getElementById('nav-profile').setAttribute('src', event.detail.img);
-
-                });
-
-            </script>
-
-
         </div>
 
         @stack('modals')
 
         @livewireScripts
 
-        @stack('script')
-
         <script>
 
+            /* Sidebar */
+            const btn_close = document.getElementById('sidebar-menu-button');
+            const btn_open = document.getElementById('mobile-menu-button');
+            const sidebar = document.getElementById('sidebar');
+
+            btn_open.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            btn_close.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            /* Change nav profile image */
+            window.addEventListener('nav-profile-img', event => {
+
+                document.getElementById('nav-profile').setAttribute('src', event.detail.img);
+
+            });
+
+            /* SweetAlert */
             window.addEventListener('showMessage', event => {
                 const Toast = Swal.mixin({
                     toast: true,
@@ -275,6 +331,8 @@
             })
 
         </script>
+
+        @stack('scripts')
 
     </body>
 </html>

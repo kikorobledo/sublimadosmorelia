@@ -19,13 +19,11 @@ class Orders extends Component
     public $direction = 'desc';
 
     public $order_id;
+    public $number;
     public $client;
-    public $anticipo;
-    public $status;
     public $total;
     public $image;
-    public $description;
-    public $content = [];
+    public $order_content = [];
 
     public function updatingSearch(){
         $this->resetPage();
@@ -46,33 +44,25 @@ class Orders extends Component
     }
 
     public function resetAll(){
-        $this->reset('order_id','client','anticipo','status','total','image','description','content');
+        $this->reset('order_id','client','total','image','order_content');
         $this->resetErrorBag();
         $this->resetValidation();
     }
 
-    public function openModalCreate(){
-
-        $this->resetAll();
-
-        $this->edit = false;
-        $this->create = true;
-        $this->modal = true;
-    }
-
-    public function openModalEdit($order){
+    public function openModalDetails($order){
 
         $this->resetAll();
 
         $this->create = false;
 
         $this->order_id = $order['id'];
-        $this->client = $order['client'];
-        $this->anticipo = $order['anticipo'];
+        $this->number = $order['number'];
+        $this->status = $order['status'];
+        $this->client = $order['client']['name'];
+        $this->anticipo_image = $order['anticipo_image'];
+        $this->design_image = $order['design_image'];
         $this->total = $order['total'];
-        $this->image = $order['image'];
-        $this->description = $order['description'];
-        $this->content = $order['content'];
+        $this->order_content = json_decode($order['content'],true);
 
         $this->edit = true;
         $this->modal = true;
@@ -88,35 +78,6 @@ class Orders extends Component
         $this->resetall();
         $this->modal = false;
         $this->modalDelete = false;
-    }
-
-    public function update(){
-
-        $this->validate();
-
-        try {
-
-            $order = Order::findorFail($this->order_id);
-
-            $order->update([
-                'client' => $this->client,
-                'anticipo' => $this->anticipo,
-                'total' => $this->total,
-                'description' => 'description',
-                'content' => $this->conten,
-                'updated_by' => auth()->user()->id,
-            ]);
-
-            $this->dispatchBrowserEvent('showMessage',['success', "El pedido ha sido actualizado con exito."]);
-
-            $this->closeModal();
-
-        } catch (\Throwable $th) {
-            $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
-
-            $this->closeModal();
-        }
-
     }
 
     public function delete(){

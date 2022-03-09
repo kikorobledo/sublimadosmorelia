@@ -16,7 +16,7 @@ class CreateSubCategoryDesignsTable extends Migration
         Schema::create('sub_category_designs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->foreignId('category_design_id')->references('id')->on('category_designs')->onDelete('cascade');
             $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('updated_by')->nullable()->constrained()->references('id')->on('users');

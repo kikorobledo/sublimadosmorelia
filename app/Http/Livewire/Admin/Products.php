@@ -2,8 +2,11 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Size;
+use App\Models\Color;
 use App\Models\Product;
 use Livewire\Component;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use App\Models\CategoryProduct;
@@ -29,6 +32,9 @@ class Products extends Component
     public $status;
     public $category_id;
     public $purchase_price;
+    public $sizesList = [];
+    public $sizesPrice = [];
+    public $colorsList = [];
 
     protected function rules(){
         return[
@@ -60,7 +66,7 @@ class Products extends Component
     }
 
     public function resetAll(){
-        $this->reset('product_id', 'category_id','name','image', 'description', 'price', 'status','purchase_price');
+        $this->reset('product_id', 'category_id','name','image', 'description', 'price', 'status','purchase_price', 'colorsList', 'sizesList','sizesPrice');
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -88,6 +94,21 @@ class Products extends Component
         $this->purchase_price = $product['purchase_price'];
         $this->price = $product['price'];
 
+        foreach($product['colors'] as $color){
+            array_push($this->colorsList, (string)$color['id']);
+        }
+
+        foreach($product['sizes'] as $size){
+            array_push($this->sizesList, (string)$size['id']);
+        }
+
+        /* dd($product['sizes']); */
+
+        if(isset($product['sizes'][0]['pivot']) )
+            foreach($product['sizes'] as $key => $size){
+               $this->sizesPrice[(string)$size['id']] = $product['sizes'][$key]['pivot']['price'];
+            }
+
         $this->edit = true;
         $this->modal = true;
     }
@@ -110,7 +131,7 @@ class Products extends Component
 
         try {
 
-            Product::create([
+            $product = Product::create([
                 'name' => $this->name,
                 'slug' => Str::slug($this->name),
                 'description' => $this->description,
@@ -120,6 +141,18 @@ class Products extends Component
                 'category_product_id' => $this->category_id,
                 'created_by' => auth()->user()->id,
             ]);
+
+            $product->colors()->attach($this->colorsList);
+
+            if(count($this->sizesList)){
+                foreach ($this->sizesList as $value) {
+                    if(isset($this->sizesPrice[$value]))
+                        $product->sizes()->attach($value, ['price' => $this->sizesPrice[$value]]);
+                    else
+                        $product->sizes()->attach($value, ['price' => $product->price]);
+                }
+            }
+
 
             $this->dispatchBrowserEvent('showMessage',['success', "El producto ha sido creado con exito."]);
 
@@ -136,8 +169,6 @@ class Products extends Component
 
         $this->validate();
 
-        try {
-
             $product = Product::findorFail($this->product_id);
 
             $product->update([
@@ -150,6 +181,21 @@ class Products extends Component
                 'category_product_id' => $this->category_id,
                 'updated_by' => auth()->user()->id,
             ]);
+
+            $product->colors()->sync($this->colorsList);
+
+            $sizes = [];
+
+            foreach ($this->sizesList as $value) {
+                if(isset($this->sizesPrice[$value]))
+                    $sizes[$value] = ['price' => $this->sizesPrice[$value]];
+                else
+                    $sizes[$value] = ['price' => $product->price];
+            }
+
+            $product->sizes()->sync($sizes);
+
+        try {
 
             $this->dispatchBrowserEvent('showMessage',['success', "El producto ha sido actualizado con exito."]);
 
@@ -185,13 +231,18 @@ class Products extends Component
     public function render()
     {
 
-        $products = Product::with('createdBy', 'updatedBy')
+        $products = Product::with('createdBy', 'updatedBy', 'colors', 'sizes')
                                 ->where('name', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('description', 'LIKE', '%' . $this->search . '%')
+                                ->orderBy($this->sort, $this->direction)
                                 ->paginate(10);
 
         $categories = CategoryProduct::all();
 
-        return view('livewire.admin.products', compact('products', 'categories'))->layout('layouts.admin');
+        $colors = Color::all();
+
+        $sizes = Size::all();
+
+        return view('livewire.admin.products', compact('products', 'categories', 'sizes', 'colors'))->layout('layouts.admin');
     }
 }

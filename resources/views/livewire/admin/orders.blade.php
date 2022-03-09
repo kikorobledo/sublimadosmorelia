@@ -98,6 +98,36 @@
 
                         </th>
 
+                        <th wire:click="order('status')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+
+                            Status
+
+                            @if($sort == 'status')
+
+                                @if($direction == 'asc')
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9m5-4v12m0 0l-4-4m4 4l4-4" />
+                                    </svg>
+
+                                @else
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12" />
+                                    </svg>
+
+                                @endif
+
+                            @else
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 float-right" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                                </svg>
+
+                            @endif
+
+                        </th>
+
                         <th wire:click="order('anticipo')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Anticipo
@@ -276,8 +306,10 @@
                                 <div class="flex items-center justify-center lg:justify-start">
 
                                     <div class="flex-shrink-0 ">
-                                        @if($order->image)
-                                            <img class="w-10 lg:w-20 rounded" src="asset('/storage/{{ $order->image }}' )" alt="Imagen">
+                                        @if($order->design_image)
+                                            <a href="{{ $order->designUrl() }}" data-lightbox="{{ $order->id }}" data-title="Diseño final">
+                                                <img class="w-10 lg:w-20 rounded" src="{{ $order->designUrl() }}" alt="Imagen">
+                                            </a>
                                         @else
                                             <img class="w-10 lg:w-20 rounded" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
                                         @endif
@@ -310,7 +342,7 @@
 
                                 @else
 
-                                    <span class="bg-green-500 text-white rounded-full py-1 px-2 mr-2">0</span><span>Productos</span>
+                                    <span class="bg-green-500 text-white rounded-full py-1 px-2 mr-2">{{ $order->orderDetails ? $order->orderDetails->count() : 0 }}</span><span>Productos</span>
 
                                 @endif
 
@@ -324,11 +356,34 @@
 
                             </td>
 
+                            <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                <span class="lg:hidden absolute cap top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Status</span>
+
+                                @if($order->status == 'nueva')
+                                    <span class="bg-blue-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                @elseif($order->status == 'aceptada')
+                                    <span class="bg-green-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                @elseif($order->status == 'terminada')
+                                    <span class="bg-yellow-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                @elseif($order->status == 'entregada')
+                                    <span class="bg-gray-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                @elseif($order->status == 'pagada')
+                                    <span class="bg-indigo-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                @endif
+
+
+                            </td>
+
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Anticipo</span>
 
-                                $ {{ $order->anticipo }}
+                                @if ($order->anticipo)
+                                    ${{ $order->anticipo }}
+                                @else
+                                    Sin anticipo
+                                @endif
 
                             </td>
 
@@ -336,7 +391,7 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Total</span>
 
-                                $ {{ $order->total }}
+                                ${{ $order->total }}
 
                             </td>
 
@@ -344,7 +399,11 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
-                                {{ $order->description }}
+                                @if ($order->description)
+                                    {{ $order->description }}
+                                @else
+                                    Sin descripción
+                                @endif
 
                             </td>
 
@@ -382,15 +441,37 @@
 
                                 <div class="flex justify-center lg:justify-start">
 
-                                    <a href="{{ route('admin.orders.edit', $order) }}" class="bg-blue-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-blue-700 flex focus:outline-none">
+                                    @if ($order->status == 'entregada')
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
+                                        <button
+                                            wire:click="openModalDetails({{  $order }})"
+                                            wire:loading.attr="disabled"
+                                            wire:target="openModalDetails({{  $order }})"
+                                            class="bg-green-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full hover:bg-green-700 flex focus:outline-none mr-2"
+                                        >
 
-                                        <p>Editar</p>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
 
-                                    </a>
+                                            <p>Ver</p>
+
+                                        </button>
+
+                                    @else
+
+                                        <a href="{{ route('admin.orders.edit', $order) }}" class="bg-blue-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-blue-700 flex focus:outline-none">
+
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+
+                                            <p>Editar</p>
+
+                                        </a>
+
+                                    @endif
 
                                     <button
                                         wire:click="openModalDelete({{$order}})"
@@ -420,7 +501,7 @@
 
                     <tr>
 
-                        <td colspan="10" class="py-2 px-5">
+                        <td colspan="12" class="py-2 px-5">
                             {{ $orders->links()}}
                         </td>
 
@@ -448,60 +529,134 @@
 
     @endif
 
-    <x-jet-dialog-modal wire:model="modal">
+    <x-jet-dialog-modal wire:model="modal" maxWidth="lg">
 
         <x-slot name="title">
 
-            @if($create)
-                Nuevo Pedido
-            @elseif($edit)
-                Editar Pedido
-            @endif
+            <div class="flex justify-between items-center">
 
-        </x-slot>
-
-        <x-slot name="content">
-
-
-
-        </x-slot>
-
-        <x-slot name="footer">
-
-            <div class="float-righ">
-
-                @if($create)
-
-                    <button
-                        wire:click="create"
-                        wire:loading.attr="disabled"
-                        wire:target="create"
-                        class="bg-blue-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
-                        Guardar
-                    </button>
-
-                @elseif($edit)
-
-                    <button
-                        wire:click="update"
-                        wire:loading.attr="disabled"
-                        wire:target="update"
-                        class="bg-blue-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
-                        Actualizar
-                    </button>
-
-                @endif
+                <p>Detalles del pedido</p>
 
                 <button
                     wire:click="closeModal"
                     wire:loading.attr="disabled"
                     wire:target="closeModal"
                     type="button"
-                    class="bg-red-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-red-700 flaot-left focus:outline-none">
-                    Cerrar
+                    class="bg-gray-400 hover:shadow-lg text-white px-2 py-1 rounded-full text-xs hover:bg-gray-500 flaot-left focus:outline-none">
+                    X
                 </button>
+            </div>
+
+        </x-slot>
+
+        <x-slot name="content">
+
+            <div class=" font-thin text-gray-700 mb-3 capitalize">
+
+                <p>Número de pedido: <span class=" text-gray-500"> {{ $number }}</span></p>
+
+                <p>Cliente: <span class=" text-gray-500"> {{ $client }}</span></p>
+
+                <p>Total: <span class=" text-gray-500">  ${{ number_format($total, 2) }}</span></p>
 
             </div>
+
+
+            <div class="relative overflow-x-auto rounded-lg ">
+
+                <table class="rounded-lg w-full">
+
+                    <thead class="border-b border-gray-300 bg-gray-50">
+
+                        <tr class="text-xs font-medium text-gray-600 uppercase text-left traling-wider">
+
+                            <th class="px-3 py-3 hidden lg:table-cell">Diseño</th>
+
+                            <th class="px-3 py-3 hidden lg:table-cell">Producto</th>
+
+                            <th class="px-3 py-3 hidden lg:table-cell">Cantidad</th>
+
+                            <th class="px-3 py-3 hidden lg:table-cell">Precio</th>
+
+                            <th class="px-3 py-3 hidden lg:table-cell">total</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
+
+                        @foreach($order_content as $item)
+
+                            <tr class="text-sm font-medium text-gray-600 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+
+                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Diseño</span>
+
+                                    {{ $item['design']}}
+
+                                </td>
+
+                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Producto</span>
+
+                                    {{ $item['product']}}
+
+                                    @if ($item['color'])
+
+                                        <p>Color: {{ $item['color']}}</p>
+
+                                    @endif
+
+                                    @if ($item['size'])
+
+                                        <p>Talla: {{ $item['size']}}</p>
+
+                                    @endif
+
+                                </td>
+
+                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Cantidad</span>
+
+                                    <p class="text-sm font-medium">{{ $item['quantity'] }}</p>
+
+                                </td>
+
+                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Precio</span>
+
+                                    <p class="text-sm font-medium">${{ number_format($item['total'] / $item['quantity'], 2) }}</p>
+
+                                </td>
+
+                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Total</span>
+
+                                    <p class="text-sm font-medium">${{ number_format($item['total'],2) }}</p>
+
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </x-slot>
+
+        <x-slot name="footer">
+
+
         </x-slot>
 
     </x-jet-dialog-modal>

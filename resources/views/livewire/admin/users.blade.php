@@ -427,7 +427,7 @@
 
                     <tr>
 
-                        <td colspan="8" class="py-2 px-5">
+                        <td colspan="10" class="py-2 px-5">
                             {{ $users->links()}}
                         </td>
 

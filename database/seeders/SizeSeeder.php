@@ -19,35 +19,17 @@ class SizeSeeder extends Seeder
 
         $sizes = [
             [
-                'name' => '11 oz',
+                'name' => 'Chica',
             ],
             [
-                'name' => '15 oz',
-            ],
-            [
-                'name' => 'Chico',
-            ],
-            [
-                'name' => 'Mediano',
+                'name' => 'Mediana',
             ],
             [
                 'name' => 'Grande',
             ],
             [
                 'name' => 'Extra grande',
-            ],
-            [
-                'name' => 'Azul Marino',
-            ],
-            [
-                'name' => 'Rojo',
-            ],
-            [
-                'name' => 'Blanco',
-            ],
-            [
-                'name' => 'Plata',
-            ],
+            ]
         ];
 
         foreach($sizes as $size){

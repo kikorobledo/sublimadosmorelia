@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoryDesignSeeder::class);
         $this->call(SubCategoryDesignSeeder::class);
         $this->call(ProductSeeder::class);
-        /* $this->call(SizeSeeder::class); */
+        $this->call(SizeSeeder::class);
         $this->call(DesignSeeder::class);
         $this->call(UserSeeder::class);
 

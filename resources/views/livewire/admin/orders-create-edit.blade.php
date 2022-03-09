@@ -10,7 +10,7 @@
 
     @endif
 
-    <div class="grid md:grid-cols-2 grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+    <div class="grid md:grid-cols-2 grid-cols-1 sm:grid-cols-2 gap-4 w-full" x-data x-ref="p">
 
         <div class="rounded-xl border-t-2 border-green-500 shadow-lg p-8 bg-white col-span-2 lg:col-span-1 text-gray-600">
 
@@ -116,7 +116,7 @@
                                 $
                                 </span>
                             </div>
-                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " wire:model.defer="anticipo" placeholder="0.00">
+                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " wire:model.lazy="anticipo" placeholder="0.00">
                         </div>
                     </div>
                     <div>
@@ -128,167 +128,364 @@
 
             @if($order)
 
-                    <div class="relative overflow-x-auto rounded-lg ">
+                <div class="relative overflow-x-auto rounded-lg ">
 
-                        <table class="rounded-lg w-full">
+                    <table class="rounded-lg w-full">
 
-                            <thead class="border-b border-gray-300 bg-gray-50">
+                        <thead class="border-b border-gray-300 bg-gray-50">
 
-                                <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                            <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
 
-                                    <th class="px-3 py-3 hidden lg:table-cell">Diseño</th>
+                                <th class="px-3 py-3 hidden lg:table-cell">Diseño</th>
 
-                                    <th class="px-3 py-3 hidden lg:table-cell">Cantidad</th>
+                                <th class="px-3 py-3 hidden lg:table-cell">Producto</th>
 
-                                    <th class="px-3 py-3 hidden lg:table-cell">total</th>
+                                <th class="px-3 py-3 hidden lg:table-cell">Cantidad</th>
 
-                                    <th class="px-3 py-3 hidden lg:table-cell">
+                                <th class="px-3 py-3 hidden lg:table-cell">Precio</th>
 
-                                        Nombre
+                                <th class="px-3 py-3 hidden lg:table-cell">total</th>
 
-                                    </th>
+                                <th class="px-3 py-3 hidden lg:table-cell">Acciones</th>
 
-                                    <th class="px-3 py-3 hidden lg:table-cell">Acciones</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
+
+                            @foreach($order->orderDetails as $orderDetail)
+
+                                <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+
+                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Diseño</span>
+
+                                        {{ $orderDetail->design->name}}
+
+                                    </td>
+
+                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Producto</span>
+
+                                        {{ $orderDetail->product->name}}
+
+                                        @if ($orderDetail->color)
+
+                                            <p>Color: {{ $orderDetail->color}}</p>
+
+                                        @endif
+
+                                        @if ($orderDetail->size)
+
+                                            <p>Talla: {{ $orderDetail->size}}</p>
+
+                                        @endif
+
+                                    </td>
+
+                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Cantidad</span>
+
+                                        <p class="text-sm font-medium">{{ $orderDetail->quantity }}</p>
+
+                                    </td>
+
+                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Precio</span>
+
+                                        <p class="text-sm font-medium">${{ number_format($orderDetail->total / $orderDetail->quantity, 2) }}</p>
+
+                                    </td>
+
+                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+
+                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Total</span>
+
+                                        <p class="text-sm font-medium">${{ number_format($orderDetail->total,2) }}</p>
+
+                                    </td>
+
+                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b lg:table-cell relative lg:static">
+
+                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Acciones</span>
+
+                                        <div class="flex items-center space-x-2">
+
+                                            <button
+                                                wire:click="deleOrderDetail({{ $orderDetail->id }})"
+                                                wire:loading.attr="disabled"
+                                                wire:target="deleOrderDetail({{ $orderDetail->id }})"
+                                                class="bg-red-400 hover:shadow-lg text-white mx-auto text-xs md:text-sm px-3 py-2 rounded-full hover:bg-red-700 flex focus:outline-none"
+                                            >
+
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+
+                                            </button>
+
+                                        </div>
+
+                                    </td>
 
                                 </tr>
 
-                            </thead>
+                            @endforeach
 
+                        </tbody>
 
-                            <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
+                    </table>
 
-                                @foreach($order->orderDetails as $orderDetail)
+                    <div class="p-2 mb-2">
 
-                                    <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                        <p class="text-sm">Comentarios:</p>
 
-                                        <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                        <textarea  wire:model.defer="description" class="bg-white rounded text-sm w-full"></textarea>
 
-                                            {{ $orderDetail->design->name}}
+                        <p class="text-right text-2xl font-bold">Total: ${{ number_format($order->total,2) }}</p>
 
-                                        </td>
+                    </div>
 
-                                        <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                    <div class="col-span-1 flex flex-col md:flex-row justify-between md:space-x-2">
 
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
+                        @if ($order)
 
-                                            <p class="text-sm font-medium">{{ $orderDetail->quantity }}</p>
+                            <button
+                                wire:click="update"
+                                wire:loading.attr="disabled"
+                                wire:target="update"
+                                class="rounded-full  text-white bg-green-500 my-2 py-2 px-4 float-right hover:bg-green-700 w-full"
+                            > Actualizar Pedido
+                            </button>
 
-                                        </td>
+                            <span x-data="{ open: false }" class="w-full z-50">
+                                <!-- Trigger -->
+                                <span x-on:click="open = true">
+                                    <button type="button" class="rounded-full  text-white bg-yellow-500 my-2 py-2 px-4 float-right hover:bg-yellow-700 w-full">
+                                        Cobrar
+                                    </button>
+                                </span>
 
-                                        <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
+                                <!-- Modal -->
+                                <div
+                                    x-show="open"
+                                    style="display: none"
+                                    x-on:keydown.escape.prevent.stop="open = false"
+                                    role="dialog"
+                                    aria-modal="true"
+                                    x-id="['modal-title']"
+                                    :aria-labelledby="$id('modal-title')"
+                                    class="fixed inset-0 overflow-y-auto"
+                                >
+                                    <!-- Overlay -->
+                                    <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
 
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
+                                    <!-- Panel -->
+                                    <div
+                                        x-show="open" x-transition
+                                        x-on:click="open = false"
+                                        class="relative min-h-screen flex items-center justify-center p-4"
+                                    >
+                                        <div
+                                            x-on:click.stop
+                                            x-trap.noscroll.inert="open"
+                                            class="relative max-w-md w-full bg-white border rounded-md p-8 overflow-y-auto"
+                                        >
+                                            <!-- Title -->
+                                            <h2 class="text-3xl mb-2" :id="$id('modal-title')">Cobrar</h2>
+                                            <!-- Content -->
+                                            <div class="flex flex-col md:flex-row justify-between md:space-x-3">
 
-                                            <p class="text-sm font-medium">${{ number_format($orderDetail->total,2) }}</p>
+                                                <div class="flex-auto mb-2">
+                                                    <div>
+                                                        <Label>Total</Label>
+                                                    </div>
+                                                    <div>
+                                                        <div class="relative rounded-md shadow-sm">
+                                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                                <span class="text-gray-500 sm:text-sm">
+                                                                $
+                                                                </span>
+                                                            </div>
+                                                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " value="{{ ($order->total - ($anticipo ? $anticipo : 0)) }}" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                        </td>
+                                                <div class="flex-auto mb-2">
+                                                    <div>
+                                                        <Label>Recibido</Label>
+                                                    </div>
+                                                    <div>
+                                                        <div class="relative rounded-md shadow-sm">
+                                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                                <span class="text-gray-500 sm:text-sm">
+                                                                $
+                                                                </span>
+                                                            </div>
+                                                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " wire:model.lazy="recibido" placeholder="0.00">
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-                                        <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Nombre</span>
-
-                                            <p class="text-sm font-medium">{{ $orderDetail->product->name }} (${{ number_format($orderDetail->product->price,2) }})</p>
-
-                                        </td>
-
-                                        <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b lg:table-cell relative lg:static">
-
-                                            <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Acciones</span>
-
-                                            <div class="flex items-center space-x-2">
-
-                                                <button
-                                                    wire:click="deleOrderDetail({{ $orderDetail->id }})"
-                                                    wire:loading.attr="disabled"
-                                                    wire:target="deleOrderDetail({{ $orderDetail->id }})"
-                                                    class="bg-red-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full hover:bg-red-700 flex focus:outline-none"
-                                                >
-
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                    </svg>
-
-                                                </button>
+                                                <div class="flex-auto mb-2">
+                                                    <div>
+                                                        <Label>Cambio</Label>
+                                                    </div>
+                                                    <div>
+                                                        <div class="relative rounded-md shadow-sm">
+                                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                                <span class="text-gray-500 sm:text-sm">
+                                                                $
+                                                                </span>
+                                                            </div>
+                                                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " value="{{ $cambio }}" placeholder="0.00" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                             </div>
 
-                                        </td>
+                                            <div>
+                                                @error('recibido') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                                            </div>
+                                            <!-- Buttons -->
+                                            <div class="mt-2 flex space-x-2 float-right">
+                                                <button
+                                                    type="button"
+                                                    x-on:click="open = false"
+                                                    wire:click="pay"
+                                                    wire:loading.attr="disabled"
+                                                    wire:target="pay"
+                                                    class="rounded-full  text-white bg-green-500 my-2 py-1 px-4 float-right hover:bg-green-700">
+                                                    Cobrar
+                                                </button>
+                                                <button type="button" x-on:click="open = false" class="rounded-full  text-white bg-red-500 my-2 py-1 px-4 float-right hover:bg-red-700">
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
 
-                                    </tr>
-
-                                @endforeach
-
-                            </tbody>
-
-                        </table>
-
-                        <div class="p-2 mb-2">
-
-                            <p class="text-sm">Comentarios:</p>
-
-                            <textarea  wire:model.defer="description" class="bg-white rounded text-sm w-full"></textarea>
-
-                            <p class="text-right text-2xl font-bold">Total: ${{ number_format($total,2) }}</p>
-
-                        </div>
-
-                        <div class="flex justify-between">
+                        @else
 
                             <button
-                                    wire:click="loadImage"
-                                    wire:loading.attr="disabled"
-                                    wire:target="loadImage"
-                                    class="rounded-full  text-white bg-blue-500 my-2 py-2 px-4 float-right hover:bg-blue-700"
-                                >Subir Imágen
-                                </button>
+                                wire:click="update"
+                                wire:loading.attr="disabled"
+                                wire:target="update"
+                                class="rounded-full  text-white bg-green-500 my-2 py-2 px-4 float-right hover:bg-green-700 w-full"
+                            > Crear Pedido
+                            </button>
 
-                            @if ($content)
+                        @endif
 
-                                <button
-                                    wire:click="create"
-                                    wire:loading.attr="disabled"
-                                    wire:target="create"
-                                    class="rounded-full  text-white bg-green-500 my-2 py-2 px-4 float-right hover:bg-green-700"
-                                > Actualizar Pedido
-                                </button>
+                    </div>
 
-                            @else
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 
-                                <button
-                                    wire:click="create"
-                                    wire:loading.attr="disabled"
-                                    wire:target="create"
-                                    class="rounded-full  text-white bg-green-500 my-2 py-2 px-4 float-right hover:bg-green-700"
-                                > Crear Pedido
-                                </button>
+                        <div class="col-span-1">
 
-                            @endif
+                            <div
+                                wire:ignore
+                                x-data
+                                x-init="
+
+                                    FilePond.setOptions({
+                                        server: {
+                                            process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                                                @this.upload('image_anticipo', file, load, error, progress);
+                                            },
+                                            revert: (filename, load) => {
+                                                @this.removeUpload('image_anticipo', filename, load);
+                                            }
+                                        },
+                                        labelIdle: 'Selecciona la imagen del anticipo'
+                                    });
+
+                                    FilePond.create($refs.input)
+                                "
+                            >
+
+                                <input type="file" x-ref="input">
+
+                            </div>
+
+                            <div class=" mt-5">
+
+                                @if($order->anticipo_image)
+
+                                    <img class="w-full rounded" src="{{ $order->anticipoUrl() }}" alt="Imagen Diseño Final">
+
+                                @endif
+
+                            </div>
 
                         </div>
 
-                        <div>
+                        <div class="col-span-1">
 
-                            @error('total') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+                            <div
+                                wire:ignore
+                                x-data
+                                x-init="() => {
+                                    const post = FilePond.create($refs.input2);
+                                    post.setOptions({
+                                        server: {
+                                            process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                                                @this.upload('image_design', file, load, error, progress);
+                                            },
+                                            revert: (filename, load) => {
+                                                @this.removeUpload('image_design', filename, load);
+                                            }
+                                        },
+                                        labelIdle: 'Selecciona la imagen del diseño final'
+                                    });
 
-                            @error('content') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                                }"
+                            >
+
+                                <input type="file" x-ref="input2">
+
+                            </div>
+
+                            <div class=" mt-5">
+
+                                @if($order->design_image)
+
+                                    <img class="w-full rounded" src="{{ $order->designUrl() }}" alt="Imagen Diseño Final">
+
+                                @endif
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                    @else
+                </div>
 
-                        <div class="border-b border-gray-300 bg-white text-gray-500 text-center p-5 w-full rounded-full text-lg">
+                @else
 
-                            No has solicitado artículos.
+                    <div class="border-b border-gray-300 bg-white text-gray-500 text-center p-5 w-full rounded-full text-lg">
 
-                        </div>
+                        No has solicitado productos.
 
-                @endif
+                    </div>
+
+            @endif
 
         </div>
 
-        <div class="rounded-xl border-t-2 border-blue-500 bg-white p-3 shadow-lg">
+        <div class="rounded-xl border-t-2 border-blue-500 bg-white p-3 shadow-lg col-span-2 lg:col-span-1">
 
             <div class="overflow-x-auto">
 

@@ -106,7 +106,7 @@
 
                             <p class="mb-2">$ {{ $design->product->price }}</p>
 
-                            <a href="#" class="border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">Ver producto</a>
+                            <a href="{{ route('designs.show', $design->slug) }}" class="border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">Ver producto</a>
 
                         </article>
 

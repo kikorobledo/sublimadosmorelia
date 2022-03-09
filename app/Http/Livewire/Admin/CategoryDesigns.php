@@ -161,6 +161,7 @@ class CategoryDesigns extends Component
 
         $categories = CategoryDesign::with('createdBy', 'updatedBy')
                                         ->where('name', 'LIKE', '%' . $this->search . '%')
+                                        ->orderBy($this->sort, $this->direction)
                                         ->paginate(10);
 
         return view('livewire.admin.category-designs', compact('categories'))->layout('layouts.admin');

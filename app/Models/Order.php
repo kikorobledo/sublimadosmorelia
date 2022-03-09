@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
@@ -35,5 +36,19 @@ class Order extends Model
 
     public function getUpdatedAtAttribute(){
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->attributes['updated_at'])->format('d-m-Y H:i:s');
+    }
+
+    public function anticipoUrl(){
+        return $this->anticipo_image
+            ? Storage::disk('orders')->url($this->anticipo_image)
+            : Storage::disk('public')->url('img/logo2.png');
+
+    }
+
+    public function designUrl(){
+        return $this->design_image
+            ? Storage::disk('orders')->url($this->design_image)
+            : Storage::disk('public')->url('img/logo2.png');
+
     }
 }

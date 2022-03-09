@@ -1,4 +1,4 @@
-<tr class="text-xs text-gray-500 bg-white">
+<tr class="text-xs text-gray-500 bg-white" >
 
     <td class="p-3 text-center">
 
@@ -19,15 +19,15 @@
 
     </td>
 
-    <td class=" w-full p-3 text-center ">
+    <td class=" w-full p-3 text-center flex flex-col space-y-1">
 
-        <select wire:model.defer="product"  class="bg-white rounded text-sm w-full">
+        <select wire:model="aux"  class="bg-white rounded text-sm w-full">
 
             <option value="">Seleccione un producto</option>
 
-            @foreach($products as $product)
+            @foreach($products as $producto)
 
-                <option value="{{ $product }}">{{ $product->name }}</option>
+                <option value="{{ $producto }}">{{ $producto->name }}</option>
 
             @endforeach
 
@@ -35,9 +35,53 @@
 
         <div>
 
-            @error('product') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+            @error('aux') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
         </div>
+
+        @if (isset($product['colors']) && count($product['colors']) > 0)
+
+            <select wire:model.defer="color"  class="bg-white rounded text-sm w-full">
+
+                <option value="">Seleccione un color</option>
+
+                @foreach($product['colors'] as $color)
+
+                    <option value="{{ $color['name'] }}">{{ $color['name'] }}</option>
+
+                @endforeach
+
+            </select>
+
+            <div>
+
+                @error('color') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+            </div>
+
+        @endif
+
+        @if (isset($product['sizes']) && count($product['sizes']) > 0)
+
+            <select wire:model.defer="size"  class="bg-white rounded text-sm w-full">
+
+                <option value="">Seleccione una talla</option>
+
+                @foreach($product['sizes'] as $size)
+
+                    <option value="{{ $size['name'] }}">{{ $size['name'] }}</option>
+
+                @endforeach
+
+            </select>
+
+            <div>
+
+                @error('size') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+            </div>
+
+        @endif
 
     </td>
 
@@ -54,12 +98,13 @@
 
     <td class=" w-full p-3 text-center ">
 
-        <div class="flex justify-center lg:justify-start">
+        <div class="flex justify-center lg:justify-start" >
 
             <button
                 wire:loading.attr="disabled"
                 wire:click="addProduct"
                 wire:target="addProduct"
+                x-on:click="$refs.p.scrollIntoView({behavior: 'smooth'})"
                 class="bg-green-400 hover:shadow-lg text-white  text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-green-700 flex focus:outline-none"
             >
 

@@ -17,6 +17,8 @@ class CreateOrderDetailsTable extends Migration
             $table->id();
             $table->unsignedDecimal('quantity', 8,2);
             $table->unsignedDecimal('total', 8,2);
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
             $table->foreignId('order_id')->constrained()->references('id')->on('orders')->onDelete('cascade');
             $table->foreignId('design_id')->constrained()->references('id')->on('designs');
             $table->foreignId('product_id')->constrained()->references('id')->on('products');

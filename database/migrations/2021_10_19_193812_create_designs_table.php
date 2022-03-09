@@ -16,7 +16,7 @@ class CreateDesignsTable extends Migration
         Schema::create('designs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
             $table->foreignId('product_id')->onDelete('cascade');
             $table->foreignId('sub_category_design_id')->references('id')->on('sub_category_designs')->onDelete('cascade');

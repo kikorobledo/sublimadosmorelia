@@ -18,10 +18,11 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('number')->unique();
             $table->foreignId('client_id')->constrained()->references('id')->on('users');
             $table->enum('status',['nueva', 'aceptada', 'terminada', 'entregada', 'pagada'])->default('nueva');
-            $table->float('anticipo')->nullable();
-            $table->float('total');
+            $table->unsignedDecimal('anticipo', 8,2)->nullable();
+            $table->unsignedDecimal('total', 8,2)->nullable();
             $table->json('content')->nullable();
-            $table->string('image')->nullable();
+            $table->string('anticipo_image')->nullable();
+            $table->string('design_image')->nullable();
             $table->text('description')->nullable();
             $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
             $table->foreignId('updated_by')->nullable()->constrained()->references('id')->on('users');

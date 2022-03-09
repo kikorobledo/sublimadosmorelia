@@ -2,52 +2,70 @@
 
 namespace App\Http\Livewire\Admin;
 
-use Livewire\Component;
 use stdClass;
+use App\Models\Size;
+use App\Models\Color;
+use Livewire\Component;
 
 class OrdersAddProduct extends Component
 {
 
     public $design;
     public $products;
+    public $aux;
     public $product;
     public $quantity;
     public $color;
     public $size;
+
+    public function updatedAux(){
+        $this->product = json_decode($this->aux, true);
+    }
 
     public function resetAll(){
         $this->reset([
             'product',
             'quantity',
             'color',
-            'size'
+            'size',
+            'aux'
         ]);
     }
 
     public function addProduct(){
 
-        if($this->product->color){
+        if(isset($this->product['colors']) && count($this->product['colors']) > 0 && isset($this->product['sizes']) && count($this->product['sizes']) > 0){
             $this->validate([
-                'product' => 'required',
+                'aux' => 'required',
                 'quantity' => 'required',
-                'color' => 'required'
-            ]);
-        }elseif($this->product->size){
-            $this->validate([
-                'product' => 'required',
+                'color' => 'required',
                 'quantity' => 'required',
                 'size' => 'required'
             ]);
+        }elseif(isset($this->product['sizes']) && count($this->product['sizes']) > 0){
+            $this->validate([
+                'aux' => 'required',
+                'quantity' => 'required',
+                'size' => 'required'
+            ]);
+        }elseif(isset($this->product['colors']) && count($this->product['colors']) > 0){
+            $this->validate([
+                'aux' => 'required',
+                'quantity' => 'required',
+                'color' => 'required'
+            ]);
         }else{
             $this->validate([
-                'product' => 'required',
-                'quantity' => 'required'
+                'aux' => 'required',
+                'quantity' => 'required',
             ]);
         }
 
         $object = new stdClass();
 
-        $object->product = $this->product;
+        $object->product = json_encode($this->product);
+        $object->color = $this->color;
+        $object->size = $this->size;
         $object->quantity = $this->quantity;
         $object->design_id = $this->design->id;
 

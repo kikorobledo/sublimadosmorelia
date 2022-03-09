@@ -14,6 +14,7 @@
 
         {{-- Glider --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" integrity="sha512-YM6sLXVMZqkCspZoZeIPGXrhD9wxlxEF7MzniuvegURqrTGV2xTfqq1v9FJnczH+5OGFl5V78RgHZGaK34ylVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.7/glider.min.js" integrity="sha512-tHimK/KZS+o34ZpPNOvb/bTHZb6ocWFXCtdGqAlWYUcz+BGHbNbHMKvEHUyFxgJhQcEO87yg5YqaJvyQgAEEtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
         @livewireStyles
 
@@ -22,6 +23,7 @@
 
         {{-- Glider --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.js" integrity="sha512-RidPlemZ+Xtdq62dXb81kYFycgFQJ71CKg+YbKw+deBWB0TLIqCraOn6k0CWDH2rGvE1a8ruqMB+4E4OLVJ7Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.7/glider-compat.min.js" integrity="sha512-uDuWqOxg/d52jrK9sfrZf5qj1VjXlbekCDElkB/EOJAa6xOhLR1mVU1RZ0rFUqx5L4EkUPwyqPfJiwLF3D7Ypw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -50,7 +52,7 @@
             <p>cualquier producto puede llevar cualquiera de nuestros diseños.</p>
         </div>
 
-        <footer class="py-3  bg-black  static bottom-0 w-full">
+        <footer class="py-3  bg-black  static bottom-0 w-full tracking-wide">
 
             {{-- Mobile Footer --}}
             <div class="container md:hidden" x-data="{selected : null}">
@@ -243,7 +245,7 @@
 
         @stack('modals')
 
-        @livewireScripts()
+        @livewireScripts
 
         @stack('script')
 

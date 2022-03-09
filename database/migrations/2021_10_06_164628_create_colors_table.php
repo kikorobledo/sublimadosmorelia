@@ -16,6 +16,8 @@ class CreateColorsTable extends Migration
         Schema::create('colors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
+            $table->foreignId('updated_by')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();
         });
     }

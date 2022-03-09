@@ -505,7 +505,7 @@
 
                     <div>
 
-                        <textarea cols="30" rows="5" class="bg-white rounded text-sm w-full" wire:model.defer="description"></textarea>
+                        <textarea rows="2" class="bg-white rounded text-sm w-full" wire:model.defer="description"></textarea>
 
                     </div>
 
@@ -529,9 +529,14 @@
                     </div>
 
                     <div>
-
-                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="purchase_price">
-
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">
+                                $
+                                </span>
+                            </div>
+                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " wire:model.defer="purchase_price" placeholder="0.00">
+                        </div>
                     </div>
 
                     <div>
@@ -550,9 +555,14 @@
                     </div>
 
                     <div>
-
-                        <input type="number" class="bg-white rounded text-sm w-full" wire:model.defer="price">
-
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">
+                                $
+                                </span>
+                            </div>
+                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " wire:model.defer="price" placeholder="0.00">
+                        </div>
                     </div>
 
                     <div>
@@ -618,6 +628,101 @@
                     <div>
 
                         @error('category_id') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label class="">Seleccione colores</Label>
+
+                    </div>
+
+                    <div class="overflow-y-auto flex flex-wrap">
+
+                        @foreach($colors as $color)
+
+                            <div class="mb-2 flex items-center">
+
+                                <label class=" mr-3 border border-gray-500 px-2 rounded-full py-1 text-sm cursor-pointer flex items-center">
+
+                                    <input class="bg-white rounded" type="checkbox" wire:model.defer="colorsList" value="{{ $color->id }}">
+
+                                    <p class="ml-2">{{ $color->name }}</p>
+
+                                </label>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                    <div>
+
+                        @error('colorsList') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+
+                <div class="flex-auto ">
+
+                    <div>
+
+                        <Label class="">Seleccione tallas</Label>
+
+                    </div>
+
+                    <div class="overflow-y-auto flex flex-wrap">
+
+                        @foreach($sizes as $size)
+
+                            <div class="py-1 flex items-center mr-2">
+
+                                <label class=" border border-gray-500 px-2 rounded-full py-2 text-sm cursor-pointer flex ">
+
+                                    <input class="bg-white rounded" type="checkbox" wire:model.defer="sizesList" value="{{ $size->id }}">
+
+                                    <p class="ml-2">{{ $size->name }}</p>
+
+                                </label>
+
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                                  </svg>
+
+                                <div>
+                                    <div class="mt-1 relative rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <span class="text-gray-500 sm:text-sm">
+                                            $
+                                            </span>
+                                        </div>
+                                        <input type="number" class="bg-white rounded-full text-sm w-32 pl-7 " wire:model.defer="sizesPrice.{{ $size->id }}" placeholder="0.00">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                    <div>
+
+                        @error('sizesPrice') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
 
