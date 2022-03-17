@@ -163,6 +163,7 @@ class CategoryProducts extends Component
 
         $categories = CategoryProduct::with('createdBy', 'updatedBy')
                                         ->where('name', 'LIKE', '%' . $this->search . '%')
+                                        ->orderBy($this->sort, $this->direction)
                                         ->paginate(10);
 
         return view('livewire.admin.category-products', compact('categories'))->layout('layouts.admin');

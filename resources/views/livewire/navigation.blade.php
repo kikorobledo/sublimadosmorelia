@@ -130,6 +130,14 @@
                             Mis Pedidos
                         </x-jet-dropdown-link>
 
+                        @if(auth()->user()->role == 'admin')
+
+                            <x-jet-dropdown-link href="{{ route('admin.index') }}">
+                                Administración
+                            </x-jet-dropdown-link>
+
+                        @endif
+
                         <div class="border-t border-gray-100"></div>
 
                         <!-- Authentication -->

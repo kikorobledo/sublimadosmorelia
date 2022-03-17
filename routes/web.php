@@ -31,9 +31,15 @@ Route::get('design/{slug}', [DesignController::class, 'show'])->name('designs.sh
 
 Route::get('search', SearchController::class)->name('search');
 
-Route::get('order_management', OrderManagement::class)->middleware('auth')->name('order_management');
+Route::group(['middleware' => ['is.active', 'auth']], function (){
 
-Route::get('user_orders', UserOrders::class)->middleware('auth')->name('user_orders');
+    Route::get('order_management', OrderManagement::class)->middleware('auth')->name('order_management');
+
+    Route::get('user_orders', UserOrders::class)->middleware('auth')->name('user_orders');
+
+});
+
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

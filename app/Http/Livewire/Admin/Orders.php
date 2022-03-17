@@ -19,9 +19,12 @@ class Orders extends Component
     public $direction = 'desc';
 
     public $order_id;
+    public $date;
+    public $anticipo;
     public $number;
     public $client;
-    public $total;
+    public $totals;
+    public $description;
     public $image;
     public $order_content = [];
 
@@ -44,7 +47,7 @@ class Orders extends Component
     }
 
     public function resetAll(){
-        $this->reset('order_id','client','total','image','order_content');
+        $this->reset('order_id','client','totals','image','order_content','description','date','anticipo');
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -57,11 +60,14 @@ class Orders extends Component
 
         $this->order_id = $order['id'];
         $this->number = $order['number'];
+        $this->date = $order['created_at'];
+        $this->anticipo = $order['anticipo'];
         $this->status = $order['status'];
         $this->client = $order['client']['name'];
         $this->anticipo_image = $order['anticipo_image'];
+        $this->description = $order['description'];
         $this->design_image = $order['design_image'];
-        $this->total = $order['total'];
+        $this->totals = $order['total'];
         $this->order_content = json_decode($order['content'],true);
 
         $this->edit = true;
@@ -101,7 +107,16 @@ class Orders extends Component
 
     public function render()
     {
-        $orders = Order::with('createdBy', 'updatedBy')->paginate(10);
+        $orders = Order::with('createdBy', 'updatedBy')
+                            ->where('number', 'LIKE',  '%' . $this->search . '%')
+                            ->orWhere('status', 'LIKE',  '%' . $this->search . '%')
+                            ->orWhere(function($q){
+                                $q->whereHas('client', function($q){
+                                    $q->where('name', 'LIKE',  '%' . $this->search . '%');
+                                });
+                            })
+                            ->orderBy($this->sort, $this->direction)
+                            ->paginate(10);
 
         return view('livewire.admin.orders', compact('orders'));
     }

@@ -2,7 +2,7 @@
 
     @if ($order)
 
-        <h1 class="text-3xl font-thin text-gray-500 mb-3">Actualizar Pedido</h1>
+        <h1 class="text-3xl font-thin text-gray-500 mb-3">Actualizar Pedido ({{ $order->number }})</h1>
 
     @else
 
@@ -128,119 +128,111 @@
 
             @if($order)
 
-                <div class="relative overflow-x-auto rounded-lg ">
+                <div class="relative rounded-lg ">
 
-                    <table class="rounded-lg w-full">
+                    <div class="overflow-x-auto mb-2">
 
-                        <thead class="border-b border-gray-300 bg-gray-50">
+                        <table class="rounded-lg w-full table-auto  xl:table-fixed">
 
-                            <tr class="text-xs font-medium text-gray-500 uppercase text-left traling-wider">
+                            <thead class="rounded-lg shadow-xl w-full ">
 
-                                <th class="px-3 py-3 hidden lg:table-cell">Diseño</th>
+                                <tr class="text-sm text-gray-500 uppercase text-left traling-wider">
 
-                                <th class="px-3 py-3 hidden lg:table-cell">Producto</th>
+                                    <th class="px-2 py-3">Diseño</th>
 
-                                <th class="px-3 py-3 hidden lg:table-cell">Cantidad</th>
+                                    <th class="px-2 py-3">Producto</th>
 
-                                <th class="px-3 py-3 hidden lg:table-cell">Precio</th>
+                                    <th class="px-2 py-3">Cantidad</th>
 
-                                <th class="px-3 py-3 hidden lg:table-cell">total</th>
+                                    <th class="px-2 py-3">Precio</th>
 
-                                <th class="px-3 py-3 hidden lg:table-cell">Acciones</th>
+                                    <th class="px-2 py-3">total</th>
 
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
-
-                            @foreach($order->orderDetails as $orderDetail)
-
-                                <tr class="text-sm font-medium text-gray-500 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
-
-                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Diseño</span>
-
-                                        {{ $orderDetail->design->name}}
-
-                                    </td>
-
-                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Producto</span>
-
-                                        {{ $orderDetail->product->name}}
-
-                                        @if ($orderDetail->color)
-
-                                            <p>Color: {{ $orderDetail->color}}</p>
-
-                                        @endif
-
-                                        @if ($orderDetail->size)
-
-                                            <p>Talla: {{ $orderDetail->size}}</p>
-
-                                        @endif
-
-                                    </td>
-
-                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Cantidad</span>
-
-                                        <p class="text-sm font-medium">{{ $orderDetail->quantity }}</p>
-
-                                    </td>
-
-                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Precio</span>
-
-                                        <p class="text-sm font-medium">${{ number_format($orderDetail->total / $orderDetail->quantity, 2) }}</p>
-
-                                    </td>
-
-                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Total</span>
-
-                                        <p class="text-sm font-medium">${{ number_format($orderDetail->total,2) }}</p>
-
-                                    </td>
-
-                                    <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b lg:table-cell relative lg:static">
-
-                                        <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Acciones</span>
-
-                                        <div class="flex items-center space-x-2">
-
-                                            <button
-                                                wire:click="deleOrderDetail({{ $orderDetail->id }})"
-                                                wire:loading.attr="disabled"
-                                                wire:target="deleOrderDetail({{ $orderDetail->id }})"
-                                                class="bg-red-400 hover:shadow-lg text-white mx-auto text-xs md:text-sm px-3 py-2 rounded-full hover:bg-red-700 flex focus:outline-none"
-                                            >
-
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-
-                                            </button>
-
-                                        </div>
-
-                                    </td>
+                                    <th class="px-2 py-3">Acciones</th>
 
                                 </tr>
 
-                            @endforeach
+                            </thead>
 
-                        </tbody>
 
-                    </table>
+                            <tbody class="divide-y divide-gray-200">
+
+                                @foreach($order->orderDetails as $orderDetail)
+
+                                    <tr class="text-sm text-gray-500 bg-white">
+
+                                        <td class="px-2 py-3 w-full text-gray-800 text-sm">
+
+                                            {{ $orderDetail->design->name}}
+
+                                        </td>
+
+                                        <td class="px-2 py-3 w-full text-gray-800 text-sm">
+
+                                            {{ $orderDetail->product->name}}
+
+                                            @if ($orderDetail->color)
+
+                                                <p>Color: {{ $orderDetail->color}}</p>
+
+                                            @endif
+
+                                            @if ($orderDetail->size)
+
+                                                <p>Talla: {{ $orderDetail->size}}</p>
+
+                                            @endif
+
+                                        </td>
+
+                                        <td class="px-2 py-3 w-full text-gray-800 text-sm">
+
+                                            <p class="text-sm font-medium">{{ $orderDetail->quantity }}</p>
+
+                                        </td>
+
+                                        <td class="px-2 py-3 w-full text-gray-800 text-sm">
+
+                                            <p class="text-sm font-medium">${{ number_format($orderDetail->total / $orderDetail->quantity, 2) }}</p>
+
+                                        </td>
+
+                                        <td class="px-2 py-3 w-full text-gray-800 text-sm">
+
+                                            <p class="text-sm font-medium">${{ number_format($orderDetail->total,2) }}</p>
+
+                                        </td>
+
+                                        <td class="px-2 py-3 w-full text-gray-800 text-sm">
+
+                                            <div class="flex items-center space-x-2">
+
+                                                <button
+                                                    wire:click="deleOrderDetail({{ $orderDetail->id }})"
+                                                    wire:loading.attr="disabled"
+                                                    wire:target="deleOrderDetail({{ $orderDetail->id }})"
+                                                    class="bg-red-400 hover:shadow-lg text-white mx-auto text-xs md:text-sm px-3 py-2 rounded-full hover:bg-red-700 flex focus:outline-none"
+                                                >
+
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                    </svg>
+
+                                                </button>
+
+                                            </div>
+
+                                        </td>
+
+                                    </tr>
+
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
 
                     <div class="p-2 mb-2">
 
@@ -248,7 +240,7 @@
 
                         <textarea  wire:model.defer="description" class="bg-white rounded text-sm w-full"></textarea>
 
-                        <p class="text-right text-2xl font-bold">Total: ${{ number_format($order->total,2) }}</p>
+                        <p class="text-center md:text-right text-2xl font-bold">Total: ${{ number_format($order->total,2) }}</p>
 
                     </div>
 
@@ -389,7 +381,7 @@
 
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
 
                         <div class="col-span-1">
 
@@ -422,7 +414,9 @@
 
                                 @if($order->anticipo_image)
 
-                                    <img class="w-full rounded" src="{{ $order->anticipoUrl() }}" alt="Imagen Diseño Final">
+                                    <a href="{{ $order->anticipoUrl() }}" data-lightbox="{{ $order->id }}" data-title="Diseño final">
+                                        <img class="w-full rounded" src="{{ $order->anticipoUrl() }}" alt="Imagen">
+                                    </a>
 
                                 @endif
 
@@ -461,7 +455,9 @@
 
                                 @if($order->design_image)
 
-                                    <img class="w-full rounded" src="{{ $order->designUrl() }}" alt="Imagen Diseño Final">
+                                    <a href="{{ $order->designUrl() }}" data-lightbox="{{ $order->id }}" data-title="Diseño final">
+                                        <img class="w-full rounded" src="{{ $order->designUrl() }}" alt="Imagen">
+                                    </a>
 
                                 @endif
 

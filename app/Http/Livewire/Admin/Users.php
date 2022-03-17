@@ -186,6 +186,7 @@ class Users extends Component
                         ->orwhere('facebook', 'LIKE', '%' . $this->search . '%')
                         ->orWhere('email', 'LIKE', '%' . $this->search . '%')
                         ->orWhere('role', 'LIKE', '%' . $this->search . '%')
+                        ->orderBy($this->sort, $this->direction)
                         ->paginate(10);
 
         return view('livewire.admin.users', compact('users'))->layout('layouts.admin');

@@ -56,7 +56,7 @@
 
                         </th>
 
-                        <th class="px-3 py-3 hidden lg:table-cell">
+                        <th class="px-3 py-3 hidden lg:table-cell w-1/12">
 
                             Imagen
 
@@ -68,11 +68,11 @@
 
                         </th>
 
-                        <th wire:click="order('client')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
+                        <th wire:click="order('client_id')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
                             Cliente
 
-                            @if($sort == 'client')
+                            @if($sort == 'client_id')
 
                                 @if($direction == 'asc')
 
@@ -321,7 +321,7 @@
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs font-bold uppercase rounded-br-xl">Contenido</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Contenido</span>
 
                                 @if ($order->content)
 
@@ -400,7 +400,7 @@
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
 
                                 @if ($order->description)
-                                    {{ $order->description }}
+                                    {{ Str::limit($order->description,100) }}
                                 @else
                                     Sin descripción
                                 @endif
@@ -555,9 +555,30 @@
 
                 <p>Número de pedido: <span class=" text-gray-500"> {{ $number }}</span></p>
 
+                <p>Fecha: <span class=" text-gray-500"> {{ $date }}</span></p>
+
                 <p>Cliente: <span class=" text-gray-500"> {{ $client }}</span></p>
 
-                <p>Total: <span class=" text-gray-500">  ${{ number_format($total, 2) }}</span></p>
+                @if ($anticipo)
+
+                    <div class="flex space-x-3 items-center">
+
+                        <p>Anticipo: <span class=" text-gray-500"> ${{ $anticipo }}</span></p>
+
+                        <a class="bg-green-500 text-white rounded-full py-1 px-1" href="{{ $order->anticipoUrl() }}" data-lightbox="{{ $order_id }}" data-title="Anticipo">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </span>
+                        </a>
+
+                    </div>
+
+                @endif
+
+                <p>Total: <span class=" text-gray-500">  ${{ $totals }}</span></p>
 
             </div>
 
@@ -566,41 +587,37 @@
 
                 <table class="rounded-lg w-full">
 
-                    <thead class="border-b border-gray-300 bg-gray-50">
+                    <thead class="rounded-lg shadow-xl w-full overflow-hidden table-auto  xl:table-fixed">
 
-                        <tr class="text-xs font-medium text-gray-600 uppercase text-left traling-wider">
+                        <tr class="text-sm text-gray-500 uppercase text-left traling-wider">
 
-                            <th class="px-3 py-3 hidden lg:table-cell">Diseño</th>
+                            <th class="px-2 py-3">Diseño</th>
 
-                            <th class="px-3 py-3 hidden lg:table-cell">Producto</th>
+                            <th class="px-2 py-3">Producto</th>
 
-                            <th class="px-3 py-3 hidden lg:table-cell">Cantidad</th>
+                            <th class="px-2 py-3">Cantidad</th>
 
-                            <th class="px-3 py-3 hidden lg:table-cell">Precio</th>
+                            <th class="px-2 py-3">Precio</th>
 
-                            <th class="px-3 py-3 hidden lg:table-cell">total</th>
+                            <th class="px-2 py-3">total</th>
 
                         </tr>
 
                     </thead>
 
-                    <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
+                    <tbody class="divide-y divide-gray-200">
 
                         @foreach($order_content as $item)
 
-                            <tr class="text-sm font-medium text-gray-600 bg-white flex lg:table-row flex-row lg:flex-row flex-wrap lg:flex-no-wrap mb-10 lg:mb-0">
+                            <tr class="text-sm text-gray-500 bg-white">
 
-                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Diseño</span>
+                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
                                     {{ $item['design']}}
 
                                 </td>
 
-                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Producto</span>
+                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
                                     {{ $item['product']}}
 
@@ -618,25 +635,19 @@
 
                                 </td>
 
-                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Cantidad</span>
+                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
                                     <p class="text-sm font-medium">{{ $item['quantity'] }}</p>
 
                                 </td>
 
-                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Precio</span>
+                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
                                     <p class="text-sm font-medium">${{ number_format($item['total'] / $item['quantity'], 2) }}</p>
 
                                 </td>
 
-                                <td class="px-3 py-3 w-full lg:w-auto p-3 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
-
-                                    <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Total</span>
+                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
                                     <p class="text-sm font-medium">${{ number_format($item['total'],2) }}</p>
 
@@ -651,6 +662,18 @@
                 </table>
 
             </div>
+
+            @if ($description)
+
+                <div>
+
+                    <p>Comentarios:</p>
+
+                    <p class="text-justify text-sm text-gray-500">{{ $description }}</p>
+
+                </div>
+
+            @endif
 
         </x-slot>
 
