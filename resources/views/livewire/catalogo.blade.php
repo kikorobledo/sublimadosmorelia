@@ -32,7 +32,7 @@
 
                             <li
                                 class=" ml-4 mb-1 text-sm cursor-pointer capitalize"
-                                wire:click="$set('subcategoryDesign', '{{ $subcategoryDesign->name }}')"
+                                wire:click="$set('subcategoryDesignName', '{{ $subcategoryDesign->name }}')"
                                 @click=" window.scrollTo({
                                     top: 0,
                                     behavior: 'smooth'
@@ -70,7 +70,7 @@
 
                         <li
                             class=" ml-4 mb-1 text-sm cursor-pointer capitalize"
-                            wire:click="$set('subcategoryDesign', '{{ $subcategoryDesign->name }}')"
+                            wire:click="$set('subcategoryDesignName', '{{ $subcategoryDesign->name }}')"
                             @click=" window.scrollTo({
                                 top: 0,
                                 behavior: 'smooth'
@@ -88,6 +88,8 @@
 
         <div class="md:col-span-2 lg:col-span-4">
 
+            <p class="text-xl capitalize font-medium">{{ $subcategoryDesignName }}</p>
+
             <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
 
                 @forelse ($designs as $design)
@@ -98,7 +100,7 @@
 
                             <figure class="mb-2">
 
-                                <img class=" object-cover object-center" src="{{ asset('storage/img/logo.png') }}" alt="">
+                                <img class=" object-cover object-center" src="{{ $design->imageUrl() }}" alt="">
 
                             </figure>
 
@@ -118,7 +120,7 @@
 
             </ul>
 
-            <div class="mt-4">
+            <div class="mt-10">
 
                 {{ $designs->links() }}
 

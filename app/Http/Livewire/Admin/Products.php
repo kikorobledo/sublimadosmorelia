@@ -10,11 +10,13 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use App\Models\CategoryProduct;
+use Livewire\WithFileUploads;
 
 class Products extends Component
 {
 
     use WithPagination;
+    use WithFileUploads;
 
     public $modal = false;
     public $modalDelete = false;
@@ -131,12 +133,18 @@ class Products extends Component
 
         try {
 
+            if($this->image)
+                $design_image = $this->image->store('/', 'products');
+            else
+                $design_image = null;
+
             $product = Product::create([
                 'name' => $this->name,
                 'slug' => Str::slug($this->name),
                 'description' => $this->description,
                 'status' => $this->status,
                 'price' =>  $this->price,
+                'image' => $design_image,
                 'purchase_price' =>  $this->purchase_price,
                 'category_product_id' => $this->category_id,
                 'created_by' => auth()->user()->id,
@@ -169,7 +177,14 @@ class Products extends Component
 
         $this->validate();
 
+        try {
+
             $product = Product::findorFail($this->product_id);
+
+            if($this->image)
+                $design_image = $this->image->store('/', 'products');
+            else
+                $design_image = null;
 
             $product->update([
                 'name' => $this->name,
@@ -177,6 +192,7 @@ class Products extends Component
                 'description' => $this->description,
                 'status' => $this->status,
                 'price' =>  $this->price,
+                'image' => $design_image ? $design_image : $product->image,
                 'purchase_price' =>  $this->purchase_price,
                 'category_product_id' => $this->category_id,
                 'updated_by' => auth()->user()->id,
@@ -187,15 +203,13 @@ class Products extends Component
             $sizes = [];
 
             foreach ($this->sizesList as $value) {
-                if(isset($this->sizesPrice[$value]))
+                if(isset($this->sizesPrice[$value]) && $this->sizesPrice[$value] != 0)
                     $sizes[$value] = ['price' => $this->sizesPrice[$value]];
                 else
                     $sizes[$value] = ['price' => $product->price];
             }
 
             $product->sizes()->sync($sizes);
-
-        try {
 
             $this->dispatchBrowserEvent('showMessage',['success', "El producto ha sido actualizado con exito."]);
 

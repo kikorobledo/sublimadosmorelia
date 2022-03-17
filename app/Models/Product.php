@@ -7,6 +7,7 @@ use App\Models\Size;
 use App\Models\Color;
 use App\Models\SubCategoryDesign;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
@@ -38,8 +39,11 @@ class Product extends Model
         return $this->hasMany(Design::class);
     }
 
-    public function images(){
-        return $this->morphMany(Image::class, 'imageable');
+    public function imageUrl(){
+        return $this->image
+            ? Storage::disk('products')->url($this->image)
+            : Storage::disk('public')->url('img/logo2.png');
+
     }
 
     public function createdBy(){

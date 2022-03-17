@@ -1,5 +1,11 @@
 <div class="">
 
+    @push('styles')
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    @endpush
+
     <div class="mb-5">
 
         <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Productos</h1>
@@ -285,17 +291,11 @@
 
                                 <div class="flex items-center justify-center lg:justify-start">
 
-                                    <div class="flex-shrink-0 h-10 w-10">
+                                    <div class="flex-shrink-0 h-14 w-14">
 
-                                        @if($product->image)
-
-                                            <img class="w-10 lg:w-20 rounded" src="asset('/storage/{{ $product->image }}' )" alt="Imagen">
-
-                                        @else
-
-                                            <img class="w-10 lg:w-20 rounded" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
-
-                                        @endif
+                                        <a href="{{ $product->imageUrl() }}" data-lightbox="{{ $product->id }}" data-title="Diseño">
+                                            <img class=" rounded" src="{{ $product->imageUrl() }}" alt="Imágen">
+                                        </a>
 
                                     </div>
 
@@ -710,7 +710,7 @@
                                             $
                                             </span>
                                         </div>
-                                        <input type="number" class="bg-white rounded-full text-sm w-32 pl-7 " wire:model.defer="sizesPrice.{{ $size->id }}" placeholder="0.00">
+                                        <input type="number" min="0" class="bg-white rounded-full text-sm w-32 pl-7 " wire:model.defer="sizesPrice.{{ $size->id }}" placeholder="0.00">
                                     </div>
                                 </div>
 
@@ -725,6 +725,35 @@
                         @error('sizesPrice') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
+
+                </div>
+
+            </div>
+
+            <div class=" mb-5 w-full">
+
+                <div
+                    wire:ignore
+                    x-data
+                    x-init="
+
+                        FilePond.setOptions({
+                            server: {
+                                process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
+                                    @this.upload('image', file, load, error, progress);
+                                },
+                                revert: (filename, load) => {
+                                    @this.removeUpload('image', filename, load);
+                                }
+                            },
+                            labelIdle: 'Selecciona la imagen del anticipo'
+                        });
+
+                        FilePond.create($refs.input)
+                    "
+                >
+
+                    <input type="file" x-ref="input">
 
                 </div>
 
@@ -803,5 +832,12 @@
         </x-slot>
 
     </x-jet-confirmation-modal>
+
+    @push('scripts')
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    @endpush
 
 </div>

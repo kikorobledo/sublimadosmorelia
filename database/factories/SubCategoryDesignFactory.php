@@ -28,7 +28,7 @@ class SubCategoryDesignFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name),
+            'slug' => $this->faker->slug,
             'category_design_id' => $categories->random()
         ];
     }

@@ -49,6 +49,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'products' => [
+            'driver' => 'local',
+            'root' => storage_path('app/products'),
+            'url' => env('APP_URL').'/products',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -84,6 +91,7 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('orders') => storage_path('app/orders'),
         public_path('designs') => storage_path('app/designs'),
+        public_path('products') => storage_path('app/products'),
     ],
 
 ];

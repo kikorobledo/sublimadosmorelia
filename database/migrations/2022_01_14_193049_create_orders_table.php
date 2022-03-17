@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('number')->unique();
             $table->foreignId('client_id')->constrained()->references('id')->on('users');
-            $table->enum('status',['nueva', 'aceptada', 'terminada', 'entregada', 'pagada'])->default('nueva');
+            $table->enum('status',['nueva', 'aceptada', 'terminada', 'entregada', 'pagada', 'cancelada'])->default('nueva');
             $table->unsignedDecimal('anticipo', 8,2)->nullable();
             $table->unsignedDecimal('total', 8,2)->nullable();
             $table->json('content')->nullable();

@@ -18,7 +18,7 @@ class Glider extends Component
 
         $this->uuid = Str::uuid()->toString();
 
-        $this->emit('glider', $this->uuid);
+        $this->dispatchBrowserEvent('glider', $this->uuid);
 
     }
 

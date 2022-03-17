@@ -1,44 +1,48 @@
 <x-app-layout>
 
     {{-- GliderJs --}}
-    <div class=" glider-contain relative w-full">
+    <div class="glider-wrap">
 
-        <div class="glider">
+        <div class=" glider-contain relative w-full">
 
-          <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg.jpg') }}" alt=""></div>
-          <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg2.jpg') }}" alt=""></div>
-          <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg3.jpg') }}" alt=""></div>
+            <div class="glider">
+
+            <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg.jpg') }}" alt=""></div>
+            <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg2.jpg') }}" alt=""></div>
+            <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg3.jpg') }}" alt=""></div>
 
 
-        </div>
+            </div>
 
-        <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hero-text" >
+            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hero-text" >
 
-            <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Compra 2 y llevate 3</p>
-            <p class="md:text-4xl text-white uppercase md:mb-6">playeras</p>
-            <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+                <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Compra 2 y llevate 3</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">playeras</p>
+                <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
 
-        </div>
+            </div>
 
-        <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
+            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
 
-            <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
-            <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p>
-            <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p>
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
 
-        </div>
+            </div>
 
-        <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
+            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
 
-            <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
-            <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p>
-            <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p>
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
 
-        </div>
+            </div>
 
-        <div class="border border-white mx-auto rounded-full md:absolute md:bottom-10 md:left-1/2 md:transform md:-translate-x-1/2 bg-white bg-opacity-20">
+            <div class="border border-white mx-auto rounded-full md:absolute md:bottom-10 md:left-1/2 md:transform md:-translate-x-1/2 bg-white bg-opacity-20">
 
-            <div role="tablist"  id="dots"></div>
+                <div role="tablist"  id="dots"></div>
+
+            </div>
 
         </div>
 
@@ -91,7 +95,7 @@
 
         <div class="w-full">
 
-            <iframe class=" w-2/3 mx-auto md:h-80 h-full" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F3546625815448093%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
+            <iframe class=" w-auto md:w-2/3 mx-auto md:h-80 h-auto" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F3546625815448093%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
 
         </div>
 
@@ -195,50 +199,9 @@
 
     @push('script')
 
-        <script>
+    <script>
 
-            Livewire.on('glider', function(id){
-
-                new Glider(document.querySelector('.glider-' + id), {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-                draggable: true,
-                dots: '.dots-' + id,
-                responsive: [
-                        {
-                            breakpoint: 640,
-                            settings: {
-                                slidesToScroll: 2.5,
-                                slidesToShow: 2,
-                            }
-                        },
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToScroll: 3.5,
-                                slidesToShow: 3,
-                            }
-                        },
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToScroll: 4.5,
-                                slidesToShow: 4,
-                            }
-                        },
-                        {
-                            breakpoint: 1280,
-                            settings: {
-                                slidesToScroll: 5.5,
-                                slidesToShow: 5,
-                            }
-                        }
-                    ]
-                });
-
-            });
-
-            var slider = new Glider(document.querySelector('.glider'), {
+        var slider = new Glider(document.querySelector('.glider'), {
                 rewind:true,
                 slidesToScroll: 1,
                 slidesToShow: 1,
@@ -246,72 +209,73 @@
                 autoplay: true
             });
 
-            slideAutoPaly(slider, '.glider');
+        slideAutoPaly(slider, '.glider');
 
-            function slideAutoPaly(glider, selector, delay = 5000, repeat = true) {
-                let autoplay = null;
-                const slidesCount = glider.track.childElementCount;
-                let nextIndex = 1;
-                let pause = true;
-                const heroTexts = document.querySelectorAll('.hero-text');
-                const dots = document.querySelectorAll('.glider-dot');
+        function slideAutoPaly(glider, selector, delay = 5000, repeat = true) {
+            let autoplay = null;
+            const slidesCount = glider.track.childElementCount;
+            let nextIndex = 1;
+            let pause = true;
+            const heroTexts = document.querySelectorAll('.hero-text');
+            const dots = document.querySelectorAll('.glider-dot');
 
-                function slide() {
+            function slide() {
 
-                    for (let index = 0; index < dots.length; index++) {
+                for (let index = 0; index < dots.length; index++) {
 
-                        dots[index].addEventListener("click", function(){
-
-                            heroTexts.forEach(element => {
-                                element.classList.add("hidden");
-                            });
-
-                            heroTexts[dots[index].getAttribute('data-index')].classList.toggle("hidden");
-                        });
-
-                    }
-
-                    autoplay = setInterval(() => {
+                    dots[index].addEventListener("click", function(){
 
                         heroTexts.forEach(element => {
                             element.classList.add("hidden");
                         });
 
-                        if (nextIndex >= slidesCount) {
-                            if (!repeat) {
-                                clearInterval(autoplay);
-                            } else {
-                                nextIndex = 0;
-                            }
-                        }
-
-                        glider.scrollItem(nextIndex++);
-
-                        heroTexts[nextIndex - 1].classList.toggle("hidden");
-
-                    }, delay);
+                        heroTexts[dots[index].getAttribute('data-index')].classList.toggle("hidden");
+                    });
 
                 }
 
-                slide();/*
+                autoplay = setInterval(() => {
 
-                var element = document.querySelector(selector);
-                element.addEventListener('mouseover', (event) => {
-                    if (pause) {
-                        clearInterval(autoplay);
-                        pause = false;
-                    }
-                }, 300);
+                    heroTexts.forEach(element => {
+                        element.classList.add("hidden");
+                    });
 
-                element.addEventListener('mouseout', (event) => {
-                    if (!pause) {
-                        slide();
-                        pause = true;
+                    if (nextIndex >= slidesCount) {
+                        if (!repeat) {
+                            clearInterval(autoplay);
+                        } else {
+                            nextIndex = 0;
+                        }
                     }
-                }, 300); */
+
+                    glider.scrollItem(nextIndex++);
+
+                    heroTexts[nextIndex - 1].classList.toggle("hidden");
+
+                }, delay);
+
             }
 
-        </script>
+            slide();/*
+
+            var element = document.querySelector(selector);
+            element.addEventListener('mouseover', (event) => {
+                if (pause) {
+                    clearInterval(autoplay);
+                    pause = false;
+                }
+            }, 300);
+
+            element.addEventListener('mouseout', (event) => {
+                if (!pause) {
+                    slide();
+                    pause = true;
+                }
+            }, 300); */
+
+        }
+
+    </script>
 
     @endpush
 

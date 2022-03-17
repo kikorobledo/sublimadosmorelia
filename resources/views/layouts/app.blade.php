@@ -14,22 +14,31 @@
 
         {{-- Glider --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.css" integrity="sha512-YM6sLXVMZqkCspZoZeIPGXrhD9wxlxEF7MzniuvegURqrTGV2xTfqq1v9FJnczH+5OGFl5V78RgHZGaK34ylVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.7/glider.min.js" integrity="sha512-tHimK/KZS+o34ZpPNOvb/bTHZb6ocWFXCtdGqAlWYUcz+BGHbNbHMKvEHUyFxgJhQcEO87yg5YqaJvyQgAEEtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-
-        @livewireStyles
-
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
-
-        {{-- Glider --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.js" integrity="sha512-RidPlemZ+Xtdq62dXb81kYFycgFQJ71CKg+YbKw+deBWB0TLIqCraOn6k0CWDH2rGvE1a8ruqMB+4E4OLVJ7Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.7.7/glider-compat.min.js" integrity="sha512-uDuWqOxg/d52jrK9sfrZf5qj1VjXlbekCDElkB/EOJAa6xOhLR1mVU1RZ0rFUqx5L4EkUPwyqPfJiwLF3D7Ypw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
+        @livewireStyles
+
+        @stack('styles')
+
+        {{-- FlexSlider --}}
+        <link rel="stylesheet" href="{{ asset('vendor/FlexSlider/flexslider.css') }}">
+
+        <!-- Scripts -->
+        <script src="{{ mix('js/app.js') }}" defer></script>
+
+        {{-- Jquery --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        {{-- Glider --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/glider-js/1.6.6/glider.min.js" integrity="sha512-RidPlemZ+Xtdq62dXb81kYFycgFQJ71CKg+YbKw+deBWB0TLIqCraOn6k0CWDH2rGvE1a8ruqMB+4E4OLVJ7Dg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         {{-- SweetAlert --}}
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+        {{-- FlexSlider --}}
+        <script src="{{ asset('vendor/flexslider/jquery.flexslider-min.js') }}"></script>
 
     </head>
 
@@ -249,5 +258,51 @@
 
         @stack('script')
 
+        <script>
+
+            window.addEventListener('glider', event=>{
+
+                new Glider(document.querySelector('.glider-' + event.detail), {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                draggable: true,
+                dots: '.dots-' + event.detail,
+                responsive: [
+                        {
+                            breakpoint: 640,
+                            settings: {
+                                slidesToScroll: 2.5,
+                                slidesToShow: 2,
+                            }
+                        },
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToScroll: 3.5,
+                                slidesToShow: 3,
+                            }
+                        },
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToScroll: 4.5,
+                                slidesToShow: 4,
+                            }
+                        },
+                        {
+                            breakpoint: 1280,
+                            settings: {
+                                slidesToScroll: 5.5,
+                                slidesToShow: 5,
+                            }
+                        }
+                    ]
+                });
+
+            });
+
+        </script>
+
     </body>
+
 </html>

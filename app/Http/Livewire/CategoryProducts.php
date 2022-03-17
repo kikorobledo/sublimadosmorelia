@@ -15,20 +15,20 @@ class CategoryProducts extends Component
 
     public $categoryProduct;
     public $product;
-    public $subcategoryDesign;
+    public $subcategoryDesignName;
     public $listSubCategoryDesigns = [];
 
-    protected $queryString = ['product', 'subcategoryDesign'];
+    protected $queryString = ['product', 'subcategoryDesignName'];
 
     public function clean(){
-        $this->reset(['product', 'subcategoryDesign']);
+        $this->reset(['product', 'subcategoryDesignName']);
     }
 
     public function updatedProduct(){
         $this->resetPage();
     }
 
-    public function updatedSubcategoryDesign(){
+    public function updatedSubcategoryDesignName(){
         $this->resetPage();
     }
 
@@ -57,15 +57,15 @@ class CategoryProducts extends Component
 
         }
 
-        if($this->subcategoryDesign){
+        if($this->subcategoryDesignName){
 
             $designsQuery = $designsQuery->whereHas('subCategoryDesign', function (Builder $b){
-                $b->where('name', $this->subcategoryDesign);
+                $b->where('name', $this->subcategoryDesignName);
             });
 
         }
 
-        $designs = $designsQuery->paginate(20);
+        $designs = $designsQuery->orderBy('created_at', 'desc')->paginate(20);
 
         return view('livewire.category-products', compact('designs'));
     }

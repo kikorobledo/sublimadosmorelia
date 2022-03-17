@@ -114,7 +114,7 @@ class Designs extends Component
                 'slug' => Str::slug($this->name),
                 'sub_category_design_id' => $this->sub_category_id,
                 'product_id' => $this->product_id,
-                'image' => $design_image ? $design_image : null,
+                'image' => $design_image,
                 'category_design_id' => $this->sub_category_id,
                 'created_by' => auth()->user()->id,
             ]);

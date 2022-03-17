@@ -13,16 +13,16 @@ class Catalogo extends Component
 
     use WithPagination;
 
-    public $subcategoryDesign;
+    public $subcategoryDesignName;
 
-    protected $queryString = ['subcategoryDesign'];
+    protected $queryString = ['subcategoryDesignName'];
 
     public function clean(){
-        $this->reset('subcategoryDesign');
+        $this->reset('subcategoryDesignName');
         $this->resetPage();
     }
 
-    public function updatedSubcategoryDesign(){
+    public function updatedSubcategoryDesignName(){
 
         $this->resetPage();
     }
@@ -31,13 +31,13 @@ class Catalogo extends Component
     {
         $categoryDesigns = CategoryDesign::all();
 
-        if($this->subcategoryDesign){
+        if($this->subcategoryDesignName){
 
             $designs = Design::whereHas('subCategoryDesign', function (Builder $b){
-                                    $b->where('name', $this->subcategoryDesign);
+                                    $b->where('name', $this->subcategoryDesignName);
                                 })->paginate(20);
         }else{
-            $designs = Design::paginate(20);
+            $designs = Design::orderBy('created_by', 'desc')->paginate(20);
         }
 
 

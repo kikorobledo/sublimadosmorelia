@@ -1,6 +1,6 @@
 <div>
 
-    <div class="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-5 gap-6 mb-5 relative" x-data="{'show':true}" id="div">
+    <div class="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-5 gap-6 mb-5 relative" x-data="{'show':true}" id="div" @click.away="show = true">
 
         <button @click="show = !show" class="border border-gray-300 mt-2 mx-2 rounded-full text-black text-sm mb-3 uppercase font-light  px-4 py-1 md:py-2 hover:border-black transition duration-500 ease-in-out md:hidden">Filtros</button>
 
@@ -43,8 +43,8 @@
                     @foreach ($listSubCategoryDesigns as $name)
 
                         <li
-                            class=" ml-2 mb-1 text-sm cursor-pointer capitalize {{ $subcategoryDesign == $name ? 'font-semibold' : '' }}"
-                            wire:click="$set('subcategoryDesign', '{{ $name }}')"
+                            class=" ml-2 mb-1 text-sm cursor-pointer capitalize {{ $subcategoryDesignName == $name ? 'font-semibold' : '' }}"
+                            wire:click="$set('subcategoryDesignName', '{{ $name }}')"
                             @click=" window.scrollTo({
                                 top: 0,
                                 behavior: 'smooth'
@@ -90,8 +90,8 @@
                 @foreach ($listSubCategoryDesigns as $name)
 
                     <li
-                        class=" ml-2 mb-1 text-sm cursor-pointer capitalize {{ $subcategoryDesign == $name ? 'font-semibold' : '' }}"
-                        wire:click="$set('subcategoryDesign', '{{ $name }}')"
+                        class=" ml-2 mb-1 text-sm cursor-pointer capitalize {{ $subcategoryDesignName == $name ? 'font-semibold' : '' }}"
+                        wire:click="$set('subcategoryDesignName', '{{ $name }}')"
                         @click=" window.scrollTo({
                             top: 0,
                             behavior: 'smooth'
@@ -105,7 +105,9 @@
 
         </aside>
 
-        <div class="md:col-span-2 lg:col-span-4">
+        <div class="md:col-span-2 lg:col-span-4" @click="show = true">
+
+            <p class="text-xl capitalize font-medium">{{ $product }} {{ ($product && $subcategoryDesignName) ? ' >> ' : ''}} {{ $subcategoryDesignName }}</p>
 
             <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
 
@@ -117,7 +119,7 @@
 
                             <figure class="mb-2">
 
-                                <img class=" object-cover object-center" src="{{ asset('storage/img/logo.png') }}" alt="">
+                                <img class=" object-cover object-center" src="{{ $design->imageUrl() }}" alt="">
 
                             </figure>
 
@@ -143,7 +145,7 @@
 
             </ul>
 
-            <div class="mt-4">
+            <div class="mt-10">
 
                 {{ $designs->links() }}
 

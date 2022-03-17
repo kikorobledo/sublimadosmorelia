@@ -32,7 +32,7 @@ class DesignFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name),
+            'slug' => $this->faker->slug,
             'sub_category_design_id' => $subCategoryDesign->id,
             'product_id' => $product->id
         ];

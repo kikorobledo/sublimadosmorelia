@@ -28,7 +28,7 @@ Route::name('admin.')->group(function () {
 
     Route::get('products', Products::class)->name('products');
 
-    Route::get('products', Sizes::class)->name('sizes');
+    Route::get('sizes', Sizes::class)->name('sizes');
 
     Route::get('colors', Colors::class)->name('colors');
 

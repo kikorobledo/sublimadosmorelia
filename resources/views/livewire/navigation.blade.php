@@ -1,7 +1,7 @@
-<header class="bg-black sticky top-0 z-10" x-data="{ show: true }">
+<header class="bg-black sticky top-0 z-10" x-data="{ show: true }" @click.away="show = true">
 
     {{-- Sidebar --}}
-    <div class="bg-white min-h-screen w-1/8 absolute space-y-4 px-6 inset-y-0 left-0 transform -translate-x-full duration-500 ease-in-out sidebar" :class="{'-translate-x-full': show}">
+    <div class="bg-white min-h-screen w-1/8 absolute space-y-4 px-6 inset-y-0 left-0 transform -translate-x-full duration-500 ease-in-out sidebar z-50 shadow-2xl" :class="{'-translate-x-full': show}">
 
         <div class="flex items-center justify-center space-x-6  border-b border-gray-300 py-4">
 
@@ -122,13 +122,12 @@
 
                     @auth
 
-                        <!-- Account Management -->
-                        <div class="block px-4 h- py-2 text-xs text-gray-400">
-                            {{ __('Manage Account') }}
-                        </div>
-
                         <x-jet-dropdown-link href="{{ route('profile.show') }}">
                             {{ __('Profile') }}
+                        </x-jet-dropdown-link>
+
+                        <x-jet-dropdown-link href="{{ route('user_orders') }}">
+                            Mis Pedidos
                         </x-jet-dropdown-link>
 
                         <div class="border-t border-gray-100"></div>
@@ -146,9 +145,9 @@
 
                     @else
 
-                    <x-jet-dropdown-link href="{{ route('login') }}">
-                        {{ __('Login') }}
-                    </x-jet-dropdown-link>
+                        <x-jet-dropdown-link href="{{ route('login') }}">
+                            {{ __('Login') }}
+                        </x-jet-dropdown-link>
 
                         <x-jet-dropdown-link href="{{ route('register') }}">
                             {{ __('Register') }}

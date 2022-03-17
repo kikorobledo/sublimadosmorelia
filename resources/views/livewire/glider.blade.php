@@ -1,3 +1,4 @@
+<div class="glider-wrap">
 <div wire:init="loadDesigns" class="glider-contain">
 
     @if($uuid)
@@ -65,4 +66,5 @@
     @endif
 
 
+</div>
 </div>

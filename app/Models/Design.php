@@ -29,6 +29,10 @@ class Design extends Model
 
     }
 
+    public function getRouteKeyName(){
+        return 'slug';
+    }
+
     public function createdBy(){
         return $this->belongsTo(User::class, 'created_by');
     }
