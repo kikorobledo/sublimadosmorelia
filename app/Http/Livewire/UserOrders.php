@@ -11,6 +11,8 @@ class UserOrders extends Component
     public $status = [];
     public $filter;
 
+    protected $listeners = ['render'];
+
     public function mount(){
 
         $this->status = [

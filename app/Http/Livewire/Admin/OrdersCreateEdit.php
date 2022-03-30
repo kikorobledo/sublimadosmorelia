@@ -40,7 +40,7 @@ class OrdersCreateEdit extends Component
 
     public $aux;
 
-    protected $listeners = ['addProduct'];
+    protected $listeners = ['addProduct', 'render'];
 
     public function updatingSearch(){
         $this->resetPage();
@@ -90,22 +90,53 @@ class OrdersCreateEdit extends Component
 
         if($aux){
 
+            $cuponPrice = 0;
+
+            foreach($this->order->cupons as $cupon){
+
+                if($cupon->product_id == $aux->product_id){
+
+                    $cuponPrice = $this->getPrice($object) - $cupon->price;
+
+                }
+
+            }
+
+            $totalOrder = $this->order->total - $aux->total;
+
+            $aux->price = $cuponPrice != 0 ? $cuponPrice : $this->getPrice($object);
             $aux->quantity = $aux->quantity + (float)$object['quantity'];
-            $aux->total = $aux->quantity * $this->getPrice($object);
+            $aux->total = $aux->quantity * $aux->price;
             $aux->save();
 
-            $this->order->update(['total' => $this->order->total + $this->getPrice($object)]);
+
+
+            $this->order->update(['total' => $totalOrder + $aux->total]);
 
         }else{
 
+            $cuponPrice = 0;
+
+            foreach($this->order->cupons as $cupon){
+
+                if($cupon->product_id == $this->producto->id){
+
+                    $cuponPrice = $this->getPrice($object) - $cupon->price;
+
+                }
+
+            }
+
+
             $orderDetail = OrderDetail::Create([
                 'product_id' => $this->producto->id,
+                'price' => $cuponPrice != 0 ? $cuponPrice : $this->getPrice($object),
                 'design_id' => (int)$object['design_id'],
                 'quantity' => (float)$object['quantity'],
                 'order_id' => $this->order->id,
                 'size' => $object['size'],
                 'color' => $object['color'],
-                'total' => (float)$object['quantity'] * (float)$this->getPrice($object)
+                'total' => (float)$object['quantity'] * ( $cuponPrice != 0 ? $cuponPrice : $this->getPrice($object) )
             ]);
 
             $this->order->update(['total' => $this->order->total + $orderDetail->total]);
@@ -115,6 +146,8 @@ class OrdersCreateEdit extends Component
         $this->producto = null;
 
         $this->order->refresh();
+
+        $this->emit('updateProductsQty');
     }
 
     public function getPrice($object){
@@ -149,6 +182,8 @@ class OrdersCreateEdit extends Component
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
         }
+
+        $this->emit('updateProductsQty');
     }
 
     public function update(){

@@ -3,12 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\Design;
-use App\Models\Product;
 use App\Models\CategoryDesign;
 use App\Models\CategoryProduct;
 use Illuminate\Database\Seeder;
 use Database\Seeders\SizeSeeder;
 use Database\Seeders\ColorSeeder;
+use Database\Seeders\CuponSeeder;
 use Database\Seeders\DesignSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\CategoryDesignSeeder;
@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SizeSeeder::class);
         $this->call(DesignSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(CuponSeeder::class);
 
         cache()->put('categoriesProduct', CategoryProduct::all());
         cache()->put('categoriesDesign', CategoryDesign::with('subcategories')->get());

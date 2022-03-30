@@ -261,6 +261,22 @@
 
                             @endif
 
+                            <label class="font-semibold text-sm">Cupones:</label>
+
+                            <div class="flex space-x-3">
+
+                                @foreach ($order->cupons as $cupon)
+
+                                    <span class="rounded-full px-2 bg-black  text-white text-sm flex">
+
+                                        <p class="">{{ $cupon->code }}</p>
+
+                                    </span>
+
+                                @endforeach
+
+                            </div>
+
                         </div>
 
                         <div class="p-4">
@@ -291,7 +307,9 @@
 
                             </div>
 
-                            <p class="text-center md:text-right text-2xl mr-4"> TOTAL: ${{ $order->total }}</p>
+                            <p class="text-center md:text-right text-2xl mr-4 mb-2"> TOTAL: ${{ $order->total }}</p>
+
+
 
                         </div>
 

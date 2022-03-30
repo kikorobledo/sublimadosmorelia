@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Admin;
 
 use stdClass;
-use App\Models\Size;
-use App\Models\Color;
 use Livewire\Component;
 
 class OrdersAddProduct extends Component

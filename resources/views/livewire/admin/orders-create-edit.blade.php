@@ -2,7 +2,7 @@
 
     @if ($order)
 
-        <h1 class="text-3xl font-thin text-gray-500 mb-3">Actualizar Pedido ({{ $order->number }})</h1>
+        <h1 class="text-3xl font-thin text-gray-500 mb-3">Actualizar Pedido #{{ $order->number }}</h1>
 
     @else
 
@@ -193,7 +193,7 @@
 
                                         <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
-                                            <p class="text-sm font-medium">${{ number_format($orderDetail->total / $orderDetail->quantity, 2) }}</p>
+                                            <p class="text-sm font-medium">${{ number_format($orderDetail->price, 2) }}</p>
 
                                         </td>
 
@@ -231,6 +231,12 @@
                             </tbody>
 
                         </table>
+
+                    </div>
+
+                    <div class="mb-2">
+
+                        @livewire('cupons', ['order' => $order])
 
                     </div>
 
@@ -272,7 +278,7 @@
                                     role="dialog"
                                     aria-modal="true"
                                     x-id="['modal-title']"
-                                    :aria-labelledby="$id('modal-title')"
+                                    :aria-labelledby="('modal-title')"
                                     class="fixed inset-0 overflow-y-auto"
                                 >
                                     <!-- Overlay -->
@@ -290,7 +296,7 @@
                                             class="relative max-w-md w-full bg-white border rounded-md p-8 overflow-y-auto"
                                         >
                                             <!-- Title -->
-                                            <h2 class="text-3xl mb-2" :id="$id('modal-title')">Cobrar</h2>
+                                            <h2 class="text-3xl mb-2" :id="('modal-title')">Cobrar</h2>
                                             <!-- Content -->
                                             <div class="flex flex-col md:flex-row justify-between md:space-x-3">
 
@@ -365,6 +371,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </span>
 
                         @else

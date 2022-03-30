@@ -16,14 +16,13 @@ class CreateOrderDetailsTable extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedDecimal('quantity', 8,2);
+            $table->unsignedDecimal('price', 8,2);
             $table->unsignedDecimal('total', 8,2);
             $table->string('color')->nullable();
             $table->string('size')->nullable();
             $table->foreignId('order_id')->constrained()->references('id')->on('orders')->onDelete('cascade');
             $table->foreignId('design_id')->constrained()->references('id')->on('designs');
             $table->foreignId('product_id')->constrained()->references('id')->on('products');
-            $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
-            $table->foreignId('updated_by')->nullable()->constrained()->references('id')->on('users');
             $table->timestamps();
         });
     }

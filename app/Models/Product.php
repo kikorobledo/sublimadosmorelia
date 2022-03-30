@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Models\Size;
 use App\Models\Color;
+use App\Models\Cupon;
 use App\Models\SubCategoryDesign;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -25,6 +26,10 @@ class Product extends Model
 
     public function subCategoryDesign(){
         return $this->belongsTo(SubCategoryDesign::class);
+    }
+
+    public function cupons(){
+        return $this->hasMany(Cupon::class);
     }
 
     public function colors(){

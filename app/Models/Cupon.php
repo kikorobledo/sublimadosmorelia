@@ -3,29 +3,37 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Order;
-use App\Models\Design;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class OrderDetail extends Model
+class Cupon extends Model
 {
+
+    const STATUS = [
+        'activo',
+        'inactivo'
+    ];
+
     use HasFactory;
 
-    protected $guarded = [];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function order(){
-        return $this->belongsTo(Order::class);
-    }
-
-    public function design(){
-        return $this->belongsTo(Design::class, 'design_id');
+        return $this->belongsToMany(Order::class);
     }
 
     public function product(){
         return $this->belongsTo(Product::class);
+    }
+
+    public function createdBy(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy(){
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
     public function getCreatedAtAttribute(){

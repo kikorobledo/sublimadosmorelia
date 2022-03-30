@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Cupon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +17,10 @@ class Order extends Model
 
     public function orderDetails(){
         return $this->hasMany(OrderDetail::class);
+    }
+
+    public function cupons(){
+        return $this->belongsToMany(Cupon::class);
     }
 
     public function client(){

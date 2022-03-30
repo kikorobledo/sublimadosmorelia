@@ -84,7 +84,9 @@ class AddToCart extends Component
                     'size' => $size->name,
                     'color' => $this->color,
                     'image' => $this->design->imageUrl(),
-                    'product' => $this->design->product->id
+                    'product' => $this->design->product->id,
+                    'product_name' => $this->design->product->name,
+                    'original_price' => $this->price,
                     ]
             ]);
         }
@@ -98,7 +100,9 @@ class AddToCart extends Component
                 'options' => [
                     'color' => $this->color,
                     'image' => $this->design->imageUrl(),
-                    'product' => $this->design->product->id
+                    'product' => $this->design->product->id,
+                    'product_name' => $this->design->product->name,
+                    'original_price' => $this->price,
                     ]
             ]);
 
@@ -114,7 +118,9 @@ class AddToCart extends Component
                 'options' => [
                     'size' => $size->name,
                     'image' => $this->design->imageUrl(),
-                    'product' => $this->design->product->id
+                    'product' => $this->design->product->id,
+                    'product_name' => $this->design->product->name,
+                    'original_price' => $this->price,
                     ]
             ]);
         }else{
@@ -127,7 +133,9 @@ class AddToCart extends Component
                 'weight' => 1,
                 'options' => [
                     'image' => $this->design->imageUrl(),
-                    'product' => $this->design->product->id
+                    'product' => $this->design->product->id,
+                    'product_name' => $this->design->product->name,
+                    'original_price' => $this->price,
                     ]
             ]);
 

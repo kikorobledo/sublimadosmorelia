@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cupon;
 use App\Models\Order;
 use Livewire\Component;
 use App\Models\OrderDetail;
@@ -12,6 +13,8 @@ class OrderManagement extends Component
 
     public $quantity;
     public $description;
+
+    protected $listeners = ['render'];
 
     public function changeQuantity($i, $id){
 
@@ -44,6 +47,26 @@ class OrderManagement extends Component
 
     }
 
+    public function removeCupon($name){
+
+        foreach(Cart::content() as $item){
+
+            if($item->options->cupon == $name){
+
+                unset($item->options['cupon']);
+
+                $array = $item->options;
+
+                Cart::update($item->rowId, [
+                    'price' => $item->options->original_price,
+                    'options' => $array
+                ]);
+            }
+
+        }
+
+    }
+
     public function destroyCart(){
 
         Cart::destroy();
@@ -73,10 +96,22 @@ class OrderManagement extends Component
                 'color' => $item->options->color ? $item->options->color : null,
                 'size' => $item->options->size ? $item->options->size : null,
                 'quantity' => $item->qty,
+                'price' => (float)$item->price,
                 'total' => ((float)$item->price * (float)$item->qty),
                 'order_id' => $order->id,
-                'created_by' => auth()->user()->id
             ]);
+
+        }
+
+        foreach(Cart::content() as $item){
+
+            if(isset($item->options['cupon'])){
+
+                $cupon = Cupon::where('code', $item->options->cupon)->first();
+
+                $order->cupons()->attach($cupon->id);
+
+            }
 
         }
 
@@ -88,8 +123,6 @@ class OrderManagement extends Component
 
     public function render()
     {
-
-
         return view('livewire.order-management');
     }
 }

@@ -59,6 +59,8 @@
 
                                         <h1 class="text-black">{{ $item->name }}</h1>
 
+                                        <p>{{ $item->options->product_name }}</p>
+
                                         @if ($item->options->color)
 
                                             <p class=" text-gray-600">Color: {{ $item->options->color }}</p>
@@ -160,14 +162,48 @@
 
                 <textarea wire:model.defer="description" rows="3" class="bg-white rounded text-sm w-full focus:border-black focus:ring-0 cursor-pointer mb-4 md:mb-0"></textarea>
 
+                <label class="font-semibold text-sm">Cupones:</label>
+
+                <div class="flex space-x-3">
+
+                    @foreach (Cart::content() as $item)
+
+                        @if (isset($item->options['cupon']))
+
+                            <span class="rounded-full px-2 bg-black  text-white text-sm flex">
+
+                                <p class="mr-2">{{ $item->options->cupon }}</p>
+
+                                <button class="text-xs"
+                                    wire:click="removeCupon('{{ $item->options->cupon }}')"
+                                    wire:loading.attr="disabled"
+                                    wire:target="removeCupon('{{ $item->options->cupon }}')"
+                                >
+                                    X
+                                </button>
+
+                            </span>
+
+                        @endif
+
+                    @endforeach
+
+                </div>
+
             </div>
 
-            <div class="p-4">
+            <div class="p-4 flex flex-col ">
 
                 <p class="text-center md:text-right text-2xl mr-4"> TOTAL: ${{ Cart::subtotal() }}</p>
 
+                <div class="mt-3">
+
+                    @livewire('cupons')
+
+                </div>
+
                 <button
-                    class="text-center rounded-full bg-black hover:bg-white text-white hover:text-black tracking-widest border-2 transition-all border-black uppercase font-light w-full py-1 md:w-1/2 float-right my-3"
+                    class="text-center rounded-full bg-black hover:bg-white text-white hover:text-black tracking-widest border-2 transition-all border-black uppercase font-light w-full py-1 md:w-1/2 ml-auto my-3"
                     wire:click="createOrder"
                     wire:loading.attr="disabled"
                     wire:target="createOrder"
