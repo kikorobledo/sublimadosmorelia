@@ -11,7 +11,7 @@ class DesignController extends Controller
 
         $design = Design::where('slug', $request->slug)->first();
 
-        $glider = Design::with('product')->where('sub_category_design_id', $design->sub_category_design_id)->take(20)->get()->toArray();
+        $glider = Design::with('product')->where('sub_category_design_id', $design->sub_category_design_id)->take(20)->get();
 
         return view('designs.show', compact('design','glider'));
     }

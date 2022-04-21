@@ -1,8 +1,14 @@
 <x-app-layout>
 
-    <figure class="mb-5">
+    <figure class="mb-5 hidden md:block">
 
-        <img class="w-full h-80 object-cover object-center" src="https://picsum.photos/800/600" alt="">
+        <img class="w-full h-80 object-cover object-center" src="{{ Storage::disk('images')->url($catalogoDesktop[0]->url) }}" alt="">
+
+    </figure>
+
+    <figure class="mb-5 md:hidden">
+
+        <img class="w-full h-80 object-cover object-center" src="{{ Storage::disk('images')->url($catalogoMobile[0]->url) }}" alt="">
 
     </figure>
 

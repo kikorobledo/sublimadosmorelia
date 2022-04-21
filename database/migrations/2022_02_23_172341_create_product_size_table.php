@@ -16,8 +16,8 @@ class CreateProductSizeTable extends Migration
         Schema::create('product_size', function (Blueprint $table) {
             $table->id();
             $table->unsignedDecimal('price', 8,2)->nullable();
-            $table->foreignId('product_id')->constrained()->references('id')->on('products');
-            $table->foreignId('size_id')->constrained()->references('id')->on('sizes');
+            $table->foreignId('product_id')->constrained()->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('size_id')->constrained()->references('id')->on('sizes')->onDelete('cascade');
             $table->timestamps();
         });
     }

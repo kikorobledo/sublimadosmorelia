@@ -149,7 +149,7 @@
 
                         <div class=" md:justify-center space-x-10 md:space-x-0 md:block w-full ">
 
-                            <p class="uppercase text-md  tracking-widest">Pedido # {{ $order->number }}</p>
+                            <p class="uppercase text-md  tracking-widest font-semibold">Pedido # {{ $order->number }}</p>
 
                             <p class="uppercase ">{{ $order->created_at }}</p>
 
@@ -203,6 +203,8 @@
 
                                                     <h1 class="text-black">{{ $orderDetail->design->name }}</h1>
 
+                                                    <p>{{ $orderDetail->product->name }}</p>
+
                                                     @if ($orderDetail->color)
 
                                                         <p class=" text-gray-600">Color: {{ $orderDetail->color }}</p>
@@ -255,13 +257,17 @@
 
                             @if($order->description)
 
-                                <label class="font-semibold">Comentarios:</label>
+                                <p class="font-semibold text-sm text-left">Comentarios:</p>
 
-                                <p class="text-justify">{{ $order->description }}</p>
+                                <p class="text-justify mb-3">{{ $order->description }}</p>
 
                             @endif
 
-                            <label class="font-semibold text-sm">Cupones:</label>
+                            @if ($order->cupons->count())
+
+                                <p class="font-semibold text-sm text-left">Cupones:</p>
+
+                            @endif
 
                             <div class="flex space-x-3">
 
@@ -307,9 +313,49 @@
 
                             </div>
 
-                            <p class="text-center md:text-right text-2xl mr-4 mb-2"> TOTAL: ${{ $order->total }}</p>
+
+                            @if($order->status != 'entregada')
+
+                                @if($order->anticipo)
+                                    <p class="text-center md:text-right text-2xl mr-4"> TOTAL: ${{ $order->total }}</p>
+                                    <p class="text-center md:text-right text-2xl mr-4"> ANTICIPO: ${{ $order->anticipo }}</p>
+                                    <p class="text-center md:text-right text-2xl mr-4 mb-2"> RESTANTE: ${{ number_format(($order->total - $order->anticipo), 2) }}</p>
+                                @else
+                                    <p class="text-center md:text-right text-2xl mr-4 mb-2"> TOTAL: ${{ $order->total }}</p>
+                                @endif
+
+                            @endif
 
 
+                            @if($order->status == 'nueva')
+
+                                <p class="text-sm text-center md:ml-auto md:text-right mb-2 w-full ">
+                                    Su pedido se encuentra en estado "Nuevo", es necesario su anticipo del 50% (${{ number_format(($order->total / 2), 2) }}) para comenzar a realizarlo, para mas información enviar aviso en el siguiente boton.
+                                </p>
+
+                                <button
+                                    class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-full md:float-right"
+                                    wire:click="sendWhastapp({{ $order }})"
+                                    wire:loading.attr="disabled"
+                                    wire:target="sendWhastapp({{ $order }})"
+                                >
+                                Enviar aviso por whatsapp
+                                </button>
+
+                            @endif
+
+                            @if($order->status == 'terminada')
+
+                                <p class="text-sm text-center md:ml-auto md:text-right mb-2 w-full ">
+                                    Su pedido se encuentra en estado "Terminado", puede pasar a recogerlo en Jesus Romero Flores #457, Col. Felicitas del Rio. En horario de Lunes a Viernes de 6pm a 9pm.
+                                </p>
+
+                                <a href="https://www.google.com.mx/maps/dir//19.6887682,-101.1984128/@19.6886017,-101.1982278,18z"
+                                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full md:float-right" target="_blank">
+                                Google Maps
+                                </a>
+
+                            @endif
 
                         </div>
 
@@ -336,5 +382,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     @endpush
+
+    <script>
+
+        window.addEventListener('sendWhatsApp', event => {
+
+            window.open(event.detail, "_blank");
+
+        });
+    </script>
 
 </div>

@@ -4,13 +4,26 @@
 
         <h1 class="text-3xl font-thin text-gray-500 mb-3">Pedidos</h1>
 
-        <div>
+        <div class="flex justify-between">
 
-            <input type="text" wire:model="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
+            <div>
 
-                <a href="{{ route('admin.orders.create') }}" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Pedido</a>
+                <input type="text" wire:model.debounce.500ms="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
 
-                <a href="{{ route('admin.orders.create') }}" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</a>
+                <select class="bg-white rounded-full text-sm" wire:model="pagination">
+
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+
+                </select>
+
+            </div>
+
+            <a href="{{ route('admin.orders.create') }}" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Pedido</a>
+
+            <a href="{{ route('admin.orders.create') }}" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</a>
 
         </div>
 
@@ -361,15 +374,15 @@
                                 <span class="lg:hidden absolute cap top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Status</span>
 
                                 @if($order->status == 'nueva')
-                                    <span class="bg-blue-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                    <span class="bg-blue-400 text-white rounded-full py-1 px-4 capitalize">{{ $order->status }}</span>
                                 @elseif($order->status == 'aceptada')
-                                    <span class="bg-green-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                    <span class="bg-green-400 text-white rounded-full py-1 px-4 capitalize">{{ $order->status }}</span>
                                 @elseif($order->status == 'terminada')
-                                    <span class="bg-yellow-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                    <span class="bg-yellow-400 text-white rounded-full py-1 px-4 capitalize">{{ $order->status }}</span>
                                 @elseif($order->status == 'entregada')
-                                    <span class="bg-gray-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                    <span class="bg-gray-400 text-white rounded-full py-1 px-4 capitalize">{{ $order->status }}</span>
                                 @elseif($order->status == 'pagada')
-                                    <span class="bg-indigo-400 text-white rounded-full py-1 px-4">{{ $order->status }}</span>
+                                    <span class="bg-indigo-400 text-white rounded-full py-1 px-4 capitalize">{{ $order->status }}</span>
                                 @endif
 
 
@@ -397,7 +410,7 @@
 
                             <td class="px-3 py-3 w-full lg:w-auto p-3 text-gray-800 text-center lg:text-left lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Descripción</span>
+                                <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Comentarios</span>
 
                                 @if ($order->description)
                                     {{ Str::limit($order->description,100) }}
@@ -565,7 +578,7 @@
 
                         <p>Anticipo: <span class=" text-gray-500"> ${{ $anticipo }}</span></p>
 
-                        <a class="bg-green-500 text-white rounded-full py-1 px-1" href="{{ $order->anticipoUrl() }}" data-lightbox="{{ $order_id }}" data-title="Anticipo">
+                        <a class="bg-green-500 text-white rounded-full py-1 px-1" href="{{ Storage::disk('orders')->url($anticipo_image) }}" data-lightbox="{{ $order_id }}" data-title="Anticipo">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -583,7 +596,7 @@
             </div>
 
 
-            <div class="relative overflow-x-auto rounded-lg ">
+            <div class="relative overflow-x-auto rounded-lg mb-5">
 
                 <table class="rounded-lg w-full">
 
@@ -607,55 +620,59 @@
 
                     <tbody class="divide-y divide-gray-200">
 
-                        @foreach($order_content as $item)
+                        @if($order_content)
 
-                            <tr class="text-sm text-gray-500 bg-white">
+                            @foreach($order_content as $item)
 
-                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
+                                <tr class="text-sm text-gray-500 bg-white">
 
-                                    {{ $item['design']}}
+                                    <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
-                                </td>
+                                        {{ $item['design']}}
 
-                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
+                                    </td>
 
-                                    {{ $item['product']}}
+                                    <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
-                                    @if ($item['color'])
+                                        {{ $item['product']}}
 
-                                        <p>Color: {{ $item['color']}}</p>
+                                        @if (isset($item['color']))
 
-                                    @endif
+                                            <p>Color: {{ $item['color']}}</p>
 
-                                    @if ($item['size'])
+                                        @endif
 
-                                        <p>Talla: {{ $item['size']}}</p>
+                                        @if (isset($item['size']))
 
-                                    @endif
+                                            <p>Talla: {{ $item['size']}}</p>
 
-                                </td>
+                                        @endif
 
-                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
+                                    </td>
 
-                                    <p class="text-sm font-medium">{{ $item['quantity'] }}</p>
+                                    <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
-                                </td>
+                                        <p class="text-sm font-medium">{{ $item['quantity'] }}</p>
 
-                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
+                                    </td>
 
-                                    <p class="text-sm font-medium">${{ number_format($item['total'] / $item['quantity'], 2) }}</p>
+                                    <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
-                                </td>
+                                        <p class="text-sm font-medium">${{ number_format($item['total'] / $item['quantity'], 2) }}</p>
 
-                                <td class="px-2 py-3 w-full text-gray-800 text-sm">
+                                    </td>
 
-                                    <p class="text-sm font-medium">${{ number_format($item['total'],2) }}</p>
+                                    <td class="px-2 py-3 w-full text-gray-800 text-sm">
 
-                                </td>
+                                        <p class="text-sm font-medium">${{ number_format($item['total'],2) }}</p>
 
-                            </tr>
+                                    </td>
 
-                        @endforeach
+                                </tr>
+
+                            @endforeach
+
+                        @endif
 
                     </tbody>
 
@@ -691,7 +708,7 @@
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar el pedido?, No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar el pedido? No sera posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

@@ -10,13 +10,26 @@
 
         <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Productos</h1>
 
-        <div>
+        <div class="flex justify-between">
 
-            <input type="text" wire:model="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
+            <div>
 
-                <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Prooducto</button>
+                <input type="text" wire:model.debounce.500ms="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
 
-                <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
+                <select class="bg-white rounded-full text-sm" wire:model="pagination">
+
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+
+                </select>
+
+            </div>
+
+            <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Prooducto</button>
+
+            <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
         </div>
 
@@ -337,7 +350,15 @@
 
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Estado</span>
 
-                                {{ $product->status }}
+                                @if($product->status == 2)
+
+                                    <span class="bg-green-400 py-1 px-2 rounded-full text-white capitalize">activa</span>
+
+                                @else
+
+                                    <span class="bg-red-400 py-1 px-2 rounded-full text-white capitalize">inactiva</span>
+
+                                @endif
 
                             </td>
 
@@ -460,9 +481,9 @@
         <x-slot name="title">
 
             @if($create)
-                Nuevo Usuario
+                Nuevo Producto
             @elseif($edit)
-                Editar Usuario
+                Editar Producto
             @endif
 
         </x-slot>
@@ -732,30 +753,7 @@
 
             <div class=" mb-5 w-full">
 
-                <div
-                    wire:ignore
-                    x-data
-                    x-init="
-
-                        FilePond.setOptions({
-                            server: {
-                                process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
-                                    @this.upload('image', file, load, error, progress);
-                                },
-                                revert: (filename, load) => {
-                                    @this.removeUpload('image', filename, load);
-                                }
-                            },
-                            labelIdle: 'Selecciona la imagen del anticipo'
-                        });
-
-                        FilePond.create($refs.input)
-                    "
-                >
-
-                    <input type="file" x-ref="input">
-
-                </div>
+                <x-filepond wire:model="image" />
 
             </div>
 
@@ -804,11 +802,11 @@
     <x-jet-confirmation-modal wire:model="modalDelete">
 
         <x-slot name="title">
-            Eliminar Usuario
+            Eliminar producto
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar al usuario?, No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar el producto?, No sera posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

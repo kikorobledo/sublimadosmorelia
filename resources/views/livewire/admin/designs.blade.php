@@ -10,13 +10,26 @@
 
         <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Diseños</h1>
 
-        <div>
+        <div class="flex justify-between">
 
-            <input type="text" wire:model="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
+            <div>
 
-                <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Diseño</button>
+                <input type="text" wire:model.debounce.500ms="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
 
-                <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
+                <select class="bg-white rounded-full text-sm" wire:model="pagination">
+
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+
+                </select>
+
+            </div>
+
+            <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Diseño</button>
+
+            <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
         </div>
 
@@ -374,6 +387,8 @@
 
                         @error('name') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
+                        @error('slug') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
                     </div>
 
                 </div>
@@ -446,30 +461,7 @@
 
             <div class=" mb-5 w-full">
 
-                <div
-                    wire:ignore
-                    x-data
-                    x-init="
-
-                        FilePond.setOptions({
-                            server: {
-                                process: (fieldName, file, metadata, load, error, progress, abort, transfer, options) => {
-                                    @this.upload('image', file, load, error, progress);
-                                },
-                                revert: (filename, load) => {
-                                    @this.removeUpload('image', filename, load);
-                                }
-                            },
-                            labelIdle: 'Selecciona la imagen del anticipo'
-                        });
-
-                        FilePond.create($refs.input)
-                    "
-                >
-
-                    <input type="file" x-ref="input">
-
-                </div>
+                <x-filepond wire:model="image" />
 
             </div>
 
@@ -518,11 +510,11 @@
     <x-jet-confirmation-modal wire:model="modalDelete">
 
         <x-slot name="title">
-            Eliminar tamaño
+            Eliminar Diseño
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar el tamaño?, No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar el diseño? No sera posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

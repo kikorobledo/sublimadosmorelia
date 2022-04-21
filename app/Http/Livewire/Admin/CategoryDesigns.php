@@ -18,6 +18,7 @@ class CategoryDesigns extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination=10;
 
     public $category_id;
     public $name;
@@ -104,6 +105,8 @@ class CategoryDesigns extends Component
 
             $this->closeModal();
 
+            $this->updateCache();
+
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
@@ -129,6 +132,8 @@ class CategoryDesigns extends Component
 
             $this->closeModal();
 
+            $this->updateCache();
+
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
@@ -149,11 +154,19 @@ class CategoryDesigns extends Component
 
             $this->closeModal();
 
+            $this->updateCache();
+
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
             $this->closeModal();
         }
+    }
+
+    public function updateCache(){
+
+        cache()->put('categoriesDesign', CategoryDesign::with('subcategories')->get());
+
     }
 
     public function render()
@@ -162,7 +175,7 @@ class CategoryDesigns extends Component
         $categories = CategoryDesign::with('createdBy', 'updatedBy')
                                         ->where('name', 'LIKE', '%' . $this->search . '%')
                                         ->orderBy($this->sort, $this->direction)
-                                        ->paginate(10);
+                                        ->paginate($this->pagination);
 
         return view('livewire.admin.category-designs', compact('categories'))->layout('layouts.admin');
     }

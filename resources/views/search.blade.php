@@ -1,8 +1,14 @@
 <x-app-layout>
 
-    <figure class="mb-5">
+    <figure class="mb-5 hidden md:block">
 
-        <img class="w-full h-80 object-cover object-center" src="https://picsum.photos/800/600" alt="">
+        <img class="w-full h-80 object-cover object-center" src="{{ Storage::disk('images')->url($searchDesktop[0]->url) }}" alt="">
+
+    </figure>
+
+    <figure class="mb-5 md:hidden">
+
+        <img class="w-full h-80 object-cover object-center" src="{{ Storage::disk('images')->url($searchMobile[0]->url) }}" alt="">
 
     </figure>
 
@@ -10,39 +16,19 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10 relative" x-data="{'show':true}" id="div">
 
-            <div class=" hidden md:block mt-10">
+            <div class=" hidden md:block mt-10 space-y-3">
 
-                <div class="text-center">
+                @foreach ($videos  as $video)
 
-                    <a href="#" class=" tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">bautizo</a>
+                    <div class="text-center">
 
-                    <iframe class=" w-full mt-3" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F521609105622737%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                        <a href="{{ route('search'). "?name=" . $video->name }}" class=" tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">{{  $video->name }}</a>
 
-                </div>
+                        <iframe class=" w-full mt-3" src="{{ $video->url }}" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
-                <div class="text-center">
+                    </div>
 
-                    <a href="#" class=" tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">primera comunión</a>
-
-                    <iframe class=" w-full mt-3" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F169869817978594%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
-                </div>
-
-                <div class="text-center">
-
-                    <a href="#" class=" tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">cumpleaños</a>
-
-                    <iframe class=" w-full mt-3" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F650586145670366%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
-                </div>
-
-                <div class="text-center">
-
-                    <a href="#" class=" tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">funebres</a>
-
-                    <iframe class=" w-full mt-3" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F180471400564132%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
-                </div>
+                @endforeach
 
             </div>
 
@@ -58,7 +44,7 @@
 
                             <article class="text-center">
 
-                                <figure class="mb-2">
+                                <figure class="mb-2 h-44 md:h-60 flex items-end overflow-hidden">
 
                                     <img class=" object-cover object-center" src="{{ $design->imageUrl() }}" alt="">
 

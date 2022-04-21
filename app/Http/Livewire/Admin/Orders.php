@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin;
 use App\Models\Order;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Storage;
 
 class Orders extends Component
 {
@@ -17,6 +18,7 @@ class Orders extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination=10;
 
     public $order_id;
     public $date;
@@ -92,6 +94,12 @@ class Orders extends Component
 
             $order = Order::findorFail($this->order_id);
 
+            if($order->anticipo_image)
+                Storage::disk('orders')->delete($order->anticipo_image);
+
+            if($order->design_image)
+                Storage::disk('orders')->delete($order->design_image);
+
             $order->delete();
 
             $this->dispatchBrowserEvent('showMessage',['success', "El pedido ha sido eliminado con exito."]);
@@ -116,7 +124,7 @@ class Orders extends Component
                                 });
                             })
                             ->orderBy($this->sort, $this->direction)
-                            ->paginate(10);
+                            ->paginate($this->pagination);
 
         return view('livewire.admin.orders', compact('orders'));
     }

@@ -1,70 +1,72 @@
 <div class="glider-wrap">
-<div wire:init="loadDesigns" class="glider-contain">
 
-    @if($uuid)
+    <div wire:init="loadDesigns" class="glider-contain">
 
-        <ul class="glider-{{  $this->uuid }} mb-2">
+        @if($uuid)
 
-            @foreach ($designs as $design)
+            <ul class="glider-{{  $this->uuid }} mb-2">
 
-                <li class="{{ $loop->last ?  '' : 'mr-4' }}">
+                @foreach ($designs as $design)
 
-                    <article class="text-center">
+                    <li class="{{ $loop->last ?  '' : 'mr-4' }}">
 
-                        <figure class="mb-2">
+                        <article class="text-center">
 
-                            <img class=" object-cover object-center" src="{{ asset('storage/img/logo.png') }}" alt="">
+                            <figure class="mb-2 h-44 md:h-60 flex items-end">
 
-                        </figure>
+                                <img class="object-cover object-center" src="{{ $design->imageUrl() }}" alt="Design image">
 
-                        <h1 class=" uppercase font-light truncate">{{ $design['name'] }}</h1>
+                            </figure>
 
-                        <p class="mb-2">$ {{ $design['product']['price'] }}</p>
+                            <h1 class=" uppercase font-light truncate">{{ $design['name'] }}</h1>
 
-                        <a href="{{ route('designs.show', $design['slug']) }}" class="border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">Ver producto</a>
+                            <p class="mb-2">$ {{ $design['product']['price'] }}</p>
 
-                    </article>
+                            <a href="{{ route('designs.show', $design['slug']) }}" class="border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">Ver producto</a>
 
-                </li>
+                        </article>
 
-            @endforeach
+                    </li>
 
-        </ul>
+                @endforeach
 
-        <div role="tablist" class="dots-{{  $this->uuid }}"></div>
+            </ul>
 
-    @else
+            <div role="tablist" class="dots-{{  $this->uuid }}"></div>
 
-        <ul class="flex w-full mb-2 overflow-hidden">
+        @else
 
-            @for($i = 0; $i < 5; $i++)
+            <ul class="flex w-full mb-2 overflow-hidden">
 
-            <li class="mr-4">
+                @for($i = 0; $i < 5; $i++)
 
-                <div class="p-4 max-w-sm w-full mx-auto">
+                <li class="mr-4">
 
-                    <div class="animate-pulse flex flex-col justify-center space-y-2">
+                    <div class="p-4 max-w-sm w-full mx-auto">
 
-                      <div class="rounded bg-gray-300 h-48 w-48"></div>
+                        <div class="animate-pulse flex flex-col justify-center space-y-2">
 
-                      <div class="h-4 bg-gray-300 rounded w-full mx-auto"></div>
+                        <div class="rounded bg-gray-300 h-48 w-48"></div>
 
-                      <div class="h-4 bg-gray-300 rounded w-1/2 mx-auto"></div>
+                        <div class="h-4 bg-gray-300 rounded w-full mx-auto"></div>
 
-                      <div class="h-4 bg-gray-300 rounded w-1/2 mx-auto"></div>
+                        <div class="h-4 bg-gray-300 rounded w-1/2 mx-auto"></div>
+
+                        <div class="h-4 bg-gray-300 rounded w-1/2 mx-auto"></div>
+
+                        </div>
 
                     </div>
 
-                  </div>
+                </li>
 
-            </li>
+                @endfor
 
-            @endfor
+            </ul>
 
-        </ul>
-
-    @endif
+        @endif
 
 
-</div>
+    </div>
+
 </div>

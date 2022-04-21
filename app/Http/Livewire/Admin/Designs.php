@@ -7,8 +7,10 @@ use App\Models\Product;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
-use App\Models\SubCategoryDesign;
 use Livewire\WithFileUploads;
+use App\Models\CategoryProduct;
+use App\Models\SubCategoryDesign;
+use Illuminate\Support\Facades\Storage;
 
 class Designs extends Component
 {
@@ -23,9 +25,11 @@ class Designs extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination=10;
 
     public $design_id;
     public $name;
+    public $slug;
     public $sub_category_id;
     public $image;
     public $product_id;
@@ -33,6 +37,7 @@ class Designs extends Component
     protected function rules(){
         return[
             'name' => 'required',
+            'slug' => 'unique:designs,slug,' . $this->design_id,
             'sub_category_id' => 'required'
         ];
     }
@@ -59,6 +64,8 @@ class Designs extends Component
         $this->reset('design_id', 'name', 'sub_category_id', 'image', 'product_id');
         $this->resetErrorBag();
         $this->resetValidation();
+
+        $this->dispatchBrowserEvent('removeFiles');
     }
 
     public function openModalCreate(){
@@ -79,7 +86,6 @@ class Designs extends Component
         $this->design_id = $design['id'];
         $this->name = $design['name'];
         $this->sub_category_id = $design['sub_category_design_id'];
-        $this->image = $design['image'];
         $this->product_id = $design['product_id'];
 
         $this->edit = true;
@@ -93,6 +99,7 @@ class Designs extends Component
     }
 
     public function closeModal(){
+
         $this->resetall();
         $this->modal = false;
         $this->modalDelete = false;
@@ -100,18 +107,21 @@ class Designs extends Component
 
     public function create(){
 
+        $this->slug = Str::slug($this->name);
+
         $this->validate();
 
         try {
 
-            if($this->image)
+            if($this->image){
                 $design_image = $this->image->store('/', 'designs');
+            }
             else
                 $design_image = null;
 
             Design::create([
                 'name' => $this->name,
-                'slug' => Str::slug($this->name),
+                'slug' => $this->slug,
                 'sub_category_design_id' => $this->sub_category_id,
                 'product_id' => $this->product_id,
                 'image' => $design_image,
@@ -123,6 +133,8 @@ class Designs extends Component
 
             $this->closeModal();
 
+            $this->updateCache();
+
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
@@ -132,18 +144,27 @@ class Designs extends Component
 
     public function update(){
 
+        $this->slug = Str::slug($this->name);
+
         $this->validate();
+
+        try {
 
             $design = Design::findorFail($this->design_id);
 
-            if($this->image)
+            if($this->image){
+
+                Storage::disk('designs')->delete($design->image);
+
                 $design_image = $this->image->store('/', 'designs');
+            }
+
             else
                 $design_image = null;
 
             $design->update([
                 'name' => $this->name,
-                'slug' => Str::slug($this->name),
+                'slug' => $this->slug,
                 'sub_category_design_id' => $this->sub_category_id,
                 'product_id' => $this->product_id,
                 'image' => $design_image ? $design_image : $design->image,
@@ -151,11 +172,11 @@ class Designs extends Component
                 'created_by' => auth()->user()->id,
             ]);
 
-        try {
-
             $this->dispatchBrowserEvent('showMessage',['success', "El diseño ha sido actualizado con exito."]);
 
             $this->closeModal();
+
+            $this->updateCache();
 
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
@@ -171,17 +192,30 @@ class Designs extends Component
 
             $design = Design::findorFail($this->design_id);
 
+            Storage::disk('designs')->delete($design->image);
+
             $design->delete();
 
             $this->dispatchBrowserEvent('showMessage',['success', "El diseño ha sido eliminado con exito."]);
 
             $this->closeModal();
 
+            $this->updateCache();
+
         } catch (\Throwable $th) {
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
             $this->closeModal();
         }
+    }
+
+    public function updateCache(){
+
+        cache()->put('latestDesigns', Design::with('product')->orderBy('created_at', 'desc')->take(20)->get());
+        cache()->put('latestDesignsTextil', CategoryProduct::where('name', 'Textiles')->first()->designs()->with('product')->orderBy('created_at')->take(20)->get());
+        cache()->put('latestDesignsAluminium', CategoryProduct::where('name', 'Aluminios')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get());
+        cache()->put('latestDesignsIron', CategoryProduct::where('name', 'Aceros')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get());
+
     }
 
     public function render()
@@ -204,7 +238,7 @@ class Designs extends Component
                                 });
                             })
                             ->orderBy($this->sort, $this->direction)
-                            ->paginate(10);
+                            ->paginate($this->pagination);
 
 
         return view('livewire.admin.designs', compact('subCategories', 'products', 'designs'))->layout('layouts.admin');

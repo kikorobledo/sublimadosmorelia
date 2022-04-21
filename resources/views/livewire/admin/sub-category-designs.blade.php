@@ -4,13 +4,26 @@
 
         <h1 class="titulo-seccion text-3xl font-thin text-gray-500 mb-3">Subcategoría Diseños</h1>
 
-        <div>
+        <div class="flex justify-between">
 
-            <input type="text" wire:model="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
+            <div>
 
-                <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Subcategoría</button>
+                <input type="text" wire:model.debounce.500ms="search" placeholder="Buscar" class="bg-white rounded-full text-sm">
 
-                <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
+                <select class="bg-white rounded-full text-sm" wire:model="pagination">
+
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+
+                </select>
+
+            </div>
+
+            <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none hidden md:block">Agregar nuevo Subcategoría</button>
+
+            <button wire:click="openModalCreate" class="bg-gray-500 hover:shadow-lg hover:bg-gray-700 float-right mb-5 text-sm py-2 px-4 text-white rounded-full focus:outline-none md:hidden">+</button>
 
         </div>
 
@@ -405,11 +418,11 @@
     <x-jet-confirmation-modal wire:model="modalDelete">
 
         <x-slot name="title">
-            Eliminar tamaño
+            Eliminar Subcategoría
         </x-slot>
 
         <x-slot name="content">
-            ¿Esta seguro que desea eliminar el tamaño?, No sera posible recuperar la información.
+            ¿Esta seguro que desea eliminar la subcategoría? No sera posible recuperar la información.
         </x-slot>
 
         <x-slot name="footer">

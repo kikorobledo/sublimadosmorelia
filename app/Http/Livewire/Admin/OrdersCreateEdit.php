@@ -8,8 +8,9 @@ use App\Models\Design;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\OrderDetail;
-use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class OrdersCreateEdit extends Component
 {
@@ -204,13 +205,21 @@ class OrdersCreateEdit extends Component
 
             }
 
-            if($this->image_anticipo)
+            if($this->image_anticipo){
+
+                Storage::disk('orders')->delete($this->order->anticipo_image);
+
                 $anticipo_image = $this->image_anticipo->store('/', 'orders');
+            }
             else
                 $anticipo_image = null;
 
-            if($this->image_design)
+            if($this->image_design){
+
+                Storage::disk('orders')->delete($this->order->design_image);
+
                 $design_image = $this->image_design->store('/', 'orders');
+            }
             else
                 $design_image = null;
 
@@ -225,7 +234,7 @@ class OrdersCreateEdit extends Component
                 'updated_by' => auth()->user()->id
             ]);
 
-            $this->dispatchBrowserEvent('showMessage',['success', "El pedido ha sido creado con exito."]);
+            $this->dispatchBrowserEvent('showMessage',['success', "El pedido ha sido procesado con exito."]);
 
             redirect()->route('admin.orders.index');
 

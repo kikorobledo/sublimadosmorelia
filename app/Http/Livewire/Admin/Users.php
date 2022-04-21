@@ -18,6 +18,7 @@ class Users extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination = 10;
 
     public $user_id;
     public $cellphone;
@@ -187,7 +188,7 @@ class Users extends Component
                         ->orWhere('email', 'LIKE', '%' . $this->search . '%')
                         ->orWhere('role', 'LIKE', '%' . $this->search . '%')
                         ->orderBy($this->sort, $this->direction)
-                        ->paginate(10);
+                        ->paginate($this->pagination);
 
         return view('livewire.admin.users', compact('users'))->layout('layouts.admin');
     }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Size;
 use App\Models\Color;
 use App\Models\Cupon;
+use App\Models\Entrie;
 use App\Models\SubCategoryDesign;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -38,6 +39,10 @@ class Product extends Model
 
     public function sizes(){
         return $this->belongsToMany(Size::class)->withPivot(['price']);
+    }
+
+    public function entries(){
+        return $this->belongsToMany(Entrie::class)->withPivot(['price', 'quantity']);
     }
 
     public function designs(){

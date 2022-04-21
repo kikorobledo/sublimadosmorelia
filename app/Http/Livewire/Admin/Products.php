@@ -9,8 +9,9 @@ use Livewire\Component;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
-use App\Models\CategoryProduct;
 use Livewire\WithFileUploads;
+use App\Models\CategoryProduct;
+use Illuminate\Support\Facades\Storage;
 
 class Products extends Component
 {
@@ -25,6 +26,7 @@ class Products extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination=10;
 
     public $product_id;
     public $name;
@@ -71,6 +73,8 @@ class Products extends Component
         $this->reset('product_id', 'category_id','name','image', 'description', 'price', 'status','purchase_price', 'colorsList', 'sizesList','sizesPrice');
         $this->resetErrorBag();
         $this->resetValidation();
+
+        $this->dispatchBrowserEvent('removeFiles');
     }
 
     public function openModalCreate(){
@@ -122,9 +126,11 @@ class Products extends Component
     }
 
     public function closeModal(){
+
         $this->resetall();
         $this->modal = false;
         $this->modalDelete = false;
+
     }
 
     public function create(){
@@ -161,7 +167,6 @@ class Products extends Component
                 }
             }
 
-
             $this->dispatchBrowserEvent('showMessage',['success', "El producto ha sido creado con exito."]);
 
             $this->closeModal();
@@ -181,8 +186,13 @@ class Products extends Component
 
             $product = Product::findorFail($this->product_id);
 
-            if($this->image)
+            if($this->image){
+
+                Storage::disk('products')->delete($product->image);
+
                 $design_image = $this->image->store('/', 'products');
+
+            }
             else
                 $design_image = null;
 
@@ -229,6 +239,8 @@ class Products extends Component
 
             $product = Product::findorFail($this->product_id);
 
+            Storage::disk('products')->delete($product->image);
+
             $product->delete();
 
             $this->dispatchBrowserEvent('showMessage',['success', "El producto ha sido eliminado con exito."]);
@@ -249,7 +261,7 @@ class Products extends Component
                                 ->where('name', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('description', 'LIKE', '%' . $this->search . '%')
                                 ->orderBy($this->sort, $this->direction)
-                                ->paginate(10);
+                                ->paginate($this->pagination);
 
         $categories = CategoryProduct::all();
 

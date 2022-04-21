@@ -15,8 +15,8 @@ class CreateColorProductTable extends Migration
     {
         Schema::create('color_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->references('id')->on('products');
-            $table->foreignId('color_id')->constrained()->references('id')->on('colors');
+            $table->foreignId('product_id')->constrained()->references('id')->on('products')->onDelete('cascade');
+            $table->foreignId('color_id')->constrained()->references('id')->on('colors')->onDelete('cascade');
             $table->timestamps();
         });
     }

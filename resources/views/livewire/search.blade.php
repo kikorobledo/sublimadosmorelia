@@ -14,7 +14,7 @@
 
                 </button>
 
-                <input name="name" wire:model="search" type="text" class="border-none mr-auto w-full rounded-lg outline-none focus:ring-1 focus:ring-black inline-block" autofocus autocomplete="off" placeholder="Buscar..">
+                <input name="name" wire:model.debounce.500ms="search" type="text" class="border-none mr-auto w-full rounded-lg outline-none focus:ring-1 focus:ring-black inline-block" autofocus autocomplete="off" placeholder="Buscar..">
 
             </form>
 

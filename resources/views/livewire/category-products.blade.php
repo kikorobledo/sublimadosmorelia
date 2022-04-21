@@ -117,7 +117,7 @@
 
                         <article class="text-center">
 
-                            <figure class="mb-2">
+                            <figure class="mb-2 h-44 md:h-60 flex items-end overflow-hidden">
 
                                 <img class=" object-cover object-center" src="{{ $design->imageUrl() }}" alt="">
 

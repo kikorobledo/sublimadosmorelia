@@ -18,6 +18,7 @@ class Sizes extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination=10;
 
     public $size_id;
     public $name;
@@ -158,7 +159,7 @@ class Sizes extends Component
         $sizes = Size::with('createdBy', 'updatedBy')
                             ->where('name', 'LIKE', '%' . $this->search . '%')
                             ->orderBy($this->sort, $this->direction)
-                            ->paginate(10);
+                            ->paginate($this->pagination);
 
         return view('livewire.admin.sizes', compact('sizes'))->layout('layouts.admin');
     }

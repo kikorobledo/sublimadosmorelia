@@ -11,6 +11,10 @@ class CategoryController extends Controller
 
         $categoryProduct = CategoryProduct::where('slug', $request->slug)->first();
 
-        return view('categoriesproduct.show', compact('categoryProduct'));
+        $categoryDesktop = cache()->get('categoryDesktop')->shuffle()->take(1);
+
+        $catalogoMobile = cache()->get('catalogoMobile')->shuffle()->take(1);
+
+        return view('categoriesproduct.show', compact('categoryProduct', 'categoryDesktop', 'catalogoMobile'));
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\DesignController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,9 @@ Route::group(['middleware' => ['is.active', 'auth']], function (){
     Route::get('user_orders', UserOrders::class)->middleware('auth')->name('user_orders');
 
 });
+
+Route::get('auth/facebook', [SocialiteController::class, 'redirectToProvider'])->name('facebook');
+Route::get('auth/facebook/callback', [SocialiteController::class, 'handleProviderCallback'])->name('facebook_callback');
 
 
 

@@ -8,6 +8,11 @@ class CatalogoController extends Controller
 {
     public function __invoke()
     {
-        return view('catalogo');
+
+        $catalogoDesktop = cache()->get('catalogoDesktop')->shuffle()->take(1);
+
+        $catalogoMobile = cache()->get('catalogoMobile')->shuffle()->take(1);
+
+        return view('catalogo', compact('catalogoDesktop', 'catalogoMobile'));
     }
 }

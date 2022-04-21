@@ -1,16 +1,18 @@
 <x-app-layout>
 
     {{-- GliderJs --}}
-    <div class="glider-wrap">
+
+    <div class="glider-wrap hidden md:block">
 
         <div class=" glider-contain relative w-full">
 
             <div class="glider">
 
-            <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg.jpg') }}" alt=""></div>
-            <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg2.jpg') }}" alt=""></div>
-            <div class="bg-black "><img class="w-full h-menu object-cover object-center opacity-60" src="{{ asset('storage/img/bg3.jpg') }}" alt=""></div>
+                @foreach ($encabezadoDesktop as $image)
 
+                    <div class="bg-black"><img class="w-full h-menu object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($image->url) }}" alt=""></div>
+
+                @endforeach
 
             </div>
 
@@ -38,9 +40,57 @@
 
             </div>
 
-            <div class="border border-white mx-auto rounded-full md:absolute md:bottom-10 md:left-1/2 md:transform md:-translate-x-1/2 bg-white bg-opacity-20">
+            <div class="border border-white mx-auto rounded-full md:absolute md:bottom-10 md:left-1/2 md:transform md:-translate-x-1/2 bg-white bg-opacity-20 ">
 
                 <div role="tablist"  id="dots"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="glider-wrap md:hidden">
+
+        <div class=" glider-contain relative w-full">
+
+            <div class="glider2">
+
+                @foreach ($encabezadoMobile as $image)
+
+                    <div class="bg-black"><img class="w-full h-menu object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($image->url) }}" alt=""></div>
+
+                @endforeach
+
+            </div>
+
+            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hero-text2" >
+
+                <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Compra 2 y llevate 3</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">playeras</p>
+                <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+
+            </div>
+
+            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text2" >
+
+                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p>
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+
+            </div>
+
+            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text2" >
+
+                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p>
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+
+            </div>
+
+            <div class="border border-white mx-auto rounded-full md:absolute md:bottom-10 md:left-1/2 md:transform md:-translate-x-1/2 bg-white bg-opacity-20 ">
+
+                <div role="tablist"  id="dots2"></div>
 
             </div>
 
@@ -66,9 +116,9 @@
     {{-- Promo --}}
     <div class="relative mb-8">
 
-        <div class="bg-black hidden md:block"><img class="w-full h-96 object-cover object-center opacity-60" src="{{ asset('storage/img/bg.jpg') }}" alt=""></div>
+        <div class="bg-black hidden md:block"><img class="w-full h-96 object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($banner1Desktop[0]['url']) }}" alt=""></div>
 
-        <div class="bg-black md:hidden"><img class="w-full h-40 object-cover object-center opacity-60" src="{{ asset('storage/img/bg2.jpg') }}" alt=""></div>
+        <div class="bg-black md:hidden"><img class="w-full h-40 object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($banner1Mobile[0]['url']) }}" alt=""></div>
 
         <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" >
 
@@ -119,9 +169,9 @@
     {{-- Printing --}}
     <div class="relative mb-8">
 
-        <div class="bg-black hidden md:block"><img class="w-full h-96 object-cover object-center opacity-60" src="{{ asset('storage/img/bg2.jpg') }}" alt=""></div>
+        <div class="bg-black hidden md:block"><img class="w-full h-96 object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($banner2Desktop[0]['url']) }}" alt=""></div>
 
-        <div class="bg-black md:hidden"><img class="w-full h-40 object-cover object-center opacity-60" src="{{ asset('storage/img/bg3.jpg') }}" alt=""></div>
+        <div class="bg-black md:hidden"><img class="w-full h-40 object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($banner2Mobile[0]['url']) }}" alt=""></div>
 
         <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" >
 
@@ -136,6 +186,7 @@
     </div>
 
     {{-- Video --}}
+
     <div class="mb-16 container px-2">
 
         <div class="text-center mb-8">
@@ -144,37 +195,29 @@
 
         </div>
 
-        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div class="glider-wrap">
 
-            <div class="text-center ">
+            <div class=" glider-contain relative w-full">
 
-                <iframe class="mx-auto w-full md:w-2/3 h-full  mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F521609105622737%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                <div class="glider3">
 
-                <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">bautizo</a>
+                    @foreach ($videos as $video)
 
-            </div>
+                        <div class="text-center overflow-hidden py-1">
 
-            <div class="text-center">
+                            <iframe class="mx-auto  mb-2 hidden md:block" src="{{ $video->url }}" width="560" height="314" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
-                <iframe class="mx-auto  w-full md:w-2/3 h-full mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F169869817978594%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                            <iframe class="mx-auto  mb-2 md:hidden" src="{{ $video->url }}" width="375" height="210" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
-                <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">primera comunión</a>
+                            <a href="{{ route('search'). "?name=" . $video->name }}" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">{{ $video->name }}</a>
 
-            </div>
+                        </div>
 
-            <div class="text-center">
+                    @endforeach
 
-                <iframe class="mx-auto w-full md:w-2/3 h-full mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F650586145670366%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </div>
 
-                <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">cumpleaños</a>
-
-            </div>
-
-            <div class="text-center">
-
-                <iframe class="mx-auto w-full md:w-2/3 h-full mb-2" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F180471400564132%2F&show_text=false&width=560&t=0" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
-                <a href="#" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">funebres</a>
+                <div role="tablist"  id="dots3"></div>
 
             </div>
 
@@ -202,21 +245,70 @@
     <script>
 
         var slider = new Glider(document.querySelector('.glider'), {
-                rewind:true,
-                slidesToScroll: 1,
-                slidesToShow: 1,
-                dots: '#dots',
-                autoplay: true
-            });
+                                    rewind:true,
+                                    slidesToScroll: 1,
+                                    slidesToShow: 1,
+                                    dots: '#dots',
+                                    autoplay: true
+                                });
 
-        slideAutoPaly(slider, '.glider');
+        var slider2 = new Glider(document.querySelector('.glider2'), {
+                                    rewind:true,
+                                    slidesToScroll: 1,
+                                    slidesToShow: 1,
+                                    dots: '#dots2',
+                                    autoplay: true
+                                });
 
-        function slideAutoPaly(glider, selector, delay = 5000, repeat = true) {
+        new Glider(document.querySelector('.glider3'), {
+                            rewind:true,
+                            slidesToScroll: 1,
+                            slidesToShow: 1,
+                            dots: '#dots3',
+                            autoplay: false,
+                            draggable: true,
+                            responsive: [
+                                            {
+                                                breakpoint: 640,
+                                                settings: {
+                                                    slidesToScroll: 2.5,
+                                                    slidesToShow: 1,
+                                                }
+                                            },
+                                            {
+                                                breakpoint: 768,
+                                                settings: {
+                                                    slidesToScroll: 3.5,
+                                                    slidesToShow: 1,
+                                                }
+                                            },
+                                            {
+                                                breakpoint: 1024,
+                                                settings: {
+                                                    slidesToScroll: 4.5,
+                                                    slidesToShow: 1,
+                                                }
+                                            },
+                                            {
+                                                breakpoint: 1280,
+                                                settings: {
+                                                    slidesToScroll: 5.5,
+                                                    slidesToShow: 2,
+                                                }
+                                            }
+                                        ]
+                            });
+
+        slideAutoPaly(slider, '.glider', '.hero-text');
+
+        slideAutoPaly(slider2, '.glider2', '.hero-text2');
+
+        function slideAutoPaly(glider, selector, text, delay = 5000, repeat = true) {
             let autoplay = null;
             const slidesCount = glider.track.childElementCount;
             let nextIndex = 1;
             let pause = true;
-            const heroTexts = document.querySelectorAll('.hero-text');
+            const heroTexts = document.querySelectorAll(text);
             const dots = document.querySelectorAll('.glider-dot');
 
             function slide() {

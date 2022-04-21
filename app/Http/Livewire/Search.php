@@ -29,6 +29,11 @@ class Search extends Component
                                         $q->where('name', 'LIKE', '%' . $this->search . '%');
                                     });
                                 })
+                                ->orWhere(function($q){
+                                    $q->whereHas('product', function($q){
+                                        $q->where('name', 'LIKE', '%' . $this->search . '%');
+                                    });
+                                })
                                 ->get();
         else
             $designs = [];

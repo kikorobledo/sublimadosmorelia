@@ -14,6 +14,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+
+        User::create([
+            'name' => 'kiko',
+            'status' => 'activo',
+            'role' => 'admin',
+            'email' => 'correo@correo.com',
+            'password' => bcrypt('12345678')
+        ]);
+
         User::factory(200)->create();
     }
 }

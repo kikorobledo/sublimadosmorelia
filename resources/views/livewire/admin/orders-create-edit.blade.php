@@ -14,9 +14,9 @@
 
         <div class="rounded-xl border-t-2 border-green-500 shadow-lg p-8 bg-white col-span-2 lg:col-span-1 text-gray-600">
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3">
 
-                <div class="flex-auto mb-5">
+                <div class="flex-auto mb-2">
 
                     <div>
 
@@ -76,7 +76,7 @@
 
                 </div>
 
-                <div class="flex-auto mb-5">
+                <div class="flex-auto mb-2">
 
                     <div>
 
@@ -105,7 +105,7 @@
 
                 </div>
 
-                <div class="flex-auto mb-5">
+                <div class="flex-auto mb-2">
                     <div>
                         <Label>Anticipo</Label>
                     </div>
@@ -116,7 +116,7 @@
                                 $
                                 </span>
                             </div>
-                            <input type="number" class="bg-white rounded text-sm w-full pl-7 " wire:model.lazy="anticipo" placeholder="0.00">
+                            <input type="number" class="bg-white rounded text-sm w-full pl-7" wire:model.lazy="anticipo" placeholder="0.00">
                         </div>
                     </div>
                     <div>
@@ -128,9 +128,9 @@
 
             @if($order)
 
-                <div class="relative rounded-lg ">
+                <div class="relative rounded-lg">
 
-                    <div class="overflow-x-auto mb-2">
+                    <div class="overflow-x-auto mb-5">
 
                         <table class="rounded-lg w-full table-auto  xl:table-fixed">
 
@@ -240,17 +240,17 @@
 
                     </div>
 
-                    <div class="p-2 mb-2">
+                    <div class="p-2">
 
                         <p class="text-sm">Comentarios:</p>
 
-                        <textarea  wire:model.defer="description" class="bg-white rounded text-sm w-full"></textarea>
+                        <textarea  wire:model.defer="description" class="bg-white rounded text-sm w-full  mb-3"></textarea>
 
                         <p class="text-center md:text-right text-2xl font-bold">Total: ${{ number_format($order->total,2) }}</p>
 
                     </div>
 
-                    <div class="col-span-1 flex flex-col md:flex-row justify-between md:space-x-2">
+                    <div class="col-span-1 flex flex-col md:flex-row justify-between md:space-x-2 mb-3">
 
                         @if ($order)
 
@@ -421,7 +421,7 @@
 
                                 @if($order->anticipo_image)
 
-                                    <a href="{{ $order->anticipoUrl() }}" data-lightbox="{{ $order->id }}" data-title="Diseño final">
+                                    <a href="{{ $order->anticipoUrl() }}" data-lightbox="{{ $order->id }}" data-title="Anticipo">
                                         <img class="w-full rounded" src="{{ $order->anticipoUrl() }}" alt="Imagen">
                                     </a>
 
@@ -430,6 +430,7 @@
                             </div>
 
                         </div>
+
 
                         <div class="col-span-1">
 
@@ -557,7 +558,6 @@
                 open:false,
                 search:'',
                 options: {},
-                limit:100,
                 init(modelo){
 
                     if(modelo == "cliente")
@@ -577,7 +577,6 @@
                         }
                         this.options = Object.keys(this.data)
                             .filter((key) => this.data[key].name.toLowerCase().includes(values.toLowerCase()))
-                            .slice(0, this.limit)
                             .reduce((options, key) => {
                                 options[key] = this.data[key]
                                 return options
@@ -586,7 +585,6 @@
                 },
                 resetOptions: function() {
                     this.options = Object.keys(this.data)
-                        .slice(0,this.limit)
                         .reduce((options, key) => {
                             options[key] = this.data[key]
                             return options

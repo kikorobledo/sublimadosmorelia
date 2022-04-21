@@ -1,7 +1,11 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <img class="h-64 w-auto" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
+            <a href="{{ route('home') }}" class="mx-auto">
+                <img class="h-64 w-auto" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
+            </a>
+
+            <p class="tracking-widest font-light text- text-center text-2xl">Sublimados Morelia</p>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

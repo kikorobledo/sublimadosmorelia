@@ -18,6 +18,7 @@ class Colors extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination=10;
 
     public $color_id;
     public $name;
@@ -158,7 +159,7 @@ class Colors extends Component
         $colors = Color::with('createdBy', 'updatedBy')
                             ->where('name', 'LIKE', '%' . $this->search . '%')
                             ->orderBy($this->sort, $this->direction)
-                            ->paginate(10);
+                            ->paginate($this->pagination);
 
         return view('livewire.admin.colors', compact('colors'))->layout('layouts.admin');
     }

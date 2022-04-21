@@ -25,6 +25,14 @@ class UserOrders extends Component
 
     }
 
+    public function sendWhastapp($order){
+
+        $mensaje = "https://api.whatsapp.com/send?phone=+5214431992866&text=Sublimados%20Morelia.%0ASolicito%20información%20de:%0APedido%3A%20%23" . $order['number'] . "%0ATotal:%20%24" . $order['total'];
+
+        $this->dispatchBrowserEvent('sendWhatsApp',$mensaje);
+
+    }
+
     public function render()
     {
         $orders = Order::where('client_id', auth()->user()->id)

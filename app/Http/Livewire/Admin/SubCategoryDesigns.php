@@ -19,6 +19,7 @@ class SubCategoryDesigns extends Component
     public $search;
     public $sort = 'id';
     public $direction = 'desc';
+    public $pagination=10;
 
     public $subCategory_id;
     public $name;
@@ -173,7 +174,7 @@ class SubCategoryDesigns extends Component
                                                 });
                                             })
                                             ->orderBy($this->sort, $this->direction)
-                                            ->paginate(10);
+                                            ->paginate($this->pagination);
 
         return view('livewire.admin.sub-category-designs', compact('subCategories', 'categories'))->layout('layouts.admin');
     }

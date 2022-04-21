@@ -20,6 +20,8 @@ class Cupons extends Component
 
     public function applyCupon(){
 
+        $this->message = '';
+
         $this->cupon = Cupon::where('code', $this->code)->first();
 
         if($this->order){

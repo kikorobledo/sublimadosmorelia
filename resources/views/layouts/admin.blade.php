@@ -50,7 +50,7 @@
 
                             <img class="h-10" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
 
-                            <span class="text-semibold text-lg ml-3">Sublimados Morelia</span>
+                            <span class="text-semibold text-lg ml-3 text-gray-600">Sublimados Morelia</span>
 
                         </a>
 
@@ -66,9 +66,9 @@
                     </div>
 
                     {{-- Nav --}}
-                    <nav class="p-4 text-gray-500" x-data="{open:true, openCategories:true, openProducts:true}">
+                    <nav class="p-4 text-gray-600" x-data="{open:true, openCategories:true, openProducts:true}">
 
-                        <p class="uppercase font-semibold text-md mb-4 tracking-wider text-gray-500">Administración</p>
+                        <p class="uppercase font-semibold text-md mb-4 tracking-wider text-gray-600">Administración</p>
 
                         <a href=" {{ route('admin.users') }} " class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
 
@@ -101,7 +101,7 @@
                         </div>
 
                         <div
-                            x-transition:enter="transition duration-2000 transform ease-out"
+                            x-transition:enter="transition duration-500 transform ease-out"
                             x-transition:leave="transition duration-200 transform ease-in"
                             x-transition:leave-end="opacity-0 scale-90"
                             x-transition:enter-start="scale-75"
@@ -162,7 +162,7 @@
                         </div>
 
                         <div
-                            x-transition:enter="transition duration-2000 transform ease-out"
+                            x-transition:enter="transition duration-500 transform ease-out"
                             x-transition:leave="transition duration-200 transform ease-in"
                             x-transition:leave-end="opacity-0 scale-90"
                             x-transition:enter-start="scale-75"
@@ -207,6 +207,42 @@
                             </svg>
 
                             Pedidos
+                        </a>
+
+                        <a href=" {{ route('admin.cupons') }} " class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z" />
+                              </svg>
+
+                            Cupones
+                        </a>
+
+                        <a href=" {{ route('admin.entries') }} " class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4 " fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />
+                              </svg>
+
+                            Entradas
+                        </a>
+
+                        <a href=" {{ route('admin.images') }} " class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
+
+                            Banners
+                        </a>
+
+                        <a href=" {{ route('admin.videos') }} " class="mb-3 capitalize font-medium text-md hover:text-teal-600 transition ease-in-out duration-500 flex hover  hover:bg-gray-100 p-2 px-4 rounded-xl">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+
+                            Videos
                         </a>
 
                     </nav>

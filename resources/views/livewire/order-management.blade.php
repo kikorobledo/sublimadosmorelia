@@ -162,7 +162,17 @@
 
                 <textarea wire:model.defer="description" rows="3" class="bg-white rounded text-sm w-full focus:border-black focus:ring-0 cursor-pointer mb-4 md:mb-0"></textarea>
 
-                <label class="font-semibold text-sm">Cupones:</label>
+                @foreach (Cart::content() as $item)
+
+                    @if (isset($item->options['cupon']))
+
+                        <label class="font-semibold text-sm">Cupones:</label>
+
+                    @endif
+
+                    @break
+
+                @endforeach
 
                 <div class="flex space-x-3">
 
