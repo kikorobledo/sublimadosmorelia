@@ -16,6 +16,11 @@ class AddToCart extends Component
     public $total;
     public $quantity = 1;
 
+    protected $validationAttributes = [
+        'color' => 'Color',
+        'size' => 'Tamaño',
+    ];
+
     public function updatedQuantity(){
         if($this->quantity <= 0)
             $this->quantity = 1;
@@ -71,6 +76,18 @@ class AddToCart extends Component
 
     public function addCartItem(){
 
+        $original_price = $this->price;
+
+        foreach(Cart::content() as $item){
+
+            if($item->options['product'] == $this->design->product->id && isset($item->options['cupon'])){
+
+                $this->price = $item->price;
+
+            }
+
+        }
+
         if($this->design->product->colors->count() && $this->design->product->sizes->count()){
             $size = json_decode($this->size);
 
@@ -86,7 +103,7 @@ class AddToCart extends Component
                     'image' => $this->design->imageUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
-                    'original_price' => $this->price,
+                    'original_price' => $original_price,
                     ]
             ]);
         }
@@ -102,7 +119,7 @@ class AddToCart extends Component
                     'image' => $this->design->imageUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
-                    'original_price' => $this->price,
+                    'original_price' => $original_price,
                     ]
             ]);
 
@@ -120,7 +137,7 @@ class AddToCart extends Component
                     'image' => $this->design->imageUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
-                    'original_price' => $this->price,
+                    'original_price' => $original_price,
                     ]
             ]);
         }else{
@@ -135,11 +152,13 @@ class AddToCart extends Component
                     'image' => $this->design->imageUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
-                    'original_price' => $this->price,
+                    'original_price' => $original_price,
                     ]
             ]);
 
         }
+
+        $this->dispatchBrowserEvent('showMessage',['success', "Se agrego al carrito con exito."]);
 
     }
 

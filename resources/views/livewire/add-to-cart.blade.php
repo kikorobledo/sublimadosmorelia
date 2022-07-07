@@ -1,4 +1,4 @@
-<div>
+<div class="p-2">
 
     <p class=" text-2xl mb-5">${{ number_format($total, 2) }}</p>
 

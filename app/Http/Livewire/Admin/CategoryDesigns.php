@@ -30,7 +30,15 @@ class CategoryDesigns extends Component
         ];
     }
 
+    protected $validationAttributes = [
+        'name' => 'Nombre'
+    ];
+
     public function updatingSearch(){
+        $this->resetPage();
+    }
+
+    public function updatedPagination(){
         $this->resetPage();
     }
 

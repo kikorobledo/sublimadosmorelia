@@ -29,7 +29,7 @@ class OrdersCreateEdit extends Component
     public $order;
     public $order_id;
     public $client_id;
-    public $anticipo = 0;
+    public $anticipo;
     public $status;
     public $image_anticipo;
     public $image_design;
@@ -42,6 +42,11 @@ class OrdersCreateEdit extends Component
     public $aux;
 
     protected $listeners = ['addProduct', 'render'];
+
+    protected $validationAttributes = [
+        'client_id' => 'Cliente',
+        'status' => 'Status'
+    ];
 
     public function updatingSearch(){
         $this->resetPage();
@@ -75,6 +80,8 @@ class OrdersCreateEdit extends Component
                 'anticipo' => $this->anticipo ? $this->anticipo : null,
                 'created_by' => auth()->user()->id,
             ]);
+
+            $this->dispatchBrowserEvent('trix-initialize');
 
         }
 

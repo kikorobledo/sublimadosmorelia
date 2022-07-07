@@ -30,6 +30,11 @@ class Videos extends Component
         ];
     }
 
+    protected $validationAttributes = [
+        'name' => 'Nombre',
+        'url' => 'URL',
+    ];
+
     public function updatingSearch(){
         $this->resetPage();
     }

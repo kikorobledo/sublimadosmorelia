@@ -1,16 +1,16 @@
 <tr class="text-xs text-gray-500 bg-white" >
 
-    <td class="p-3 text-center">
+    <td class="py-3">
 
-        <div class="flex items-center justify-center lg:justify-start ">
-            <div class="flex-shrink">
+        <div class="flex items-center flex-col">
+            <div>
                 @if($design->image)
-                    <img class="w-10 lg:w-10 rounded" src="/storage/{{ $design->image }}" alt="{{ $design->name }}">
+                    <img class="w-10 lg:w-10 rounded" src="{{ $design->imageUrl() }}" alt="{{ $design->name }}">
                 @else
                     <img class="w-10 lg:w-10 rounded" src="{{ asset('storage/img/logo2.png') }}" alt="{{ $design->name }}">
                 @endif
             </div>
-            <div class="ml-4">
+            <div class="">
                 <div class="text-sm text-left font-medium mb-1">
                     {{ $design->name }}
                 </div>
@@ -19,7 +19,7 @@
 
     </td>
 
-    <td class=" w-full p-3 text-center flex flex-col space-y-1">
+    <td class="w-full p-3 text-center flex flex-col space-y-1">
 
         <select wire:model="aux"  class="bg-white rounded text-sm w-full">
 

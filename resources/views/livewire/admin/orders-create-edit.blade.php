@@ -29,7 +29,7 @@
                         @click.away="closeSelect()"
                         @keydown.escape="closeSelect()">
 
-                        <div class="flex w-full p-2  cursor-pointer" @click="open=true">
+                        <div class="flex w-full p-2  cursor-pointer" x-on:click="focus()">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5 mr-4">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -47,7 +47,7 @@
 
                             <div class="relative z-30 w-full p-2 bg-white">
 
-                                <input placeholder="Buscar.." type="text" x-model="search" x-on:click.prevent.stop="open=true" class="block w-full  border border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm sm:leading-5">
+                                <input id="clienteIinput" placeholder="Buscar.." type="text" x-model="search" x-on:click.prevent.stop="open=true" class="block w-full  border border-gray-300 rounded-md focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 sm:text-sm sm:leading-5">
 
                             </div>
 
@@ -85,7 +85,7 @@
 
                     <div>
 
-                        <select class="bg-white rounded text-sm w-full capitalize" wire:model.defer="status">
+                        <select class="bg-white rounded text-sm w-full capitalize" wire:model.lazy="status">
                             <option selected>Selecciona una opción</option>
                             <option  value="nueva">nueva</option>
                             <option  value="aceptada">aceptada</option>
@@ -107,7 +107,11 @@
 
                 <div class="flex-auto mb-2">
                     <div>
-                        <Label>Anticipo</Label>
+                        @if ($status != "pagada")
+                            <Label>Anticipo</Label>
+                        @else
+                            <Label>Pago</Label>
+                        @endif
                     </div>
                     <div>
                         <div class="relative rounded-md shadow-sm">
@@ -244,9 +248,9 @@
 
                         <p class="text-sm">Comentarios:</p>
 
-                        <textarea  wire:model.defer="description" class="bg-white rounded text-sm w-full  mb-3"></textarea>
+                        <x-rich-text wire:model.defer="description"  :initial-value="$description" />
 
-                        <p class="text-center md:text-right text-2xl font-bold">Total: ${{ number_format($order->total,2) }}</p>
+                        <p class="text-center md:text-right text-2xl font-bold mt-3">Total: ${{ number_format($order->total,2) }}</p>
 
                     </div>
 
@@ -558,6 +562,12 @@
                 open:false,
                 search:'',
                 options: {},
+                focus(){
+                    this.open=true
+                    setTimeout(() => {
+                        document.getElementById('clienteIinput').focus()
+                    }, "100")
+                },
                 init(modelo){
 
                     if(modelo == "cliente")

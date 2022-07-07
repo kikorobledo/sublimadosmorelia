@@ -46,7 +46,7 @@
                     <div class="w-100 flex-none bg-white border-b-2 border-b-grey-200 flex flex-row p-5 pr-0 justify-between items-center h-20 ">
 
                         {{-- Logo --}}
-                        <a href="/" class="flex items-center justify-between|">
+                        <a href="{{ route('admin.index') }}" class="flex items-center justify-between|">
 
                             <img class="h-10" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
 
@@ -269,7 +269,7 @@
                         </div>
 
                         {{-- Logo --}}
-                        <img x-show.transition.in.duration.1000ms.out.duration.200msw="!open_side_menu"  class="h-8 w-8 " src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
+                       <a href="{{  route('home') }}"><img x-show.transition.in.duration.1000ms.out.duration.200msw="!open_side_menu"  class="h-8 w-8 " src="{{ asset('storage/img/logo2.png') }}" alt="Logo"></a>
 
                         <!-- Profile dropdown -->
                         <div class="ml-3 relative z-50" x-data="{ open_drop_down:false }">

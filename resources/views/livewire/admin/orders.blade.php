@@ -297,7 +297,6 @@
 
                 </thead>
 
-
                 <tbody class="divide-y divide-gray-200 flex-1 sm:flex-none ">
 
                     @foreach($orders as $order)
@@ -319,13 +318,9 @@
                                 <div class="flex items-center justify-center lg:justify-start">
 
                                     <div class="flex-shrink-0 ">
-                                        @if($order->design_image)
-                                            <a href="{{ $order->designUrl() }}" data-lightbox="{{ $order->id }}" data-title="Diseño final">
-                                                <img class="w-10 lg:w-20 rounded" src="{{ $order->designUrl() }}" alt="Imagen">
-                                            </a>
-                                        @else
-                                            <img class="w-10 lg:w-20 rounded" src="{{ asset('storage/img/logo2.png') }}" alt="Logo">
-                                        @endif
+                                        <a href="{{ $order->designUrl() }}" data-lightbox="{{ $order->id }}" data-title="Diseño final">
+                                            <img class="w-10 lg:w-20 rounded" src="{{ $order->designUrl() }}" alt="Imagen">
+                                        </a>
                                     </div>
 
                                 </div>
@@ -365,7 +360,7 @@
 
                                 <span class="lg:hidden absolute cap top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Cliente</span>
 
-                                {{ $order->client->name }}
+                                <a href="{{ route('admin.users') . "?search=" . $order->client->name }}">{{ $order->client->name }}</a>
 
                             </td>
 
@@ -413,7 +408,7 @@
                                 <span class="lg:hidden absolute top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">Comentarios</span>
 
                                 @if ($order->description)
-                                    {{ Str::limit($order->description,100) }}
+                                    {!! Str::limit($order->description,200) !!}
                                 @else
                                     Sin descripción
                                 @endif
@@ -454,37 +449,32 @@
 
                                 <div class="flex justify-center lg:justify-start">
 
-                                    @if ($order->status == 'entregada')
+                                    <button
+                                        wire:click="openModalDetails({{  $order }})"
+                                        wire:loading.attr="disabled"
+                                        wire:target="openModalDetails({{  $order }})"
+                                        class="bg-green-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full hover:bg-green-700 flex focus:outline-none mr-2"
+                                    >
 
-                                        <button
-                                            wire:click="openModalDetails({{  $order }})"
-                                            wire:loading.attr="disabled"
-                                            wire:target="openModalDetails({{  $order }})"
-                                            class="bg-green-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full hover:bg-green-700 flex focus:outline-none mr-2"
-                                        >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                        </svg>
 
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
+                                        <p>Ver</p>
 
-                                            <p>Ver</p>
+                                    </button>
 
-                                        </button>
+                                    <a href="{{ route('admin.orders.edit', $order) }}" class="bg-blue-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-blue-700 flex focus:outline-none">
 
-                                    @else
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
 
-                                        <a href="{{ route('admin.orders.edit', $order) }}" class="bg-blue-400 hover:shadow-lg text-white text-xs md:text-sm px-3 py-2 rounded-full mr-2 hover:bg-blue-700 flex focus:outline-none">
+                                        <p>Editar</p>
 
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 mr-3">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                            </svg>
+                                    </a>
 
-                                            <p>Editar</p>
-
-                                        </a>
-
-                                    @endif
 
                                     <button
                                         wire:click="openModalDelete({{$order}})"
@@ -578,7 +568,7 @@
 
                         <p>Anticipo: <span class=" text-gray-500"> ${{ $anticipo }}</span></p>
 
-                        <a class="bg-green-500 text-white rounded-full py-1 px-1" href="{{ Storage::disk('orders')->url($anticipo_image) }}" data-lightbox="{{ $order_id }}" data-title="Anticipo">
+                        <a class="bg-green-500 text-white rounded-full py-1 px-1" href="{{ $anticipo_image ? Storage::disk('orders')->url($this->anticipo_image) : Storage::disk('public')->url('img/logo2.png'); }}" data-lightbox="{{ (int)$order_id }}" data-title="Anticipo">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -600,7 +590,7 @@
 
                 <table class="rounded-lg w-full">
 
-                    <thead class="rounded-lg shadow-xl w-full overflow-hidden table-auto  xl:table-fixed">
+                    <thead class="rounded-lg shadow-xl w-full overflow-hidden table-auto  xl:table-fixed border-gray-300 bg-gray-50">
 
                         <tr class="text-sm text-gray-500 uppercase text-left traling-wider">
 
@@ -686,7 +676,7 @@
 
                     <p>Comentarios:</p>
 
-                    <p class="text-justify text-sm text-gray-500">{{ $description }}</p>
+                    <p class="text-justify text-sm text-gray-500">{!! $description !!}</p>
 
                 </div>
 

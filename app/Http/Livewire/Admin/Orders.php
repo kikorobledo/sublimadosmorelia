@@ -30,7 +30,13 @@ class Orders extends Component
     public $image;
     public $order_content = [];
 
+    protected $queryString = ['search'];
+
     public function updatingSearch(){
+        $this->resetPage();
+    }
+
+        public function updatedPagination(){
         $this->resetPage();
     }
 
@@ -115,7 +121,7 @@ class Orders extends Component
 
     public function render()
     {
-        $orders = Order::with('createdBy', 'updatedBy')
+        $orders = Order::with('createdBy', 'updatedBy', 'client', 'orderDetails')
                             ->where('number', 'LIKE',  '%' . $this->search . '%')
                             ->orWhere('status', 'LIKE',  '%' . $this->search . '%')
                             ->orWhere(function($q){

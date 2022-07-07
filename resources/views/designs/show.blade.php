@@ -40,13 +40,13 @@
 
         </div>
 
-        <h3 class="uppercase tracking-wide font-light mb-5 text-sm md:text-lg mt-10">tal vez te interese ver otros productos relacionados con {{ $design->name }}.</h3>
+        <h3 class="uppercase tracking-wide font-light text-sm md:text-lg mt-2">tal vez te interese ver otros productos relacionados con {{ $design->name }}.</h3>
 
         @livewire('glider', ['designs' => $glider], key($design->id))
 
     </div>
 
-    @push('script')
+    @push('scripts')
 
         <script>
 

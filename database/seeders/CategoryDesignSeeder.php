@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Str;
 use App\Models\CategoryDesign;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,29 @@ class CategoryDesignSeeder extends Seeder
      */
     public function run()
     {
-        CategoryDesign::factory(15)->create();
+        CategoryDesign::Create([
+            'name' => 'Días festivos',
+            'slug' => Str::slug('Días festivos')
+        ]);
+
+        CategoryDesign::Create([
+            'name' => 'Deportes',
+            'slug' => Str::slug('Deportes')
+        ]);
+
+        CategoryDesign::Create([
+            'name' => 'Peliculas',
+            'slug' => Str::slug('Peliculas')
+        ]);
+
+        CategoryDesign::Create([
+            'name' => 'Series',
+            'slug' => Str::slug('Series')
+        ]);
+
+        CategoryDesign::Create([
+            'name' => 'Caricaturas',
+            'slug' => Str::slug('Caricaturas')
+        ]);
     }
 }

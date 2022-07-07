@@ -4,14 +4,18 @@
         {{ $product->name }}
 
     </td>
-    <td class="p-3 text-gray-800 text-center ">
+    <td class="p-3 text-gray-800 text-center">
 
         <input type="number" min="0" wire:model.defer="quantity" class="bg-white rounded-full text-sm w-20">
+        <br>
+        @error('quantity') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
     </td>
-    <td class="p-3 text-gray-800 text-center ">
+    <td class="p-3 text-gray-800 text-center">
 
         <input type="number" min="0" wire:model.defer="price" class="bg-white rounded-full text-sm w-20">
+        <br>
+        @error('price') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
     </td>
     <td class="p-3 text-gray-800 text-center ">

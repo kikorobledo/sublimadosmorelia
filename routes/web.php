@@ -10,6 +10,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\SetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ use App\Http\Controllers\SocialiteController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('setpassword/{email}', [SetPasswordController::class, 'create'])->name('setpassword');
+Route::post('setpassword', [SetPasswordController::class, 'store'])->name('setpassword.store');
 
 Route::get('/', HomeController::class)->name('home');
 

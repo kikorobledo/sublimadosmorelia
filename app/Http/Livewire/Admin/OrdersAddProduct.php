@@ -16,6 +16,11 @@ class OrdersAddProduct extends Component
     public $color;
     public $size;
 
+    protected $validationAttributes = [
+        'quantity' => 'Cantidad',
+        'aux' => 'Producto'
+    ];
+
     public function updatedAux(){
         $this->product = json_decode($this->aux, true);
     }

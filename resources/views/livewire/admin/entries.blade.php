@@ -634,7 +634,7 @@
                     wire:target="closeModal"
                     type="button"
                     class="bg-red-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-red-700 ml-auto focus:outline-none">
-                    Cerrar
+                    Finalizar
                 </button>
 
             </div>

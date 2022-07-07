@@ -127,7 +127,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
                             </svg>
-                        @elseif($order->status == 'aceptada')
+                        @elseif($order->status == 'aceptada' || $order->status == 'pagada')
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto text-green-500" viewBox="0 0 20 20" fill="currentColor">
                                 <path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z" />
                                 <path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM15 11h2a1 1 0 110 2h-2v-2z" />
@@ -172,7 +172,7 @@
                     {{-- Tabla de productos --}}
                     <div class="w-full p-1 rounded-md overflow-x-auto mb-2">
 
-                        <table class="rounded-lg w-full overflow-hidden table-auto   lg:table-fixed">
+                        <table class="rounded-lg w-full overflow-hidden table-auto lg:table-fixed">
 
                             <thead class="border-b border-gray-300 bg-gray-50 ">
 
@@ -193,13 +193,13 @@
 
                                     <tr class="bg-white">
 
-                                        <td class="px-3 py-3 w-full  text-gray-800 text-center">
+                                        <td class="py-3 text-gray-800 text-center" style="min-width: 150px">
 
-                                            <div class="flex items-center space-x-4 w-full">
+                                            <div class="flex items-start w-full flex-col lg:flex-row lg:space-x-3">
 
                                                 <img class="h-8 md:h-8 object-cover" src="{{ $orderDetail->design->imageUrl() }}" alt="Imagen del diseño">
 
-                                                <div class="text-left">
+                                                <div class="text-left text-sm ">
 
                                                     <h1 class="text-black">{{ $orderDetail->design->name }}</h1>
 
@@ -253,13 +253,13 @@
 
                     <div class=" grid grid-cols-1 md:grid-cols-2 bg-white shadow-2xl">
 
-                        <div class=" px-2">
+                        <div class=" px-2 text-left text-sm">
 
                             @if($order->description)
 
                                 <p class="font-semibold text-sm text-left">Comentarios:</p>
 
-                                <p class="text-justify mb-3">{{ $order->description }}</p>
+                                <div class="mb-3 border p-2 rounded-lg">{!! $order->description !!}</div>
 
                             @endif
 
@@ -377,7 +377,7 @@
 
     </div>
 
-    @push('script')
+    @push('scripts')
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 

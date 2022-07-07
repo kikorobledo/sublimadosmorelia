@@ -345,7 +345,7 @@
 
                                 @if($user->facebook)
 
-                                    {{ $user->facebook }}
+                                    <a href="{{ $user->facebook }}" target="_blank">Facebook</a>
 
                                 @else
 

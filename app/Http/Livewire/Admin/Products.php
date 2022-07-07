@@ -51,7 +51,21 @@ class Products extends Component
         ];
     }
 
+    protected $validationAttributes = [
+        'slug' => 'Nombre',
+        'category_id' => 'Categoría',
+        'purchase_price' => 'Precio de compra',
+        'price' => 'Precio de venta',
+        'status' => 'Estado',
+        'description' => 'Descripción',
+        'name' => 'Nombre'
+    ];
+
     public function updatingSearch(){
+        $this->resetPage();
+    }
+
+    public function updatedPagination(){
         $this->resetPage();
     }
 
@@ -257,7 +271,7 @@ class Products extends Component
     public function render()
     {
 
-        $products = Product::with('createdBy', 'updatedBy', 'colors', 'sizes')
+        $products = Product::with('createdBy', 'updatedBy', 'colors', 'sizes', 'categoryProduct')
                                 ->where('name', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere('description', 'LIKE', '%' . $this->search . '%')
                                 ->orderBy($this->sort, $this->direction)

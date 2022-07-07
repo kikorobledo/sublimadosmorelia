@@ -37,9 +37,8 @@ class Catalogo extends Component
                                     $b->where('name', $this->subcategoryDesignName);
                                 })->paginate(20);
         }else{
-            $designs = Design::orderBy('created_by', 'desc')->paginate(20);
+            $designs = Design::orderBy('created_at', 'DESC')->paginate(20);
         }
-
 
         return view('livewire.catalogo', compact('categoryDesigns','designs'));
     }

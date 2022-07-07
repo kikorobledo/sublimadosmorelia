@@ -16,7 +16,7 @@ class Cupons extends Component
     public $cuponList = [];
     public $orderDetailsCount = [];
 
-    protected $listeners = ['updateProductsQty'];
+    protected $listeners = ['updateProductsQty', 'checkQuantity'];
 
     public function applyCupon(){
 
@@ -134,27 +134,41 @@ class Cupons extends Component
 
                     $flag = false;
 
+                    $count = 0;
+
                     foreach(Cart::content() as  $item){
 
                         if($item->options->product == $this->cupon->product_id){
 
-                            if($item->qty < 10){
+                            $count = $count + $item->qty;
 
-                                $this->message = "Cupón para " . $this->cupon->product->name . " mínimo " . $this->cupon->min_quantity . " piezas.";
+                        }
 
-                                return;
+                    }
+
+                    if($count < $this->cupon->min_quantity){
+
+                        $this->message = "Cupón para " . $this->cupon->product->name . " mínimo " . $this->cupon->min_quantity . " piezas.";
+
+                        return;
+
+                    }else{
+
+                        foreach(Cart::content() as  $item){
+
+                            if($item->options->product == $this->cupon->product_id){
+
+                                $item->price = $item->price - $this->cupon->price;
+
+                                $array = $item->options->merge(['cupon' => $this->cupon->code]);
+
+                                Cart::update($item->rowId, ['options' => $array]);
+
+                                $this->cupon->update(['available' => $this->cupon->available - 1]);
+
+                                $flag = true;
+
                             }
-
-                            $item->price = $item->price - $this->cupon->price;
-
-                            $array = $item->options->merge(['cupon' => $this->cupon->code]);
-
-                            Cart::update($item->rowId, ['options' => $array]);
-
-                            $this->cupon->update(['available' => $this->cupon->available - 1]);
-
-                            $flag = true;
-
                         }
 
                     }
@@ -298,6 +312,47 @@ class Cupons extends Component
                 }
 
             }
+        }
+
+    }
+
+    public function checkQuantity(){
+
+        $cupons = [];
+        $count = 0;
+
+        foreach(Cart::content() as $item){
+
+            if(isset($item->options['cupon']))
+                array_push($cupons, $item->options->cupon);
+
+        }
+
+        foreach($cupons as $cupon){
+
+            $aux = Cupon::where('code', $cupon)->first();
+
+            foreach(Cart::content() as $item){
+
+                if(isset($item->options['cupon'])){
+
+                    if($item->options['cupon'] == $aux->code){
+
+                        $count = $count + $item->qty;
+
+                    }
+                }
+
+            }
+
+            if($count < $aux->min_quantity){
+
+                $this->emit('removeCupon', $cupon);
+
+            }
+
+            $count = 0;
+
         }
 
     }

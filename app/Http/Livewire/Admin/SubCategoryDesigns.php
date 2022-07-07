@@ -32,7 +32,16 @@ class SubCategoryDesigns extends Component
         ];
     }
 
+    protected $validationAttributes = [
+        'name' => 'Nombre',
+        'category_id' => 'Categpría'
+    ];
+
     public function updatingSearch(){
+        $this->resetPage();
+    }
+
+    public function updatedPagination(){
         $this->resetPage();
     }
 

@@ -16,6 +16,18 @@ class EntrieAddProduct extends Component
 
     protected $listeners = ['entrie_id'];
 
+    protected function rules(){
+        return[
+            'price' => 'required',
+            'quantity' => 'required'
+        ];
+    }
+
+    protected $validationAttributes = [
+        'quantity' => 'Cantidad',
+        'price' => 'Precio'
+    ];
+
     public function entrie_id($id){
         $this->entrie_id = $id;
     }
@@ -23,6 +35,8 @@ class EntrieAddProduct extends Component
     public function create(){
 
         $entrie = Entrie::findorFail($this->entrie_id);
+
+        $this->validate();
 
         try {
 

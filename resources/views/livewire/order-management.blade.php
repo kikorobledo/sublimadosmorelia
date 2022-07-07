@@ -49,13 +49,13 @@
 
                         <tr class="bg-white">
 
-                            <td class="px-3 py-3 w-full  text-gray-800 text-center">
+                            <td class="py-3 text-gray-800 text-center" style="min-width: 150px">
 
-                                <div class="flex items-center space-x-4 w-full">
+                                <div class="flex items-start w-full flex-col">
 
                                     <img class="h-10 md:h-20 object-cover" src="{{ $item->options->image }}" alt="Imagen del diseño">
 
-                                    <div class="text-left">
+                                    <div class="text-left text-sm">
 
                                         <h1 class="text-black">{{ $item->name }}</h1>
 
@@ -160,45 +160,7 @@
 
                 <label class="font-semibold">Comentarios:</label>
 
-                <textarea wire:model.defer="description" rows="3" class="bg-white rounded text-sm w-full focus:border-black focus:ring-0 cursor-pointer mb-4 md:mb-0"></textarea>
-
-                @foreach (Cart::content() as $item)
-
-                    @if (isset($item->options['cupon']))
-
-                        <label class="font-semibold text-sm">Cupones:</label>
-
-                    @endif
-
-                    @break
-
-                @endforeach
-
-                <div class="flex space-x-3">
-
-                    @foreach (Cart::content() as $item)
-
-                        @if (isset($item->options['cupon']))
-
-                            <span class="rounded-full px-2 bg-black  text-white text-sm flex">
-
-                                <p class="mr-2">{{ $item->options->cupon }}</p>
-
-                                <button class="text-xs"
-                                    wire:click="removeCupon('{{ $item->options->cupon }}')"
-                                    wire:loading.attr="disabled"
-                                    wire:target="removeCupon('{{ $item->options->cupon }}')"
-                                >
-                                    X
-                                </button>
-
-                            </span>
-
-                        @endif
-
-                    @endforeach
-
-                </div>
+                <x-rich-text wire:model.defer="description" :initial-value="$description" />
 
             </div>
 

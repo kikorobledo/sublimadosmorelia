@@ -28,15 +28,20 @@ class Users extends Component
     public $status;
     public $role;
 
+    protected $queryString = ['search'];
+
     protected function rules(){
         return[
             'name' => 'required',
-
             'email' => 'required|email|unique:users,email,'. $this->user_id,
             'status' => 'required|in:activo,inactivo',
             'role' => 'required'
         ];
     }
+
+    protected $validationAttributes = [
+        'name' => 'Nombre'
+    ];
 
     public function updatingSearch(){
         $this->resetPage();

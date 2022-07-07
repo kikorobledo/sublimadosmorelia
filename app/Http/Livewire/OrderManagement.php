@@ -14,7 +14,7 @@ class OrderManagement extends Component
     public $quantity;
     public $description;
 
-    protected $listeners = ['render'];
+    protected $listeners = ['render', 'removeCupon'];
 
     public function changeQuantity($i, $id){
 
@@ -35,6 +35,8 @@ class OrderManagement extends Component
 
         $this->emitTo('dropdown-cart', 'render');
 
+        $this->emitTo('cupons', 'checkQuantity');
+
         $this->render();
 
     }
@@ -44,6 +46,8 @@ class OrderManagement extends Component
         Cart::remove($id);
 
         $this->emitTo('dropdown-cart', 'render');
+
+        $this->emitTo('cupons', 'checkQuantity');
 
     }
 
@@ -108,6 +112,10 @@ class OrderManagement extends Component
             if(isset($item->options['cupon'])){
 
                 $cupon = Cupon::where('code', $item->options->cupon)->first();
+
+                if($order->hasCupon($cupon)){
+                    continue;
+                }
 
                 $order->cupons()->attach($cupon->id);
 

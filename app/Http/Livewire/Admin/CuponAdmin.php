@@ -41,7 +41,20 @@ class CuponAdmin extends Component
         ];
     }
 
+    protected $validationAttributes = [
+        'code' => 'Código',
+        'available' => 'Disponibilidad',
+        'min_quantity' => 'Cantidad mínima',
+        'status' => 'Status',
+        'product_id' => 'Producto',
+        'price' => 'Descuento'
+    ];
+
     public function updatingSearch(){
+        $this->resetPage();
+    }
+
+    public function updatedPagination(){
         $this->resetPage();
     }
 

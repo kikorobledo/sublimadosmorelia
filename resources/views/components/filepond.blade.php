@@ -2,7 +2,7 @@
 
     @push('styles')
 
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 
     @endpush
 

@@ -1,7 +1,9 @@
 <x-app-layout>
 
-    {{-- GliderJs --}}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v13.0&appId=1009774999918061&autoLogAppEvents=1" nonce="OvKjACLI"></script>
 
+    {{-- GliderJs --}}
     <div class="glider-wrap hidden md:block">
 
         <div class=" glider-contain relative w-full">
@@ -99,9 +101,9 @@
     </div>
 
     {{-- Latest Designs --}}
-    <div class="container md:mt-8 mt-4 px-2 mb-8">
+    <div class="container md:mt-8 px-2 my-8">
 
-        <div class="text-center tracking-widest mb-8">
+        <div class="text-center tracking-widest mb-4">
 
             <p class="text-2xl md:text-4xl uppercase font-bold mb-4">Los mas nuevos</p>
 
@@ -143,18 +145,14 @@
 
         </div>
 
-        <div class="w-full">
-
-            <iframe class=" w-auto md:w-2/3 mx-auto md:h-80 h-auto" src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FSublimadosmorelia%2Fvideos%2F3546625815448093%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>
-
-        </div>
+        <div class="fb-video ml-auto" data-href="https://www.facebook.com/Sublimadosmorelia/videos/1120111075508475/" data-allowfullscreen="false" data-width="500" data-show-text="false"><blockquote cite="https://www.facebook.com/Sublimadosmorelia/videos/1120111075508475/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Sublimadosmorelia/videos/1120111075508475/"></a></div>
 
     </div>
 
     {{-- Latest Designs Textil --}}
-    <div class="container md:mt-8 mt-4 px-2 mb-8">
+    <div class="container md:mt-8 px-2 mb-8">
 
-        <div class="text-center tracking-widest mb-8">
+        <div class="text-center tracking-widest mb-4">
 
             <p class="text-2xl md:text-4xl uppercase font-bold mb-4">Textiles</p>
 
@@ -186,8 +184,7 @@
     </div>
 
     {{-- Video --}}
-
-    <div class="mb-16 container px-2">
+    <div class="mb-8 container px-2">
 
         <div class="text-center mb-8">
 
@@ -203,11 +200,9 @@
 
                     @foreach ($videos as $video)
 
-                        <div class="text-center overflow-hidden py-1">
+                        <div class="text-center py-1">
 
-                            <iframe class="mx-auto  mb-2 hidden md:block" src="{{ $video->url }}" width="560" height="314" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-
-                            <iframe class="mx-auto  mb-2 md:hidden" src="{{ $video->url }}" width="375" height="210" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                            <div class="fb-video w-full mb-2" data-href="{{ $video->url }}" data-allowfullscreen="false" data-width="500" data-show-text="false"><blockquote cite="{{ $video->url }}" class="fb-xfbml-parse-ignore"><a href="{{ $video->url }}"></a></div>
 
                             <a href="{{ route('search'). "?name=" . $video->name }}" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">{{ $video->name }}</a>
 
@@ -228,7 +223,7 @@
     {{-- Latest Designs Metals --}}
     <div class="container px-2 mb-8">
 
-        <div class="text-center tracking-widest mb-8">
+        <div class="text-center tracking-widest mb-4">
 
             <p class="text-2xl md:text-4xl uppercase font-bold mb-4">Latas metalicas</p>
 
@@ -240,7 +235,7 @@
 
     </div>
 
-    @push('script')
+    @push('scripts')
 
     <script>
 

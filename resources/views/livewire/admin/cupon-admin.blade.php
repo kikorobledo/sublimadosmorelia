@@ -161,7 +161,7 @@
 
                         <th wire:click="order('min_quantity')" class="cursor-pointer px-3 py-3 hidden lg:table-cell">
 
-                            Cantidad Minima
+                            Cantidad Mínima
 
                             @if($sort == 'min_quantity')
 
@@ -373,7 +373,7 @@
 
                             <td class="px-3 py-3 w-full lg:w-auto capitalize p-3 text-gray-800 text-center  lg:border-0 border border-b block lg:table-cell relative lg:static">
 
-                                <span class="lg:hidden absolute cap top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">CAntidad Minima</span>
+                                <span class="lg:hidden absolute cap top-0 left-0 bg-blue-300 px-2 py-1 text-xs text-white font-bold uppercase rounded-br-xl">CAntidad Mínima</span>
 
                                 {{ $cupon->min_quantity }}
 
@@ -515,7 +515,7 @@
 
         <x-slot name="content">
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-2 space-y-2">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-2 ">
 
                 <div class="flex-auto ">
 
@@ -582,7 +582,7 @@
 
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-2 space-y-2">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-2">
 
                 <div class="flex-auto ">
 
@@ -609,7 +609,7 @@
 
                     <div>
 
-                        <Label>Cantidad minima</Label>
+                        <Label>Cantidad mínima</Label>
 
                     </div>
 
@@ -629,7 +629,7 @@
 
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-2 space-y-2">
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-2">
 
                 <div class="flex-auto mr-1 ">
 

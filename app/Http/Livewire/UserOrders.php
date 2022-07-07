@@ -17,7 +17,7 @@ class UserOrders extends Component
 
         $this->status = [
             'nueva' => Order::where('client_id', auth()->user()->id)->where('status', 'nueva')->count(),
-            'aceptada' => Order::where('client_id', auth()->user()->id)->where('status', 'aceptada')->count(),
+            'aceptada' => Order::where('client_id', auth()->user()->id)->where('status', 'aceptada')->count() + Order::where('client_id', auth()->user()->id)->where('status', 'pagada')->count(),
             'terminada' => Order::where('client_id', auth()->user()->id)->where('status', 'terminada')->count(),
             'entregada' => Order::where('client_id', auth()->user()->id)->where('status', 'entregada')->count(),
             'cancelada' => Order::where('client_id', auth()->user()->id)->where('status', 'cancelada')->count(),

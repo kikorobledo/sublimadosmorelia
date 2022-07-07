@@ -56,4 +56,10 @@ class Order extends Model
             : Storage::disk('public')->url('img/logo2.png');
 
     }
+
+    public function hasCupon($cupon){
+        return $this->cupons()
+            ->where('cupon_id', $cupon->getKey())
+            ->exists();
+    }
 }

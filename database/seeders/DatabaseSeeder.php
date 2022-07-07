@@ -38,10 +38,10 @@ class DatabaseSeeder extends Seeder
         $this->call(SubCategoryDesignSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(SizeSeeder::class);
-        $this->call(DesignSeeder::class);
+        /* $this->call(DesignSeeder::class); */
         $this->call(UserSeeder::class);
         $this->call(CuponSeeder::class);
-        $this->call(EntrieSeeder::class);
+        /* $this->call(EntrieSeeder::class); */
         $this->call(VideoSeeder::class);
         $this->call(BannerSeeder::class);
 

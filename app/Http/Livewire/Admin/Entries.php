@@ -35,7 +35,16 @@ class Entries extends Component
         ];
     }
 
+    protected $validationAttributes = [
+        'quantity' => 'Cantidad de productos',
+        'price' => 'Costo'
+    ];
+
     public function updatingSearch(){
+        $this->resetPage();
+    }
+
+    public function updatedPagination(){
         $this->resetPage();
     }
 
@@ -203,7 +212,7 @@ class Entries extends Component
     public function render()
     {
 
-        $entries = Entrie::with('products')->where('price', 'LIKE', '%' . $this->search . '%')
+        $entries = Entrie::with('products','createdBy', 'updatedBy')->where('price', 'LIKE', '%' . $this->search . '%')
                                             ->orderBy($this->sort, $this->direction)
                                             ->paginate($this->pagination);
 

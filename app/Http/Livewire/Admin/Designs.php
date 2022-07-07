@@ -37,12 +37,24 @@ class Designs extends Component
     protected function rules(){
         return[
             'name' => 'required',
+            'product_id' => 'required',
             'slug' => 'unique:designs,slug,' . $this->design_id,
             'sub_category_id' => 'required'
         ];
     }
 
+    protected $validationAttributes = [
+        'slug' => 'Nombre',
+        'name' => 'Nombre',
+        'sub_category_id' => 'Subcategoría',
+        'product_id' => 'Producto'
+    ];
+
     public function updatingSearch(){
+        $this->resetPage();
+    }
+
+    public function updatedPagination(){
         $this->resetPage();
     }
 
