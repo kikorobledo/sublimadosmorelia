@@ -10,6 +10,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\SetPasswordController;
 
 /*
@@ -23,7 +24,7 @@ use App\Http\Controllers\SetPasswordController;
 |
 */
 
-Route::get('setpassword/{email}', [SetPasswordController::class, 'create'])->name('setpassword');
+Route::get('setpassword', [SetPasswordController::class, 'create'])->name('setpassword');
 Route::post('setpassword', [SetPasswordController::class, 'store'])->name('setpassword.store');
 
 Route::get('/', HomeController::class)->name('home');
@@ -35,6 +36,8 @@ Route::get('categories/{slug}', [CategoryController::class, 'show'])->name('cate
 Route::get('design/{slug}', [DesignController::class, 'show'])->name('designs.show');
 
 Route::get('search', SearchController::class)->name('search');
+
+Route::get('invitation/{user}', [UserController::class, 'invitation'])->name('invitation');
 
 Route::group(['middleware' => ['is.active', 'auth']], function (){
 

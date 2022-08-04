@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Admin;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\URL;
+use App\Notifications\UserInvitationNotification;
 
 class Users extends Component
 {
@@ -112,22 +114,28 @@ class Users extends Component
 
         try {
 
-            User::create([
+            $user = User::create([
                 'name' => $this->name,
                 'email' => $this->email,
                 'cellphone' => $this->cellphone,
                 'facebook' => $this->facebook,
                 'status' =>  $this->status,
                 'role' => $this->role,
-                'password' => 'sublimadosmorelia',
+                'password' => 'password',
                 'created_by' => auth()->user()->id,
             ]);
+
+            $url = URL::signedRoute('invitation', $user);
+
+            $user->notify(new UserInvitationNotification($url));
 
             $this->dispatchBrowserEvent('showMessage',['success', "El usuario ha sido creado con exito."]);
 
             $this->closeModal();
 
         } catch (\Throwable $th) {
+
+            dd($th);
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
             $this->closeModal();

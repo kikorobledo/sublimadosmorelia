@@ -25,7 +25,6 @@ class StorePasswordRequest extends FormRequest
     {
         return [
             'password' => 'min:8|string|confirmed',
-            'email' => 'required|email'
         ];
     }
 }

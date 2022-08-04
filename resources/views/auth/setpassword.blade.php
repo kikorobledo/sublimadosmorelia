@@ -1,5 +1,7 @@
 <x-guest-layout>
+
     <x-jet-authentication-card>
+
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
         </x-slot>
@@ -8,7 +10,7 @@
 
             <div class="mb-4">
 
-                <p class="font-semibold tracking-widest text-center" >{{ session('message') }}</p>
+                <p class=" tracking-widest text-center" >{{ session('message') }}</p>
 
             </div>
 
@@ -18,8 +20,6 @@
 
         <form method="POST" action="{{ route('setpassword.store') }}">
             @csrf
-
-            <input type="hidden" name="email" value="{{ $email }}">
 
             <div class="mt-4">
                 <x-jet-label for="password" value="{{ __('Password') }}" />
@@ -37,5 +37,7 @@
                 </x-jet-button>
             </div>
         </form>
+
     </x-jet-authentication-card>
+
 </x-guest-layout>

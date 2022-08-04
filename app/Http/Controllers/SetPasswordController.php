@@ -2,29 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StorePasswordRequest;
 
 class SetPasswordController extends Controller
 {
     public function create(Request $request){
 
-        $email = $request->email;
-
-        return view('auth.setpassword', compact('email'));
+        return view('auth.setpassword');
 
     }
 
     public function store(StorePasswordRequest $request){
 
-        $user = User::where('email', $request->email)->first();
-
-        $user->update([
-            'password' => bcrypt($request->password)
+        auth()->user()->update([
+            'password' => Hash::make($request->password)
         ]);
-
-        auth()->login($user);
 
         return redirect()->route('home');
 

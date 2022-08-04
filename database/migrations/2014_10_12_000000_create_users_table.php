@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('facebook')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->enum('status',['activo','inactivo'])->default('activo');
             $table->enum('role',['usuario','admin'])->default('usuario');
             $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
