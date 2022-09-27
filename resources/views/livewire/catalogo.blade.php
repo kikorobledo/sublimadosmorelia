@@ -100,7 +100,7 @@
 
                             <figure class="mb-2 h-44 md:h-60 flex items-end overflow-hidden">
 
-                                <img class=" object-cover object-center  " src="{{ $design->imageUrl() }}" alt="">
+                                <img class=" object-cover object-center  " src="{{ $design->thumbUrl() }}" alt="">
 
                             </figure>
 

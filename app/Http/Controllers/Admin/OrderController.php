@@ -19,6 +19,8 @@ class OrderController extends Controller
 
     public function edit(Order $order){
 
+        $order->load('orderDetails.design', 'orderDetails.product');
+
         return view('admin.orders.edit', compact('order'));
     }
 }

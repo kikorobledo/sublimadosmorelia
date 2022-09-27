@@ -22,7 +22,7 @@ class Search extends Component
     {
 
         if($this->search)
-            $designs = Design::with('subCategoryDesign')
+            $designs = Design::with('subCategoryDesign', 'product')
                                 ->where('name', 'LIKE', '%' . $this->search . '%')
                                 ->orWhere(function($q){
                                     $q->whereHas('subCategoryDesign', function($q){
@@ -31,6 +31,11 @@ class Search extends Component
                                 })
                                 ->orWhere(function($q){
                                     $q->whereHas('product', function($q){
+                                        $q->where('name', 'LIKE', '%' . $this->search . '%');
+                                    });
+                                })
+                                ->orWhere(function($q){
+                                    $q->whereHas('tags', function($q){
                                         $q->where('name', 'LIKE', '%' . $this->search . '%');
                                     });
                                 })

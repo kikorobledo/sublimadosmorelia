@@ -155,6 +155,8 @@ class OrdersCreateEdit extends Component
 
         $this->order->refresh();
 
+        $this->order->load('orderDetails.design', 'orderDetails.product');
+
         $this->emit('updateProductsQty');
     }
 
@@ -199,6 +201,8 @@ class OrdersCreateEdit extends Component
         try {
 
             foreach ($this->order->orderdetails as  $orderDetail) {
+
+                $orderDetail->load('product', 'design');
 
                 $this->content[] = array(
                     'product' => $orderDetail->product->name,
@@ -246,6 +250,7 @@ class OrdersCreateEdit extends Component
             redirect()->route('admin.orders.index');
 
         } catch (\Throwable $th) {
+            dd($th);
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo."]);
         }
     }
@@ -265,11 +270,16 @@ class OrdersCreateEdit extends Component
             $this->anticipo = $this->order->anticipo;
             $this->total = $this->order->total;
             $this->description = $this->order->description;
+
         }
     }
 
     public function render()
     {
+
+        if($this->order)
+            $this->order->load('orderDetails.design', 'orderDetails.product');
+
         $clients = User::where('role', 'usuario')->get();
 
         $products = Product::with('sizes', 'colors')->orderBy('name')->get();

@@ -21,6 +21,11 @@ class Dashboard extends Component
                             ->groupBy('status')
                             ->get();
 
+        $ordersGraphic = Order::selectRaw('year(created_at) year, monthname(created_at) month, count(*) data, sum(total) sum')
+                            ->where('status', 'entregada')
+                            ->groupBy('year', 'month')
+                            ->orderBy('year', 'asc')
+                            ->get();
 
         $entries = Entrie::selectRaw('year(created_at) year, monthname(created_at) month, count(*) data, sum(price) sum')
                             ->groupBy('year', 'month')
@@ -29,11 +34,14 @@ class Dashboard extends Component
 
         $data = [];
 
+        $data2 = [];
+
         $labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
         foreach($entries as $entrie){
             foreach($labels as $label){
                 $data[$entrie->year][$label] = 0;
+                $data2[$entrie->year][$label] = 0;
             }
         }
 
@@ -42,13 +50,29 @@ class Dashboard extends Component
             foreach($labels as $label){
 
                 if($entrie->month === $label ){
+
                     if($data[$entrie->year][$label] == 0)
                         $data[$entrie->year][$label] = $entrie->sum;
+
                 }
             }
 
         }
 
-        return view('livewire.admin.dashboard', compact('data', 'orders', 'totalEntries', 'totalOrders'))->layout('layouts.admin');
+        foreach($ordersGraphic as $order){
+
+            foreach($labels as $label){
+
+                if($order->month === $label ){
+
+                    if($data2[$order->year][$label] == 0)
+                        $data2[$order->year][$label] = $order->sum - $data[$entrie->year][$label];
+
+                }
+            }
+
+        }
+
+        return view('livewire.admin.dashboard', compact('data', 'data2', 'orders', 'totalEntries', 'totalOrders'))->layout('layouts.admin');
     }
 }

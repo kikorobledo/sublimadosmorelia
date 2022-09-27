@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\OrderManagement;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DesignController;
+use App\Http\Controllers\FooterController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CatalogoController;
 use App\Http\Controllers\CategoryController;
@@ -38,6 +39,12 @@ Route::get('design/{slug}', [DesignController::class, 'show'])->name('designs.sh
 Route::get('search', SearchController::class)->name('search');
 
 Route::get('invitation/{user}', [UserController::class, 'invitation'])->name('invitation');
+
+Route::get('preguntas_frecuentes', [FooterController::class, 'preguntas_frecuentes'])->name('preguntas_frecuentes');
+
+Route::get('aviso_de_privacidad', [FooterController::class, 'aviso_de_privacidad'])->name('aviso_de_privacidad');
+
+Route::get('terminos_y_condiciones', [FooterController::class, 'terminos_y_condiciones'])->name('terminos_y_condiciones');
 
 Route::group(['middleware' => ['is.active', 'auth']], function (){
 

@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Models\Design;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\CategoryDesign;
 use Illuminate\Database\Eloquent\Builder;
 
 class CategoryProducts extends Component
@@ -35,7 +34,9 @@ class CategoryProducts extends Component
     public function mount(){
 
         foreach($this->categoryProduct->products as $product){
+            $product->load('designs');
             foreach($product->designs as $design){
+                $design->load('subCategoryDesign');
                 if(!in_array($design->subCategoryDesign->name, $this->listSubCategoryDesigns))
                     $this->listSubCategoryDesigns[] = $design->subCategoryDesign->name;
             }
@@ -45,7 +46,7 @@ class CategoryProducts extends Component
     public function render()
     {
 
-        $designsQuery = Design::query()->whereHas('product.categoryProduct', function (Builder $b){
+        $designsQuery = Design::query()->with('product')->whereHas('product.categoryProduct', function (Builder $b){
             $b->where('id', $this->categoryProduct->id);
         });
 

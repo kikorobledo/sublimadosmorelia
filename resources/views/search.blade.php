@@ -19,7 +19,7 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-2 relative" x-data="{'show':true}" id="div">
 
-            <div class=" hidden md:block mt-10 space-y-3">
+            <div class=" hidden md:block mt-10 space-y-3 mb-3">
 
                 @foreach ($videos  as $video)
 
@@ -49,7 +49,7 @@
 
                                 <figure class="mb-2 h-44 md:h-60 flex items-end overflow-hidden">
 
-                                    <img class=" object-cover object-center" src="{{ $design->imageUrl() }}" alt="">
+                                    <img class=" object-cover object-center" src="{{ $design->thumbUrl() }}" alt="">
 
                                 </figure>
 

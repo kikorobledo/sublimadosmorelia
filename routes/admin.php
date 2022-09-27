@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Admin\Tags;
 use App\Http\Livewire\Admin\Sizes;
 use App\Http\Livewire\Admin\Users;
 use App\Http\Livewire\Admin\Colors;
@@ -47,6 +48,8 @@ Route::name('admin.')->group(function () {
     Route::get('images', Images::class)->name('images');
 
     Route::get('videos', Videos::class)->name('videos');
+
+    Route::get('tags', Tags::class)->name('tags');
 
 });
 

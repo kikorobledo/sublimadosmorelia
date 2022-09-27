@@ -14,7 +14,7 @@
 
                             <figure class="mb-2 h-44 md:h-60 flex items-end">
 
-                                <img class="object-cover object-center" src="{{ $design->imageUrl() }}" alt="Design image">
+                                <img class="object-cover object-center" src="{{ $design->thumbUrl() }}" alt="Design image">
 
                             </figure>
 

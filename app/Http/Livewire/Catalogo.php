@@ -29,15 +29,15 @@ class Catalogo extends Component
 
     public function render()
     {
-        $categoryDesigns = CategoryDesign::all();
+        $categoryDesigns = CategoryDesign::with('subcategories')->get();
 
         if($this->subcategoryDesignName){
 
-            $designs = Design::whereHas('subCategoryDesign', function (Builder $b){
+            $designs = Design::with('product')->whereHas('subCategoryDesign', function (Builder $b){
                                     $b->where('name', $this->subcategoryDesignName);
                                 })->paginate(20);
         }else{
-            $designs = Design::orderBy('created_at', 'DESC')->paginate(20);
+            $designs = Design::with('product')->orderBy('created_at', 'DESC')->paginate(20);
         }
 
         return view('livewire.catalogo', compact('categoryDesigns','designs'));

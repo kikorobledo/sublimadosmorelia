@@ -16,16 +16,16 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('number')->unique();
-            $table->foreignId('client_id')->constrained()->references('id')->on('users');
-            $table->enum('status',['nueva', 'aceptada', 'terminada', 'entregada', 'pagada', 'cancelada'])->default('nueva');
+            $table->foreignId('client_id')->references('id')->on('users');
+            $table->enum('status', ['nueva', 'aceptada', 'terminada', 'entregada', 'pagada', 'cancelada'])->default('nueva');
             $table->unsignedDecimal('anticipo', 8,2)->nullable();
             $table->unsignedDecimal('total', 8,2)->nullable();
             $table->json('content')->nullable();
             $table->string('anticipo_image')->nullable();
             $table->string('design_image')->nullable();
             $table->text('description')->nullable();
-            $table->foreignId('created_by')->nullable()->constrained()->references('id')->on('users');
-            $table->foreignId('updated_by')->nullable()->constrained()->references('id')->on('users');
+            $table->foreignId('created_by')->nullable()->references('id')->on('users');
+            $table->foreignId('updated_by')->nullable()->references('id')->on('users');
             $table->timestamps();
         });
     }

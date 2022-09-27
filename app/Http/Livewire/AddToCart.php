@@ -100,7 +100,7 @@ class AddToCart extends Component
                 'options' => [
                     'size' => $size->name,
                     'color' => $this->color,
-                    'image' => $this->design->imageUrl(),
+                    'image' => $this->design->thumbUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
                     'original_price' => $original_price,
@@ -116,7 +116,7 @@ class AddToCart extends Component
                 'weight' => 1,
                 'options' => [
                     'color' => $this->color,
-                    'image' => $this->design->imageUrl(),
+                    'image' => $this->design->thumbUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
                     'original_price' => $original_price,
@@ -134,7 +134,7 @@ class AddToCart extends Component
                 'weight' => 1,
                 'options' => [
                     'size' => $size->name,
-                    'image' => $this->design->imageUrl(),
+                    'image' => $this->design->thumbUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
                     'original_price' => $original_price,
@@ -149,7 +149,7 @@ class AddToCart extends Component
                 'price' => $this->price,
                 'weight' => 1,
                 'options' => [
-                    'image' => $this->design->imageUrl(),
+                    'image' => $this->design->thumbUrl(),
                     'product' => $this->design->product->id,
                     'product_name' => $this->design->product->name,
                     'original_price' => $original_price,

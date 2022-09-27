@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\Tag;
 use App\Models\SubCategoryDesign;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -22,9 +23,20 @@ class Design extends Model
         return $this->belongsTo(SubCategoryDesign::class);
     }
 
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function imageUrl(){
         return $this->image
             ? Storage::disk('designs')->url($this->image)
+            : Storage::disk('public')->url('img/logo2.png');
+
+    }
+
+    public function thumbUrl(){
+        return $this->image
+            ? Storage::disk('designs')->url($this->thumb)
             : Storage::disk('public')->url('img/logo2.png');
 
     }

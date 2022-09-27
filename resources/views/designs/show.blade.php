@@ -22,7 +22,7 @@
 
             </div>
 
-            <div class="cols-1 p2 md:p-8">
+            <div class="cols-1 p2 md:p-8 mb-5">
 
                 <h1 class="text-3xl tracking-widest">{{ $design->name }}</h1>
 
@@ -35,6 +35,12 @@
                     @livewire('add-to-cart', ['design' => $design])
 
                 </div>
+
+                @foreach ($design->tags as $tag)
+
+                    <a href="{{ route('search') . '?name=' . $tag->name }}" class="bg-black text-white px-2 py-1 rounded-full text-xs">{{ $tag->name }}</a>
+
+                @endforeach
 
             </div>
 

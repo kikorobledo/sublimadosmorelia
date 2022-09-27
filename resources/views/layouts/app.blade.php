@@ -112,7 +112,7 @@
                     :style="selected == 2 ? 'max-height: ' + $refs.tab2.scrollHeight + 'px;' :  ''"
                 >
 
-                    <p class="uppercase text-white text-xs tracking-widest mx-auto font-semibold">Preguntas Frecuentes</p>
+                    <a href="{{ route('preguntas_frecuentes') }}" class="uppercase text-white text-xs tracking-widest mx-auto font-semibold">Preguntas Frecuentes</a>
 
                 </div>
 
@@ -132,9 +132,9 @@
                     :style="selected == 3 ? 'max-height: ' + $refs.tab3.scrollHeight + 'px;' :  ''"
                 >
 
-                    <a class="uppercase text-white text-xs tracking-widest mx-auto font-semibold mb-3" href="#">Aviso de privacidad</a>
+                    <a class="uppercase text-white text-xs tracking-widest mx-auto font-semibold mb-3" href="{{ route('aviso_de_privacidad') }}">Aviso de privacidad</a>
 
-                    <a class="uppercase text-white text-xs tracking-widest mx-auto font-semibold" href="#">Terminos y condiciones de uso</a>
+                    <a class="uppercase text-white text-xs tracking-widest mx-auto font-semibold" href="{{ route('terminos_y_condiciones') }}">Terminos y condiciones de uso</a>
 
                 </div>
 
@@ -164,7 +164,7 @@
                 </div>
 
                 <div>
-                    <p class="py-2 text-white font-thin text-center text-xs">© 2021 Sublimados Morelia. Todos los derechos reservados.</p>
+                    <p class="py-2 text-white font-thin text-center text-xs">© 2022 Sublimados Morelia. Todos los derechos reservados.</p>
                 </div>
 
             </div>
@@ -202,7 +202,7 @@
 
                         <div class="mb-2 text-left">
 
-                            <p class="uppercase text-white text-xs tracking-widest mx-auto">Preguntas Frecuentes</p>
+                            <a href="{{ route('preguntas_frecuentes') }}" class="uppercase text-white text-xs tracking-widest mx-auto">Preguntas Frecuentes</a>
 
                         </div>
 
@@ -214,9 +214,9 @@
 
                         <div class="mb-2 flex flex-col text-left">
 
-                            <a class="uppercase text-white text-xs tracking-widest mb-3" href="#">Aviso de privacidad</a>
+                            <a class="uppercase text-white text-xs tracking-widest mb-3" href="{{ route('aviso_de_privacidad') }}">Aviso de privacidad</a>
 
-                            <a class="uppercase text-white text-xs tracking-widest" href="#">Terminos y condiciones de uso</a>
+                            <a class="uppercase text-white text-xs tracking-widest" href="{{ route('terminos_y_condiciones') }}">Terminos y condiciones de uso</a>
 
                         </div>
 
@@ -251,7 +251,7 @@
                 </div>
 
                 <div>
-                    <p class="py-2 text-white font-thin dark:text-white sm:py-0 text-center">© 2021 Sublimados Morelia. Todos los derechos reservados.</p>
+                    <p class="py-2 text-white font-thin dark:text-white sm:py-0 text-center">© 2022 Sublimados Morelia. Todos los derechos reservados.</p>
                 </div>
 
             </div>

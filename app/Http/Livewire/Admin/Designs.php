@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Tag;
 use App\Models\Design;
 use App\Models\Product;
 use Livewire\Component;
@@ -10,6 +11,7 @@ use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Models\CategoryProduct;
 use App\Models\SubCategoryDesign;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
 class Designs extends Component
@@ -26,6 +28,7 @@ class Designs extends Component
     public $sort = 'id';
     public $direction = 'desc';
     public $pagination=10;
+    public $selectedTags = [];
 
     public $design_id;
     public $name;
@@ -36,18 +39,20 @@ class Designs extends Component
 
     protected function rules(){
         return[
-            'name' => 'required',
+            'name' => 'required|unique:designs,name',
             'product_id' => 'required',
             'slug' => 'unique:designs,slug,' . $this->design_id,
-            'sub_category_id' => 'required'
+            'sub_category_id' => 'required',
+            'selectedTags' => 'required'
         ];
     }
 
     protected $validationAttributes = [
-        'slug' => 'Nombre',
-        'name' => 'Nombre',
-        'sub_category_id' => 'Subcategoría',
-        'product_id' => 'Producto'
+        'slug' => 'nombre',
+        'name' => 'nombre',
+        'sub_category_id' => 'subcategoría',
+        'product_id' => 'producto',
+        'selectedTags' => 'etiquetas'
     ];
 
     public function updatingSearch(){
@@ -73,7 +78,7 @@ class Designs extends Component
     }
 
     public function resetAll(){
-        $this->reset('design_id', 'name', 'sub_category_id', 'image', 'product_id');
+        $this->reset('design_id', 'name', 'sub_category_id', 'image', 'product_id', 'selectedTags');
         $this->resetErrorBag();
         $this->resetValidation();
 
@@ -87,6 +92,8 @@ class Designs extends Component
         $this->edit = false;
         $this->create = true;
         $this->modal = true;
+
+        $this->dispatchBrowserEvent('select2');
     }
 
     public function openModalEdit($design){
@@ -100,8 +107,14 @@ class Designs extends Component
         $this->sub_category_id = $design['sub_category_design_id'];
         $this->product_id = $design['product_id'];
 
+        foreach($design['tags'] as $tag){
+            array_push($this->selectedTags, (string)$tag['id']);
+        }
+
         $this->edit = true;
         $this->modal = true;
+
+        $this->dispatchBrowserEvent('select2');
     }
 
     public function openModalDelete($design){
@@ -126,20 +139,31 @@ class Designs extends Component
         try {
 
             if($this->image){
-                $design_image = $this->image->store('/', 'designs');
-            }
-            else
-                $design_image = null;
 
-            Design::create([
+                $design_image = $this->image->store('/', 'designs');
+
+                $mime= $this->image->getClientOriginalExtension();
+                $imageName = time().".".$mime;
+                $image = Image::make($this->image)->fit(200, 200)->encode('jpg');
+                Storage::disk('designs')->put($imageName, $image);
+
+            }else{
+                $design_image = null;
+                $imageName = null;
+            }
+
+            $design = Design::create([
                 'name' => $this->name,
                 'slug' => $this->slug,
                 'sub_category_design_id' => $this->sub_category_id,
                 'product_id' => $this->product_id,
                 'image' => $design_image,
+                'thumb' => $imageName,
                 'category_design_id' => $this->sub_category_id,
                 'created_by' => auth()->user()->id,
             ]);
+
+            $design->tags()->attach($this->selectedTags);
 
             $this->dispatchBrowserEvent('showMessage',['success', "El diseño ha sido creado con exito."]);
 
@@ -148,6 +172,7 @@ class Designs extends Component
             $this->updateCache();
 
         } catch (\Throwable $th) {
+
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
             $this->closeModal();
@@ -168,11 +193,21 @@ class Designs extends Component
 
                 Storage::disk('designs')->delete($design->image);
 
-                $design_image = $this->image->store('/', 'designs');
-            }
+                Storage::disk('designs')->delete($design->thumb);
 
-            else
+                $design_image = $this->image->store('/', 'designs');
+
+                $mime= $this->image->getClientOriginalExtension();
+                $imageName = time().".".$mime;
+                $image = Image::make($this->image)->fit(200, 200)->encode('jpg');
+                Storage::disk('designs')->put($imageName, $image);
+
+            }else{
+
                 $design_image = null;
+                $imageName = null;
+
+            }
 
             $design->update([
                 'name' => $this->name,
@@ -180,9 +215,12 @@ class Designs extends Component
                 'sub_category_design_id' => $this->sub_category_id,
                 'product_id' => $this->product_id,
                 'image' => $design_image ? $design_image : $design->image,
+                'thumb' => $imageName ? $imageName : $design->thumb,
                 'category_design_id' => $this->sub_category_id,
                 'created_by' => auth()->user()->id,
             ]);
+
+            $design->tags()->sync($this->selectedTags);
 
             $this->dispatchBrowserEvent('showMessage',['success', "El diseño ha sido actualizado con exito."]);
 
@@ -206,6 +244,8 @@ class Designs extends Component
 
             Storage::disk('designs')->delete($design->image);
 
+            Storage::disk('designs')->delete($design->thumb);
+
             $design->delete();
 
             $this->dispatchBrowserEvent('showMessage',['success', "El diseño ha sido eliminado con exito."]);
@@ -224,20 +264,22 @@ class Designs extends Component
     public function updateCache(){
 
         cache()->put('latestDesigns', Design::with('product')->orderBy('created_at', 'desc')->take(20)->get());
-        cache()->put('latestDesignsTextil', CategoryProduct::where('name', 'Textiles')->first()->designs()->with('product')->orderBy('created_at')->take(20)->get());
-        cache()->put('latestDesignsAluminium', CategoryProduct::where('name', 'Aluminios')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get());
-        cache()->put('latestDesignsIron', CategoryProduct::where('name', 'Aceros')->first()->designs()->with('product')->orderBy('created_at')->take(10)->get());
+        cache()->put('latestDesignsTextil', CategoryProduct::where('name', 'Textiles')->first()->designs()->with('product')->orderBy('created_at', 'desc')->take(20)->get());
+        cache()->put('latestDesignsAluminium', CategoryProduct::where('name', 'Aluminios')->first()->designs()->with('product')->orderBy('created_at', 'desc')->take(10)->get());
+        cache()->put('latestDesignsIron', CategoryProduct::where('name', 'Aceros')->first()->designs()->with('product')->orderBy('created_at', 'desc')->take(10)->get());
 
     }
 
     public function render()
     {
 
-        $subCategories = SubCategoryDesign::all();
+        $subCategories = SubCategoryDesign::orderBy('name')->get();
 
-        $products = Product::all();
+        $products = Product::orderBy('name')->get();
 
-        $designs = Design::with('createdBy', 'updatedBy', 'subCategoryDesign', 'product')
+        $tags = Tag::orderBy('name')->get();
+
+        $designs = Design::with('createdBy', 'updatedBy', 'subCategoryDesign', 'product', 'tags')
                             ->where('name', 'LIKE', '%' . $this->search . '%')
                             ->orWhere(function($q){
                                 return $q->whereHas('subCategoryDesign', function($q){
@@ -253,6 +295,6 @@ class Designs extends Component
                             ->paginate($this->pagination);
 
 
-        return view('livewire.admin.designs', compact('subCategories', 'products', 'designs'))->layout('layouts.admin');
+        return view('livewire.admin.designs', compact('subCategories', 'products', 'designs', 'tags'))->layout('layouts.admin');
     }
 }

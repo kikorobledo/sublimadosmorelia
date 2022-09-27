@@ -3,7 +3,11 @@
     @push('styles')
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+        />
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     @endpush
 
     <div class="mb-5">
@@ -217,7 +221,7 @@
                                     <div class="flex-shrink-0 h-14 w-14">
 
                                         <a href="{{ $design->imageUrl() }}" data-lightbox="{{ $design->id }}" data-title="Diseño">
-                                            <img class=" rounded" src="{{ $design->imageUrl() }}" alt="Imágen">
+                                            <img class=" rounded h-14" src="{{ $design->imageUrl() }}" alt="Imágen">
                                         </a>
 
                                     </div>
@@ -385,8 +389,6 @@
 
                     <div>
 
-                        @error('name') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
-
                         @error('slug') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
 
                     </div>
@@ -465,6 +467,35 @@
 
             </div>
 
+            <div class="flex flex-col md:flex-row justify-between md:space-x-3 mb-5 w-full">
+
+                <div class="flex-auto">
+
+                    <div>
+                        <Label>Etiquetas</Label>
+                    </div>
+
+                    <div wire:ignore>
+
+                        <select class="select2 bg-white rounded text-sm w-full z-50" multiple="multiple">
+
+                            @foreach ($tags as $tag)
+
+                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+
+                    @error('selectedTags') <span class="error text-sm text-red-500">{{ $message }}</span> @enderror
+
+                </div>
+
+            </div>
+
         </x-slot>
 
         <x-slot name="footer">
@@ -539,11 +570,38 @@
 
     </x-jet-confirmation-modal>
 
-    @push('scripts')
+    <script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        document.addEventListener('select2', function(){
 
-    @endpush
+            $('.select2').select2({
+                width: '100%',
+            })
+
+            $('.select2').val(@this.selectedTags);
+            $('.select2').trigger('change');
+
+            $('.select2').on('change', function(){
+                @this.set('selectedTags', $(this).val())
+            })
+
+            $('.select2').on("keyup", function(e) {
+                if (e.keyCode === 13){
+                    @this.set('selectedTags', $('.select2').val())
+                }
+            });
+
+        });
+
+    </script>
 
 </div>
+
+@push('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+@endpush

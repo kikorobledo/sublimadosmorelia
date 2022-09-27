@@ -9,7 +9,7 @@ class DesignController extends Controller
 {
     public function show(Request $request){
 
-        $design = Design::where('slug', $request->slug)->first();
+        $design = Design::with('tags')->where('slug', $request->slug)->first();
 
         $glider = Design::with('product')->where('sub_category_design_id', $design->sub_category_design_id)->take(20)->get();
 

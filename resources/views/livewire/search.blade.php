@@ -32,7 +32,7 @@
 
                     <a href="{{ route('designs.show', $design['slug']) }}" class="flex px-4 py-3 items-center space-x-6 hover:bg-gray-100">
 
-                        <img src="{{ $design->imageUrl() }}" class="w-20 object-cover" alt="Imagen del designo">
+                        <img src="{{ $design->thumbUrl() }}" class="w-20 object-cover" alt="Imagen del diseño">
 
                         <p>{{ $design->name }}</p>
 

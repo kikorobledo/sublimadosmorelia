@@ -245,7 +245,7 @@
                 <span class="font-bold text-3xl text-blueGray-600">
 
                     <span>
-                    $ {{ $totalEntries }}
+                    $ {{ number_format($totalEntries, 2) }}
                     </span>
 
                 </span>
@@ -279,7 +279,7 @@
                 <span class="font-bold text-2xl text-blueGray-600">
 
                     <span class="text-3xl">
-                        $ {{ $totalOrders }}
+                        $ {{ number_format($totalOrders, 2) }}
                     </span>
 
                 </span>
@@ -313,12 +313,24 @@
                 <span class="font-bold text-3xl text-blueGray-600">
 
                     <span>
-                        $ {{ $totalOrders - $totalEntries}}
+                        $ {{ number_format(($totalOrders - $totalEntries), 2) }}
                     </span>
 
                 </span>
 
             </div>
+
+        </div>
+
+    </div>
+
+    <div class="mb-10">
+
+        <h2 class="text-2xl tracking-widest py-3 px-6 text-gray-600 rounded-xl border-b-2 border-gray-500 font-semibold mb-6 bg-white">Gráfica de ganancias</h2>
+
+        <div class="bg-white rounded-lg p-2 shadow-lg">
+
+            <canvas id="ordersChart" style="width: 100%; height: 400px;"></canvas>
 
         </div>
 
@@ -352,9 +364,15 @@
 
             const aux = {!! json_encode($data) !!}
 
+            const aux3 = {!! json_encode($data2) !!}
+
             let dataArray = new Array();
 
+            let dataArray2 = new Array();
+
             let aux2 = new Array();
+
+            let aux4 = new Array();
 
             for(let key in aux){
                 for (let key2 in aux[key]) {
@@ -378,11 +396,38 @@
                 aux2 = new Array();
             }
 
+            for(let key in aux3){
+                for (let key2 in aux3[key]) {
+                    aux4.push(aux3[key][key2])
+                }
+
+                var color = colors[Math.floor(Math.random()*colors.length)]
+
+                dataArray2.push(
+                    {
+                        label: key,
+                        data: aux4,
+                        borderColor: color[0],
+                        backgroundColor: color[1],
+                        pointStyle: 'circle',
+                        pointRadius: 5,
+                        pointHoverRadius: 10
+                    }
+                )
+
+                aux4 = new Array();
+            }
+
             const labels=  ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
             const data = {
                 labels: labels,
                 datasets:dataArray
+            }
+
+            const data2 = {
+                labels: labels,
+                datasets:dataArray2
             }
 
             const config = {
@@ -423,9 +468,52 @@
                 },
             };
 
+            const config2 = {
+                type: 'line',
+                data: data2,
+                options: {
+                    locale:'es-MX',
+                    responsive: true,
+                    scales:{
+                        y:{
+                            ticks:{
+                                callback:(value, index, values) => {
+                                    return new Intl.NumberFormat('es-MX', {
+                                        style: 'currency',
+                                        currency: 'MXN',
+                                    }).format(value);
+                                }
+                            },
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false,
+                            text: 'Gráfica de ganancias'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context){
+                                    return `${context.dataset.label}: $${context.formattedValue}`;
+                                }
+                            }
+                        }
+                    }
+                },
+            };
+
             const myChart = new Chart(
                 document.getElementById('entriesChart'),
                 config
+            );
+
+            const myChart2 = new Chart(
+                document.getElementById('ordersChart'),
+                config2
             );
 
         </script>

@@ -16,7 +16,7 @@ class SearchController extends Controller
 
         $name = $request->name;
 
-        $designs = Design::with('subCategoryDesign')
+        $designs = Design::with('subCategoryDesign', 'product')
                                 ->where('name', 'LIKE', '%' . $name . '%')
                                 ->orWhere(function($q) use($name){
                                     $q->whereHas('subCategoryDesign', function($q) use($name){
@@ -25,6 +25,11 @@ class SearchController extends Controller
                                 })
                                 ->orWhere(function($q) use($name){
                                     $q->whereHas('product', function($q) use($name){
+                                        $q->where('name', 'LIKE', '%' . $name . '%');
+                                    });
+                                })
+                                ->orWhere(function($q) use($name){
+                                    $q->whereHas('tags', function($q) use($name){
                                         $q->where('name', 'LIKE', '%' . $name . '%');
                                     });
                                 })
