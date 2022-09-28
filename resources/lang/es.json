@@ -55,5 +55,8 @@
     "Before proceeding, please check your email for a verification link.": "Antes de poder continuar, por favor, confirma tu correo electrónico con el enlace que te hemos enviado.",
     "If you did not receive the email": "Si no has recibido el email",
     "click here to request another": "pulsa aquí para que te enviemos otro",
-    "All rights reserved.":  "Todos los derechos reservados."
+    "All rights reserved.":  "Todos los derechos reservados.",
+    "I agree to the :terms_of_service and :privacy_policy": "Estoy de acuerdo con los :términos",
+    "Already registered?": "¿Ya estas resegistrado?",
+    "Whoops! Something went wrong.": "¡Upss! Algo salio mal"
 }

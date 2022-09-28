@@ -125,9 +125,9 @@ class Users extends Component
                 'created_by' => auth()->user()->id,
             ]);
 
-            /* $url = URL::signedRoute('invitation', $user);
+            $url = URL::signedRoute('invitation', $user);
 
-            $user->notify(new UserInvitationNotification($url)); */
+            $user->notify(new UserInvitationNotification($url));
 
             $this->dispatchBrowserEvent('showMessage',['success', "El usuario ha sido creado con exito."]);
 

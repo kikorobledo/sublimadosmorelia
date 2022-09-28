@@ -35,7 +35,7 @@
                     <div class="mb-5">
 
                         <p class="font-light text-lg mb-3">
-                            Selecciona los productos que deseas pedir, pueder revisarlos por categorias en el botón superior izquierdo. Al hacer click
+                            Selecciona los productos que deseas pedir, puedes revisarlos por categorías en el botón superior izquierdo. Al hacer click
                             en el botón "AGREGAR AL CARRITO", el carrito se actualizara agregando los productos.
                         </p>
 

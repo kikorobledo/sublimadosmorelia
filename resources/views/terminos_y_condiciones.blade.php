@@ -5,8 +5,8 @@
         <h1 class=" text-center font-bold uppercase md:text-3xl md:font-light md:capitalize mb-2 md:mb-10 tracking-widest">Terminos Y Condiciones</h1>
 
         <p class="font-light text-lg mb-3">
-            Esta página web es propiedad y está operado por Enrique De Jesus Robledo Camacho. Estos Términos establecen los términos y condiciones
-            bajo los cuales tu puedes usar nuestra página web y servicios ofrecidos por nosotros. Esta página web ofrece a los visitantes
+            Esta página web es propiedad y está operada por Enrique De Jesus Robledo Camacho. Estos Términos establecen los términos y condiciones
+            bajo los cuales tu puedes usar nuestra página web y los servicios ofrecidos por nosotros. Esta página web ofrece a los visitantes
             consulta sobre tipos de articulos asi como de diseños para poder hacer pedidos.
         </p>
 
