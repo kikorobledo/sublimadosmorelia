@@ -5,7 +5,7 @@
 
     <figure class="mb-5 hidden md:block">
 
-        <img class="w-full h-80 object-cover object-center" src="{{ Storage::disk('images')->url($searchDesktop[0]->url) }}" alt="">
+        <img class="w-full h-96 object-cover object-center" src="{{ Storage::disk('images')->url($searchDesktop[0]->url) }}" alt="">
 
     </figure>
 
@@ -35,11 +35,11 @@
 
             </div>
 
-            <div class="md:col-span-2 lg:col-span-4">
+            <div class="md:col-span-2 lg:col-span-4 mx-auto">
 
-                <h1 class="text-3xl mb-2">Resultados de busqueda para: "{{ $name }}"</h1>
+                <h1 class="text-3xl my-2">Resultados de busqueda para: "{{ $name }}"</h1>
 
-                <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4 w-full">
+                <ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-4 w-full mx-auto">
 
                     @forelse ($designs as $design)
 
@@ -49,7 +49,7 @@
 
                                 <figure class="mb-2 h-44 md:h-60 flex items-end overflow-hidden">
 
-                                    <img class=" object-cover object-center" src="{{ $design->thumbUrl() }}" alt="">
+                                    <img class="h-full mx-auto" src="{{ $design->thumbUrl() }}" alt="">
 
                                 </figure>
 
@@ -75,7 +75,7 @@
 
                 </ul>
 
-                <div class="mt-10">
+                <div class="my-8">
 
                     {{ $designs->links() }}
 

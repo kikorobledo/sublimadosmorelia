@@ -8,37 +8,37 @@
 
         <div class=" glider-contain relative w-full">
 
-            <div class="glider">
+            <div class="glider h-menu">
 
                 @foreach ($encabezadoDesktop as $image)
 
-                    <div class="bg-black"><img class="w-full h-menu object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($image->url) }}" alt=""></div>
+                    <div class="bg-black"><img class="w-full object-cover object-center " src="{{ Storage::disk('images')->url($image->url) }}" alt=""></div>
 
                 @endforeach
 
             </div>
 
-            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hero-text" >
+            <div class="w-full absolute text-center top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hero-text" >
 
-                <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Compra 2 y llevate 3</p>
-                <p class="md:text-4xl text-white uppercase md:mb-6">playeras</p>
-                <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
-
-            </div>
-
-            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
-
-                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
-                <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p>
-                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+                {{-- <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Has regalos para</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">tus fiestas</p> --}}
+                <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xl ">catálogo</a>
 
             </div>
 
-            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
+            <div class="w-full absolute text-center top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
 
-                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
-                <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p>
-                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+                {{-- <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p> --}}
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xl ">catálogo</a>
+
+            </div>
+
+            <div class="w-full absolute text-center top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text" >
+
+                {{-- <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p> --}}
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xl ">catálogo</a>
 
             </div>
 
@@ -60,33 +60,33 @@
 
                 @foreach ($encabezadoMobile as $image)
 
-                    <div class="bg-black"><img class="w-full h-menu object-cover object-center opacity-60" src="{{ Storage::disk('images')->url($image->url) }}" alt=""></div>
+                    <div class="bg-black"><img class="w-full h-full object-cover object-center" src="{{ Storage::disk('images')->url($image->url) }}" alt=""></div>
 
                 @endforeach
 
             </div>
 
-            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hero-text2" >
+            <div class="w-full absolute text-center top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2  hero-text2" >
 
-                <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Compra 2 y llevate 3</p>
-                <p class="md:text-4xl text-white uppercase md:mb-6">playeras</p>
-                <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
-
-            </div>
-
-            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text2" >
-
-                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
-                <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p>
-                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+               {{--  <p class=" md:text-6xl text-white uppercase font-bold md:mb-4">Compra 2 y llevate 3</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">playeras</p> --}}
+                <a href="{{ route('catalogo') }}" class="border border-gray-400 rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest">catálogo</a>
 
             </div>
 
-            <div class="w-full absolute text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text2" >
+            <div class="w-full absolute text-center top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text2" >
 
-                <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
-                <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p>
-                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest text-xs md:text-base">comprar</a>
+               {{--  <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Personaliza tu regalo</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">ponle tu foto favorita</p> --}}
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest">catálogo</a>
+
+            </div>
+
+            <div class="w-full absolute text-center top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden hero-text2" >
+
+                {{-- <p class="md:text-6xl text-white uppercase font-bold md:mb-4">Haz un regalo memorable</p>
+                <p class="md:text-4xl text-white uppercase md:mb-6">a esa persona especial</p> --}}
+                <a href="{{ route('catalogo') }}" class="border border-gray-400  rounded-full bg-black text-white uppercase font-bold px-4 py-1 md:py-2 tracking-widest">catálogo</a>
 
             </div>
 
@@ -101,7 +101,7 @@
     </div>
 
     {{-- Latest Designs --}}
-    <div class="container md:mt-8 px-2 my-8">
+    <div class="container md:mt-8 px-2 mb-8">
 
         <div class="text-center tracking-widest mb-4">
 
@@ -133,7 +133,7 @@
     </div>
 
     {{-- Video --}}
-    <div class="mb-8 container flex flex-col md:flex-row  items-center  md:h-80">
+    <div class="mb-8 container flex flex-col md:flex-row  items-center">
 
         <div class="text-center mb-4">
 
@@ -145,7 +145,7 @@
 
         </div>
 
-        <div class="fb-video ml-auto" data-href="https://www.facebook.com/Sublimadosmorelia/videos/1120111075508475/" data-allowfullscreen="false" data-width="500" data-show-text="false"><blockquote cite="https://www.facebook.com/Sublimadosmorelia/videos/1120111075508475/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Sublimadosmorelia/videos/1120111075508475/"></a></div>
+        <div class="fb-video mx-auto" data-href="https://www.facebook.com/Sublimadosmorelia/videos/407845304686592/" data-allowfullscreen="false" data-width="350" data-show-text="false"></div>
 
     </div>
 
@@ -196,15 +196,15 @@
 
             <div class=" glider-contain relative w-full">
 
-                <div class="glider3">
+                <div class="glider3 h-96 md:h-auto sm:auto">
 
                     @foreach ($videos as $video)
 
-                        <div class="text-center py-1">
+                        <div class="flex flex-col">
 
-                            <div class="fb-video w-full mb-2" data-href="{{ $video->url }}" data-allowfullscreen="false" data-width="500" data-show-text="false"><blockquote cite="{{ $video->url }}" class="fb-xfbml-parse-ignore"><a href="{{ $video->url }}"></a></div>
+                            <div class="fb-video mx-auto" data-href="{{ $video->url }}" data-width="450" data-show-text="false" data-allowfullscreen="false"></div>
 
-                            <a href="{{ route('search'). "?name=" . $video->name }}" class="tracking-widest py-1 border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">{{ $video->name }}</a>
+                            <a href="{{ route('search'). "?name=" . $video->name }}" class="tracking-widest py-1 mt-2 mx-auto border border-gray-300  rounded-full text-black uppercase font-light text-sm px-2 hover:border-black transition duration-500 ease-in-out">{{ $video->name }}&nbsp;</a>
 
                         </div>
 

@@ -263,7 +263,9 @@
                                 wire:loading.attr="disabled"
                                 wire:target="update"
                                 class="rounded-full  text-white bg-green-500 my-2 py-2 px-4 float-right hover:bg-green-700 w-full"
-                            > Actualizar Pedido
+                            >
+                                <img wire:loading wire:target="update" class="mx-auto h-4" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
+                                Actualizar Pedido
                             </button>
 
                             <span x-data="{ open: false }" class="w-full z-50">
@@ -385,7 +387,9 @@
                                 wire:loading.attr="disabled"
                                 wire:target="update"
                                 class="rounded-full  text-white bg-green-500 my-2 py-2 px-4 float-right hover:bg-green-700 w-full"
-                            > Crear Pedido
+                            >
+                                <img wire:loading wire:target="create" class="mx-auto h-4" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
+                                Crear Pedido
                             </button>
 
                         @endif

@@ -667,6 +667,7 @@
                         wire:loading.attr="disabled"
                         wire:target="create"
                         class="bg-blue-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
+                        <img wire:loading wire:target="create" class="mx-auto h-4" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
                         Guardar
                     </button>
 
@@ -677,6 +678,7 @@
                         wire:loading.attr="disabled"
                         wire:target="update"
                         class="bg-blue-400 hover:shadow-lg text-white font-bold px-4 py-2 rounded-full text-sm mb-2 hover:bg-blue-700 flaot-left mr-1 focus:outline-none">
+                        <img wire:loading wire:target="update" class="mx-auto h-4" src="{{ asset('storage/img/loading3.svg') }}" alt="Loading">
                         Actualizar
                     </button>
 

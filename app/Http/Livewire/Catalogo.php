@@ -35,9 +35,11 @@ class Catalogo extends Component
 
             $designs = Design::with('product')->whereHas('subCategoryDesign', function (Builder $b){
                                     $b->where('name', $this->subcategoryDesignName);
-                                })->paginate(20);
+                                })
+                                ->orderBy('id', 'desc')
+                                ->paginate(20);
         }else{
-            $designs = Design::with('product')->orderBy('created_at', 'DESC')->paginate(20);
+            $designs = Design::with('product')->orderBy('created_at', 'DESC')->orderBy('id', 'desc')->paginate(20);
         }
 
         return view('livewire.catalogo', compact('categoryDesigns','designs'));

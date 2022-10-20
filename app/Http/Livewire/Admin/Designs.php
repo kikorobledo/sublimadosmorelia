@@ -39,7 +39,7 @@ class Designs extends Component
 
     protected function rules(){
         return[
-            'name' => 'required|unique:designs,name',
+            'name' => 'required|unique:designs,name,' . $this->design_id,
             'product_id' => 'required',
             'slug' => 'unique:designs,slug,' . $this->design_id,
             'sub_category_id' => 'required',
@@ -229,6 +229,7 @@ class Designs extends Component
             $this->updateCache();
 
         } catch (\Throwable $th) {
+            dd($th);
             $this->dispatchBrowserEvent('showMessage',['error', "Lo sentimos hubo un error inténtalo de nuevo"]);
 
             $this->closeModal();

@@ -57,6 +57,7 @@
                 </ul>
 
             </aside>
+
         </div>
 
         <aside class="hidden md:block">
@@ -105,7 +106,7 @@
 
         </aside>
 
-        <div class="md:col-span-2 lg:col-span-4" @click="show = true">
+        <div class="md:col-span-2 lg:col-span-4 mx-auto" @click="show = true">
 
             <p class="text-xl capitalize font-medium">{{ $product }} {{ ($product && $subcategoryDesignName) ? ' >> ' : ''}} {{ $subcategoryDesignName }}</p>
 
@@ -119,7 +120,7 @@
 
                             <figure class="mb-2 h-44 md:h-60 flex items-end overflow-hidden">
 
-                                <img class="h-full" src="{{ $design->thumbUrl() }}" alt="">
+                                <img class="h-full mx-auto" src="{{ $design->thumbUrl() }}" alt="">
 
                             </figure>
 

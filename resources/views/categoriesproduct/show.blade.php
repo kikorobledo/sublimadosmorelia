@@ -2,7 +2,7 @@
 
     <figure class="mb-5 hidden md:block">
 
-        <img class="w-full h-80 object-cover object-center" src="{{ Storage::disk('images')->url($categoryDesktop[0]->url) }}" alt="">
+        <img class="w-full h-96 object-cover object-center" src="{{ Storage::disk('images')->url($categoryDesktop[0]->url) }}" alt="">
 
     </figure>
 
